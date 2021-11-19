@@ -1,0 +1,16 @@
+{
+    "name": "julienquentier/admin",
+    "type": "no",
+    "autoload": {
+        "psr-4": {
+            "App\\": "/assets/functions/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Julien QUENTIER",
+            "email": "j.quentier@gmail.com"
+        }
+    ],
+    "require": {}
+}

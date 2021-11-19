@@ -1,0 +1,154 @@
+/* ***************** */
+/* ***** flash ***** */
+/* ***************** */
+@import url("var_admin.css");
+
+#notif .card {
+  background-color: #fff;
+  width: auto;
+  min-width: 430px;
+  max-width: 80%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  justify-content: space-between;
+  border-radius: 100px 20px 20px 100px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+#notif .notification {
+  position: fixed;
+  right: 0px;
+  top: 10px;
+  -webkit-animation: show_slide 1s ease forwards;
+  z-index: 3000;
+}
+
+#notif .notification.show {
+  -webkit-animation: show_slide 1s ease forwards;
+}
+
+@-webkit-keyframes show_slide {
+  0% {
+    transform: translateX(100%);
+  }
+  40% {
+    transform: translateX(-10%);
+  }
+  80% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-10px);
+  }
+}
+
+#notif .notification.hide {
+  -webkit-animation: hide_slide 1s ease forwards;
+}
+
+@-webkit-keyframes hide_slide {
+  0% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(0%);
+  }
+  80% {
+    transform: translateX(-10%);
+  }
+  100% {
+    transform: translateX(100%);
+    visibility: hidden;
+  }
+}
+
+#notif .card .content {
+  margin-left: 10%;
+  display: flex;
+  align-items: center;
+}
+
+#notif .card .img {
+  height: 90px;
+  width: 90px;
+  position: absolute;
+  left: -5px;
+  top: 0;
+  background-color: #fff;
+  padding: 15px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+}
+
+#notif .card .name {
+  text-transform: uppercase;
+}
+
+#notif .card.success .img {
+  border: 4px solid #34c759;
+  content: url("../images/check-solid.svg");
+}
+
+#notif .card.success .name {
+  color: #34c759;
+}
+
+#notif .card.error .img {
+  border: 4px solid #ff453a;
+  content: url("../images/times-solid.svg");
+}
+
+#notif .card.error .name {
+  color: #ff453a;
+}
+
+#notif .card.info .img {
+  border: 4px solid #5ac8fa;
+  content: url("../images/info-solid.svg");
+}
+
+#notif .card.info .name {
+  color: #5ac8fa;
+}
+
+#notif .card.warning .img {
+  border: 4px solid #ff954f;
+  content: url("../images/exclamation-circle-solid.svg");
+}
+
+#notif .card.warning .name {
+  color: #ff954f;
+}
+
+#notif #notif.card .details {
+  margin-left: 80px;
+}
+
+#notif .details span {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+#notif .close-btn {
+  position: absolute;
+  right: 10px;
+  top: 25px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #e7e7e7;
+  font-size: 25px;
+  line-height: 40px;
+}
+
+@media only screen and (max-width: 450px) {
+  #notif {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: none;
+    z-index: 4000;
+    transform-origin: top;
+  }
+}

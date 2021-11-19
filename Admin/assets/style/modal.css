@@ -1,0 +1,134 @@
+@import url("var_admin.css");
+/* **** Modal ***** */
+
+.modal .custom-select {
+  border: 1px solid #ccc;
+  border-radius: 9px;
+  width: 100%;
+  padding: 0.2rem;
+}
+.modal-close {
+  position: absolute;
+  font-size: 1rem;
+  top: 10px;
+  right: 10px;
+  font-weight: bold;
+  color: #ccc;
+  cursor: pointer;
+}
+.modal-close:hover {
+  color: var(--color-dark);
+}
+.modal-content {
+  border-radius: 7px;
+}
+.modal-header {
+  background-color: var(--main-color);
+  color: #fff;
+}
+#deletemodal .modal-header {
+  background-color: rgba(240, 52, 52, 0.8);
+  color: #fff;
+}
+.btn-close {
+  background: transparent url("../images/cancel.svg") center/1em auto no-repeat;
+  opacity: 1;
+}
+.modal-footer {
+  margin-top: 2rem;
+  padding: 0;
+}
+
+#update_modal .img-logo {
+  font-size: 2rem;
+}
+
+.iframe_container {
+  height: 600px;
+}
+
+.iframe_container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* **** modal view team member **** */
+
+.list_container ul li {
+  display: flex;
+}
+.list_container ul li h6 {
+  margin-right: 4rem;
+  font-weight: bold;
+  width: 170px;
+}
+.list_container ul li p {
+  max-width: 100px;
+}
+
+/* **** Modal update **** */
+
+.hiddenFileInput > input {
+  height: 100%;
+  width: 100;
+  opacity: 0;
+  cursor: pointer;
+}
+.hiddenFileInput {
+  position: relative;
+  left: -40px;
+  top: 60px;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  overflow: hidden;
+  cursor: pointer;
+  background: center center no-repeat;
+  background-size: 75% 75%;
+  background-image: url("../../../global/img/plus-circle-solid.svg");
+}
+
+.hiddenFileInput.minus {
+  background-image: url("../../../global/img/plus-circle-solid.svg");
+}
+
+.hiddenFileInput.minus {
+  background-image: url("../../../global/img/minus-circle-solid.svg");
+}
+
+.hiddenFileInput.hidden__delete {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  color: #f00134;
+  background-image: url("../../../global/img/trash-alt-regular.svg");
+}
+
+#update_lang .hiddenFileInput,
+#update_cat .hiddenFileInput,
+#update_post .hiddenFileInput,
+#update_link .hiddenFileInput {
+  left: 20px;
+  top: 0;
+}
+
+.prctVal {
+  border: none;
+  color: #777;
+  padding-left: 10px;
+}
+
+.form-range::-webkit-slider-thumb {
+  background: var(--main-color);
+}
+
+.form-range::-moz-range-thumb {
+  background: var(--main-color);
+}
+
+.form-range::-ms-thumb {
+  background: var(--main-color);
+}
