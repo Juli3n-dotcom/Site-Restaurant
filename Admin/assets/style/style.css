@@ -523,7 +523,7 @@ header {
 .activity__card h3,
 .grid__card h3 {
   color: var(--text-grey);
-  margin: 1rem;
+  /* margin: 1rem;*/
 }
 
 .activity__card table,
@@ -557,6 +557,10 @@ header {
   transition: 0.5s;
   border: none;
   cursor: pointer;
+}
+
+#add_team_member {
+  display: none;
 }
 
 .resetBtn {
@@ -787,6 +791,21 @@ tbody tr:nth-child(even) {
   .social-icons span,
   .social-icons div {
     margin-left: 0.5rem;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .activity__card h3,
+  .grid__card h3 {
+    margin: 1rem;
+  }
+
+  #add_team_member {
+    display: block;
+  }
+
+  #add_team_member_min {
+    display: none;
   }
 }
 

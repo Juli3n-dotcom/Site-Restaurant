@@ -37,6 +37,11 @@ $(document).ready(function () {
     $('#add_team_member').on('click', function () {
         $('#addmodal').modal('show');
     });
+  
+  //modal d'ajout team member min
+    $('#add_team_member_min').on('click', function () {
+        $('#addmodal').modal('show');
+    });
 
     // ## ajout membre ajax
 $("#add_member").on('submit', function(e){

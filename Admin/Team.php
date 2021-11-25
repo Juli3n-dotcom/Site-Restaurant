@@ -23,6 +23,9 @@ include __DIR__ . '/assets/includes/HeaderAdmin.php';
           <i class="fas fa-user-plus"></i>
           Ajouter
         </button>
+        <button id="add_team_member_min">
+          <i class="fas fa-user-plus"></i>
+        </button>
         <!-- <?php endif; ?> -->
       </div>
 
