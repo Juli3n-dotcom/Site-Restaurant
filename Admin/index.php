@@ -1,5 +1,5 @@
 <?php
-include 'assets/includes/Header_admin.php';
+include 'assets/includes/HeaderAdmin.php';
 
 
-include 'assets/includes/Footer_admin.php';
+include 'assets/includes/FooterAdmin.php';

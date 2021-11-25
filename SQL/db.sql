@@ -16,6 +16,7 @@ CREATE TABLE global_options(
   PRIMARY KEY (id)
 )ENGINE=INNODB;
 
+
 /* team */
 
 CREATE TABLE team_photo
@@ -41,10 +42,27 @@ date_enregistrement DATETIME NOT NULL,
 last_login DATETIME DEFAULT NULL,
 confirmation TINYINT DEFAULT NULL,
 token VARCHAR (255) DEFAULT NULL,
-name VARCHAR (255) NOT NULL,
   PRIMARY KEY (id_team_member),
       CONSTRAINT fk_team_member_photo
       FOREIGN KEY (photo_id)
       REFERENCES  team_photo(id_photo)
+      ON DELETE SET NULL
+)ENGINE=INNODB;
+
+
+/* Journal */
+
+CREATE TABLE journal
+(
+id INT(3) NOT NULL AUTO_INCREMENT,
+ titre VARCHAR (255) NOT NULL,
+ member_id INT (3) DEFAULT NULL,
+ contenu TEXT DEFAULT NULL,
+ statut INT (3) NOT NULL,
+ date_enregistrement DATETIME NOT NULL,
+ PRIMARY KEY (id),
+  CONSTRAINT fk_team_member_journal
+      FOREIGN KEY (member_id)
+      REFERENCES  team(id_team_member)
       ON DELETE SET NULL
 )ENGINE=INNODB;

@@ -545,7 +545,8 @@ header {
 .closeBtn,
 .deleteBtn,
 .disabledBtn,
-.reset button {
+.reset button,
+.resetBtn {
   margin: 1rem;
   padding: 0.2rem 1rem;
   border-radius: 20px;
@@ -556,6 +557,10 @@ header {
   transition: 0.5s;
   border: none;
   cursor: pointer;
+}
+
+.resetBtn {
+  background: var(--text-grey);
 }
 
 .closeBtn {
@@ -647,7 +652,7 @@ tbody tr:nth-child(even) {
   color: #fff;
 }
 
-.badges.editer {
+.badge.editer {
   background: rgb(60, 179, 113);
   color: #fff;
 }
@@ -732,13 +737,30 @@ tbody tr:nth-child(even) {
 
 .pagination_link {
   display: block;
-  width: 30px;
+
   height: auto;
   margin: 2px;
-  border: 1px solid #ccc;
-  border-radius: 50%;
+
   background-color: #fff;
+}
+
+.pagination_link span {
+  padding: 0.2rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.7rem;
+  border-radius: 50px;
+  background: var(--main-color);
+  color: #fff;
+  transition: 0.5s;
+  border: none;
+  cursor: pointer;
+}
+
+.pagination_link span:hover {
   color: var(--main-color);
+  background: #fff;
+  border: 1px solid var(--main-color);
 }
 
 .pagination_link.active {

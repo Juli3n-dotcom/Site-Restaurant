@@ -90,7 +90,7 @@
           <span class="link_name">Team</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Chart</a></li>
+          <li><a class="link_name" href="Team.php">Team</a></li>
         </ul>
       </li>
 

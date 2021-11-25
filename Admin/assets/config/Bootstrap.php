@@ -1,13 +1,16 @@
 <?php
 require_once __DIR__ . '/../../../global/config/Bootstrap.php';
 
+require_once __DIR__ . '/FunctionsGlobal.php';
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-require_once __DIR__ . '/../functions/Notifications.php';
+require_once __DIR__ . '/../class/Notifications.php';
+
+require_once __DIR__ . '/../class/Team.php';
+
 
 //  require_once __DIR__ . '/../functions/auth.php';
-
-//  require_once __DIR__ . '/functions_global_admin.php';
 
  
 

@@ -1,10 +1,9 @@
 <?php
 require_once __DIR__ . '/../../config/Bootstrap.php';
+require_once __DIR__ . '/../../functions/TeamFunctions.php';
 
 use App\Notifications;
-use App\TeamFunctions;
-
-
+use App\Team;
 /* #############################################################################
 
 Ajout d'un member a partir team.php en Ajax
@@ -14,25 +13,30 @@ Ajout d'un member a partir team.php en Ajax
 if (!empty($_POST)) {
 
   $result = array();
+  $civilite = $_POST['add_civilite'];
+  $name = htmlspecialchars($_POST['add_name_member']);
+  $fname = htmlspecialchars($_POST['add_prenom_member']);
+  $email = htmlspecialchars($_POST['add_email_member']);
+  $statut = $_POST['add_statut'];
 
-  if (!preg_match('~^[a-zA-Z-]+$~', $_POST['add_name_member'])) {
-
+  if (!preg_match('~^[a-zA-Z- ]+$~', $name)) {
     $result['status'] = false;
     $result['notif'] = Notifications::notif('warning', 'oups! il manque le nom');
-  } elseif (!preg_match('~^[a-zA-Z-]+$~', $_POST['add_prenom_member'])) {
+    // postJournal($pdo, 1, 5, 'oups! il manque le nom', 'oups! il manque le nom');
+
+  } elseif (!preg_match('~^[a-zA-Z- ]+$~', $fname)) {
 
     $result['status'] = false;
     $result['notif'] = Notifications::notif('warning', 'oups! il manque le prénom');
-  } elseif (TeamFunctions::getMemberBy($pdo, 'email', $_POST['add_email_member']) !== null) {
+  } elseif (getMemberBy($pdo, 'email', $email) !== null) {
 
     $result['status'] = false;
     $result['notif'] = Notifications::notif('warning', 'email déjà utilisé');
-  } elseif (!filter_var($_POST['add_email_member'], FILTER_VALIDATE_EMAIL)) {
+  } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
     $result['status'] = false;
     $result['notif'] = Notifications::notif('warning', 'email non valide ou manquant');
   } else {
-
 
     //création d'un mot de passe aléatoire
     function passgen($nbChar)
@@ -49,19 +53,15 @@ if (!empty($_POST)) {
     $mdp = passgen(8);
     $hash = password_hash($mdp, PASSWORD_DEFAULT);
 
-    //création de l'username + création du name
-    $first_name = $_POST['add_prenom_member'];
-    $a = $first_name[0];
-    $explode_name = explode(' ', $_POST['add_name_member']);
-    $explode_fn = explode(' ', $_POST['add_prenom_member']);
-
+    //création de l'username 
+    $a = $fname[0];
+    $explode_name = explode(' ', $name);
     $username = strtolower($a . $explode_name[0]);
-    $name = 'Fr' . $explode_fn[0] . $explode_name[0] . bin2hex(random_bytes(6));
 
     //autres valeurs
     $token = bin2hex(random_bytes(16));
-    $civilite = $_POST['add_civilite'];
-    $statut = $_POST['add_statut'];
+    $date = (new DateTime())->format('Y-m-d H:i:s');
+
 
     // requete SQL
     $req = $pdo->prepare(
@@ -77,9 +77,7 @@ if (!empty($_POST)) {
                 date_enregistrement,
                 last_login,
                 confirmation,
-                token,
-                name
-            )
+                token)
             VALUES (
                 :civilite,
                 :username,
@@ -92,156 +90,106 @@ if (!empty($_POST)) {
                 :date,
                 :last,
                 :confirmation,
-                :token,
-                :name
-            )'
+                :token)'
     );
+    // $result['status'] = false;
+    // $result['test'] = 'civilite= ' . $civilite . ' username= ' . $username . ' nom= ' . $name . ' prenom= ' . $fname . ' email= ' . $email . ' hash= ' . $hash . ' 	statut= ' . $statut . ' date= ' . $date . ' token= ' . $token;
 
     $req->bindParam(':civilite', $civilite);
     $req->bindParam(':username', $username);
-    $req->bindParam(':nom', $_POST['add_name_member']);
-    $req->bindParam(':prenom', $_POST['add_prenom_member']);
-    $req->bindParam(':email', $_POST['add_email_member']);
+    $req->bindParam(':nom', $name);
+    $req->bindParam(':prenom', $fname);
+    $req->bindParam(':email', $email);
     $req->bindParam(':password', $hash);
     $req->bindValue(':photo_id', NULL);
     $req->bindValue(':statut', $statut);
-    $req->bindValue(':date', (new DateTime())->format('Y-m-d H:i:s'));
+    $req->bindValue(':date', $date);
     $req->bindValue(':last', NULL);
     $req->bindValue(':confirmation', 0);
     $req->bindParam(':token', $token);
-    $req->bindParam(':name', $name);
     $req->execute();
 
     $result['status'] = true;
     $result['notif'] = Notifications::notif('success', 'Nouveau membre ajouté');
 
-    //retour ajax card
-    $result['cards'] = '<div class="card__single">
-      <div class="card__body">
-        <i class="fas fa-user-shield"></i>
-        <div>
-          <h5>Admin</h5>
-          <h4></h4>
-        </div>
-      </div>
-      <div class="card__footer">
-        <a href="">View all</a>
-      </div>
-  </div>';
+    $record_per_page = 10;
+    $page = 0;
 
-    $result['cards'] .= '<div class="card__single">
-      <div class="card__body">
-        <i class="fas fa-user"></i>
-        <div>
-          <h5>User</h5>
-          <h4></h4>
-        </div>
-      </div>
-      <div class="card__footer">
-        <a href="">View all</a>
-    </div>
-  </div>';
+    if (isset($_POST['page'])) {
 
-    $result['cards'] .= '<div class="card__single">
-      <div class="card__body">
-        <i class="fas fa-user-edit"></i>
-        <div>
-            <h5>Editeur</h5>
-            <h4></h4>
-        </div>
-      </div>
-      <div class="card__footer">
-        <a href="">View all</a>
-      </div>
-    </div>';
-
-    // préparation retour Ajax
-    $query = $pdo->query('SELECT * FROM team');
-
-    //retour ajax table
-    $result['resultat'] = '<table>';
-
-    $result['resultat'] .= '<thead>
-                <tr>
-                  <th>ID</th>
-                  <th class="dnone">Civilité</th>
-                  <th>Nom</th>
-                  <th>Prénom</th>
-                  <th>Photo</th>
-                  <th>Email</th>
-                  <th>Status</th>';
-    if ($Membre['statut'] == 0) {
-      $result['resultat'] .= '<th>Confirmation</th>';
-      $result['resultat'] .= '<th>Actions</th>';
+      $page = $_POST['page'];
     } else {
-      $result['resultat'] .= '<th>Action</th>';
+
+      $page = 1;
     }
 
-    $result['resultat'] .=  '</tr>
-            </thead>';
+    $start_from = ($page - 1) * $record_per_page;
 
-    $result['resultat'] .= '<tbody>';
+    $query = $pdo->query("SELECT * FROM team ORDER BY id_team_member DESC LIMIT $start_from,$record_per_page");
+    $result['resultat'] = '<table>
 
-    while ($member = $query->fetch()) {
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th class="dnone">Civilité</th>
+              <th>Nom</th>
+              <th>Prénom</th>
+              <th>Photo</th>
+              <th>Email</th>
+              <th>Statut</th>';
+    //if ($Membre['statut'] == 0)         
+    $result['resultat'] .= '<th>Confirmation</th>
+              <th>Actions</th>';
+    //prévoir else $Membre['statut']
+    // $result['resultat'] .= '<th>Action</th>';
+    //prévoir fin elseif $Membre['statut']
+    $result['resultat'] .= ' </tr>
+          </thead>';
+    $result['resultat'] .= '<tbody';
 
+    while ($row = $query->fetch()) {
       $result['resultat'] .= '<tr>';
-      $result['resultat'] .= '<td>' . $member['id_team_member'] . '</td>';
-      $result['resultat'] .= '<td class="dnone">' . $member['civilite'] . '</td>';
-      $result['resultat'] .= '<td>' . $member['nom'] . '</td>';
-      $result['resultat'] .= '<td>' . $member['prenom'] . '</td>';
-      $result['resultat'] .= ' <td class="td-team">';
-      if ($member['photo_id'] == NULL) {
-        if ($member['civilite'] == 0) {
-          $result['resultat'] .= '<div class="img-profil" style="background-image: url(assets/img/male.svg)"></div>';
-        } elseif ($member['civilite'] == 1) {
-          $result['resultat'] .= '<div class="img-profil" style="background-image: url(assets/img/female.svg)"></div>';
-        } else {
-          $result['resultat'] .= '<div class="img-profil" style="background-image: url(assets/img/profil.svg)"></div>';
-        }
-      } else {
-        $result['resultat'] .= '<div class="img-profil" style="background-image: url(assets/uploads/ )"></div>';
-      }
-      $result['resultat'] .= '</td>';
-      $result['resultat'] .= '<td><a href="mailto:' . $member['email'] . '" class="email_member">' . $member['email'] . '</a></td>';
-
-      $result['resultat'] .= '<td>';
-      if ($member['statut'] == 0) {
-        $result['resultat'] .= '<p class="badge admin">Admin</p>';
-      } elseif ($member['statut'] == 1) {
-        $result['resultat'] .= '<p class="badge user">User</p>';
-      } else {
-        $result['resultat'] .= '<p class="badge editer">Editeur</p>';
-      }
-      $result['resultat'] .= '</td>';
-
-      if ($Membre['statut'] == 0) {
-        $result['resultat'] .= '<td class="dnone"><i>' . $member['confirmation'] . '</i></td>';
-        $result['resultat'] .= '<td>';
-        if ($member['confirmation'] == 0) {
-          $result['resultat'] .= '<p class="badge danger confirmation">Non</p>';
-        } else {
-          $result['resultat'] .= '<p class="badge success confirmation">Oui</p>';
-        }
-        $result['resultat'] .= '</td>';
-      }
-
+      $result['resultat'] .= '<td>' . $row['id_team_member'] . '</td>';
+      $result['resultat'] .= '<td class="dnone">' . $row['id_team_member'] . '</td>';
+      $result['resultat'] .= '<td>' . $row['nom'] . '</td>';
+      $result['resultat'] .= '<td>' . $row['prenom'] . '</td>';
+      $result['resultat'] .= '<td class="td-team">' . Team::getProfil($pdo, $row['photo_id'], $row['civilite']) . '</td>';
+      $result['resultat'] .= '<td><a href="mailto:' . $row['email'] . '" class="email_member">' . $row['email'] . '</a></td>';
+      $result['resultat'] .= '<td>' . Team::getStatut($row['statut']) . '</td>';
+      $result['resultat'] .= '<td>' . Team::getConfirmation($row['confirmation']) . '</td>';
       $result['resultat'] .= '<td class="member_action">';
-      $result['resultat'] .= '<input type="button" class="viewbtn" name="view" id="' . $member['id_team_member'] . '"></input>';
-
-      if ($Membre['statut'] == 0) {
-        $result['resultat'] .= '<input type="button" class="editbtn" id="' . $member['id_team_member'] . '"></input>';
-        $result['resultat'] .= '<input type="button" class="deletebtn"></input>';
-      }
+      $result['resultat'] .= '<div class="member_action-container">';
+      $result['resultat'] .= '<input type="button" class="viewbtn" name="view" id="' . $row['id_team_member'] . '"></input>';
+      $result['resultat'] .= '<input type="button" class="editbtn" id="' . $row['id_team_member'] . '"></input>';
+      $result['resultat'] .= '<input type="button" class="deletebtn"></input>';
+      $result['resultat'] .= '</div>';
       $result['resultat'] .= '</td>';
-
       $result['resultat'] .= '</tr>';
     }
+    $result['resultat'] .= '</tbody></table><br /><div  class="custom_pagination">';
 
-    $result['resultat'] .= '</tbody>';
+    $page_query = $pdo->query('SELECT * FROM team ORDER BY id_team_member DESC');
+    $total_records = $page_query->rowCount();
+    $total_pages = ceil($total_records / $record_per_page);
 
-    $result['resultat'] .= '</table>';
-  } // fin else
+    $result['resultat'] .= '<ul class="pagination">';
 
+    if (
+      $page > 1
+    ) {
+      $previous = $page - 1;
+      $result['resultat'] .= '<li class="pagination_link" id="' . $previous . '"><span class="page-link"><i class="fas fa-caret-left"></i> Précédent</span></li>';
+    }
+
+    if ($page < $total_pages) {
+      $page++;
+      $result['resultat'] .= '<li class="pagination_link" id="' . $page . '"><span class="page-link">Suivant <i class="fas fa-caret-right"></i></span></li>';
+    }
+
+    $result['resultat'] .= '</ul>';
+
+    $result['resultat'] .= '</div>';
+  } //fin else
 
   // Return result 
   echo json_encode($result);
