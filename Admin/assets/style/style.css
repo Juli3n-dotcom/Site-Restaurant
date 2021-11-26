@@ -739,7 +739,18 @@ tbody tr:nth-child(even) {
   justify-content: center;
 }
 
-.pagination_link {
+.pagination {
+  align-items: center;
+}
+
+.pagination_link,
+.reset_link,
+.pagination_link_add,
+.pagination_link_update,
+.pagination_link_delete,
+.pagination_link_info,
+.pagination_link_error,
+.pagination_link_warning {
   display: block;
 
   height: auto;
@@ -748,7 +759,13 @@ tbody tr:nth-child(even) {
   background-color: #fff;
 }
 
-.pagination_link span {
+.pagination_link span,
+.pagination_link_add span,
+.pagination_link_update span,
+.pagination_link_delete span,
+.pagination_link_info span,
+.pagination_link_error span,
+.pagination_link_warning span {
   padding: 0.2rem 1rem;
   border-radius: 20px;
   font-weight: 700;
@@ -761,7 +778,13 @@ tbody tr:nth-child(even) {
   cursor: pointer;
 }
 
-.pagination_link span:hover {
+.pagination_link span:hover,
+.pagination_link_add span:hover,
+.pagination_link_update span:hover,
+.pagination_link_delete span:hover,
+.pagination_link_info span:hover,
+.pagination_link_error span:hover,
+.pagination_link_warning span:hover {
   color: var(--main-color);
   background: #fff;
   border: 1px solid var(--main-color);
@@ -770,6 +793,56 @@ tbody tr:nth-child(even) {
 .pagination_link.active {
   background-color: var(--main-color);
   color: #fff;
+}
+
+/* **** Journal **** */
+
+div.history_Statut i {
+  font-size: 20px;
+}
+td.history_statut {
+  color: #fff;
+}
+
+div.history_statut div {
+  padding: 0.2rem 1rem;
+  font-weight: 700;
+  font-size: 0.7rem;
+  border-radius: 50px;
+  color: #fff;
+  border: none;
+}
+
+td.delete,
+div.history_statut div.delete {
+  background-color: var(--error);
+}
+td.add,
+div.history_statut div.add {
+  background-color: var(--success);
+}
+
+td.warning,
+div.history_statut div.warning {
+  background-color: var(--orange);
+}
+td.info,
+div.history_statut div.info {
+  background-color: var(--info);
+}
+td.update,
+div.history_statut div.update {
+  background-color: var(--blue);
+}
+
+td.error,
+div.history_statut div.error {
+  background-color: #4c0000;
+}
+
+div.list_container.history p {
+  max-width: none;
+  width: 100%;
 }
 
 @media only screen and (max-width: 860px) {

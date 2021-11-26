@@ -25,6 +25,7 @@ if (!empty($_POST)) {
 
     $result['status'] = false;
     $result['notif'] = Notifications::notif('error', 'Merci de confirmer la suppression');
+    postJournal($pdo, 3, 4, 'Tentative de suppresion d\'un membre', 'Tentative de suppresion sans confirmation');
   } else {
 
     //recherche si il existe une photo de profil
@@ -48,11 +49,15 @@ if (!empty($_POST)) {
       $req1 = $pdo->exec("DELETE FROM team_photo WHERE id_photo = '$img'");
     }
 
+    $data = $pdo->query("SELECT username FROM team WHERE id_team_member = '$id'");
+    $username = $data->fetch(PDO::FETCH_ASSOC);
+
     //suppresion du membre de la BDD
     $req2 = $pdo->exec("DELETE FROM team WHERE id_team_member = '$id'");
 
     $result['status'] = true;
     $result['notif'] = Notifications::notif('success', 'Membre supprimé');
+    postJournal($pdo, 3, 2, 'Suppresion membre de l\'équipe',  $username['username'] . ' a été supprimé');
 
 
     $record_per_page = 10;

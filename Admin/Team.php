@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/assets/config/Bootstrap.php';
+
 $page_title = 'Team';
 include __DIR__ . '/assets/includes/HeaderAdmin.php';
 ?>

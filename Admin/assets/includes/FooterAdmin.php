@@ -9,6 +9,9 @@
 if (stripos($_SERVER['REQUEST_URI'], 'Team.php')) {
   echo '<script type="text/javascript" src="assets/js/Team.min.js"></script>';
 }
+if (stripos($_SERVER['REQUEST_URI'], 'History.php')) {
+  echo '<script type="text/javascript" src="assets/js/History.min.js"></script>';
+}
 ?>
 <script src="assets/js/app.js" type="text/javascript"></script>
 

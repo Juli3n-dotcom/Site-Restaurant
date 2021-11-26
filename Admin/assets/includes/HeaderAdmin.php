@@ -104,12 +104,12 @@
         </ul>
       </li>
       <li>
-        <a href="#">
+        <a href="History.php">
           <i class='bx bx-history'></i>
           <span class="link_name">History</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">History</a></li>
+          <li><a class="link_name" href="History.php">History</a></li>
         </ul>
       </li>
       <li>

@@ -10,6 +10,7 @@ const DB_PASS = 'root';
 const ROLE_ADMIN = 0;
 const ROLE_GERANT = 1;
 const ROLE_EDITEUR = 2;
+const ROLE_VISITEUR = 3;
 
 //Confirmation
 const NON_CONFIRME = 0;

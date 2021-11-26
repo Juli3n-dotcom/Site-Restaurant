@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/Bootstrap.php';
 function postJournal(PDO $pdo, INT $member, INT $statut, string $title, string $contenu)
 {
 

@@ -22,20 +22,22 @@ if (!empty($_POST)) {
   if (!preg_match('~^[a-zA-Z- ]+$~', $name)) {
     $result['status'] = false;
     $result['notif'] = Notifications::notif('warning', 'oups! il manque le nom');
-    // postJournal($pdo, 1, 5, 'oups! il manque le nom', 'oups! il manque le nom');
-
+    postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Nom manquant');
   } elseif (!preg_match('~^[a-zA-Z- ]+$~', $fname)) {
 
     $result['status'] = false;
     $result['notif'] = Notifications::notif('warning', 'oups! il manque le prénom');
+    postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Prénom manquant');
   } elseif (getMemberBy($pdo, 'email', $email) !== null) {
 
     $result['status'] = false;
     $result['notif'] = Notifications::notif('warning', 'email déjà utilisé');
+    postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Email déjà utilisé');
   } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
     $result['status'] = false;
     $result['notif'] = Notifications::notif('warning', 'email non valide ou manquant');
+    postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Email non valide');
   } else {
 
     //création d'un mot de passe aléatoire
@@ -111,6 +113,12 @@ if (!empty($_POST)) {
 
     $result['status'] = true;
     $result['notif'] = Notifications::notif('success', 'Nouveau membre ajouté');
+
+    $new_member = $pdo->lastInsertId();
+    $data = $pdo->query("SELECT username FROM team WHERE id_team_member = '$new_member'");
+    $username = $data->fetch(PDO::FETCH_ASSOC);
+
+    postJournal($pdo, 3, 0, 'Nouveau membre de l\'équipe', $username['username'] . ' a été ajouté');
 
     $record_per_page = 10;
     $page = 0;
