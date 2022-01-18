@@ -74,6 +74,7 @@ if (!empty($_POST)) {
                 prenom,
                 email,
                 password,
+                mdp,
                 photo_id,
                 statut,
                 date_enregistrement,
@@ -87,6 +88,7 @@ if (!empty($_POST)) {
                 :prenom,
                 :email,
                 :password,
+                :mdp,
                 :photo_id,
                 :statut,
                 :date,
@@ -94,8 +96,7 @@ if (!empty($_POST)) {
                 :confirmation,
                 :token)'
     );
-    // $result['status'] = false;
-    // $result['test'] = 'civilite= ' . $civilite . ' username= ' . $username . ' nom= ' . $name . ' prenom= ' . $fname . ' email= ' . $email . ' hash= ' . $hash . ' 	statut= ' . $statut . ' date= ' . $date . ' token= ' . $token;
+
 
     $req->bindParam(':civilite', $civilite);
     $req->bindParam(':username', $username);
@@ -103,6 +104,7 @@ if (!empty($_POST)) {
     $req->bindParam(':prenom', $fname);
     $req->bindParam(':email', $email);
     $req->bindParam(':password', $hash);
+    $req->bindParam(':mdp', $mdp);
     $req->bindValue(':photo_id', NULL);
     $req->bindValue(':statut', $statut);
     $req->bindValue(':date', $date);

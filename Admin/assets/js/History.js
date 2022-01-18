@@ -8,7 +8,7 @@ $(document).ready(function () {
   function load_data(page) {
 
     $.ajax({
-      url: "assets/src/history/AffichageHistory.php",
+      url: "Assets/Src/History/AffichageHistory.php",
       method: "post",
       data: { page: page },
       success: function (data) {
@@ -23,7 +23,7 @@ $(document).ready(function () {
     load_data(page);
   })
 
-  /*
+/*
  * --> View history element
  * 
  * # Ouverture du Modal de vue
@@ -35,7 +35,7 @@ $(document).on('click','.viewbtn', function(){
   var history_id = $(this).attr("id");  
 
   $.ajax({  
-       url:"assets/src/history/ViewHistoryElement.php",  
+       url:"Assets/Src/History/ViewHistoryElement.php",  
        method:"post",  
        data:{history_id:history_id},  
        success:function(data){  
@@ -58,7 +58,7 @@ $(document).on('click','.viewbtn', function(){
 function load_data_add(page) {
 
     $.ajax({
-      url: "assets/src/history/ViewAllAdd.php",
+      url: "Assets/Src/History/ViewAllAdd.php",
       method: "post",
       dataType: 'json', 
       data: { page: page },
@@ -80,9 +80,9 @@ function load_data_add(page) {
   $(document).on('click', '#allAdd', function (e) {
   
   e.preventDefault();
-load_data_add()
+  load_data_add()
   $.ajax({  
-       url:"assets/src/history/ViewAllAdd.php",  
+       url:"Assets/Src/History/ViewAllAdd.php",  
        method:"post",
        dataType: 'json', 
        success:function(data){  
@@ -106,7 +106,7 @@ load_data_add()
 function load_data_delete(page) {
 
     $.ajax({
-      url: "assets/src/history/ViewAllDelete.php",
+      url: "Assets/Src/History/ViewAllDelete.php",
       method: "post",
       dataType: 'json', 
       data: { page: page },
@@ -130,7 +130,7 @@ function load_data_delete(page) {
   e.preventDefault();
   load_data_delete()
   $.ajax({  
-       url:"assets/src/history/ViewAllDelete.php",  
+       url:"Assets/Src/History/ViewAllDelete.php",  
        method:"post",
        dataType: 'json', 
        success:function(data){  
@@ -142,7 +142,7 @@ function load_data_delete(page) {
   });
 
   /*
- * --> View all delete
+ * --> View all update
  * 
  * # load data
  * 
@@ -151,10 +151,10 @@ function load_data_delete(page) {
  * ###traitement ajax
  */
   
-function load_data_De(page) {
+function load_data_update(page) {
 
     $.ajax({
-      url: "assets/src/history/ViewAllDe.php",
+      url: "Assets/Src/History/ViewAllUpdate.php",
       method: "post",
       dataType: 'json', 
       data: { page: page },
@@ -165,20 +165,20 @@ function load_data_De(page) {
 
   }
 
-  $(document).on('click', '.pagination_link_De', function () {
+  $(document).on('click', '.pagination_link_update', function () {
   
     var page = $(this).attr('id');
     
-    load_data_De(page);
+    load_data_update(page);
   })
   
 
-  $(document).on('click', '#allDe', function (e) {
+  $(document).on('click', '#allUpdate', function (e) {
   
   e.preventDefault();
-  load_data_De()
+  load_data_update()
   $.ajax({  
-       url:"assets/src/history/ViewAllDe.php",  
+       url:"Assets/Src/History/ViewAllUpdate.php",  
        method:"post",
        dataType: 'json', 
        success:function(data){  
@@ -202,7 +202,7 @@ function load_data_De(page) {
 function load_data_info(page) {
 
     $.ajax({
-      url: "assets/src/history/ViewAllInfo.php",
+      url: "Assets/Src/History/ViewAllInfo.php",
       method: "post",
       dataType: 'json', 
       data: { page: page },
@@ -226,7 +226,7 @@ function load_data_info(page) {
   e.preventDefault();
   load_data_info()
   $.ajax({  
-       url:"assets/src/history/ViewAllInfo.php",  
+       url:"Assets/Src/History/ViewAllInfo.php",  
        method:"post",
        dataType: 'json', 
        success:function(data){  
@@ -250,7 +250,7 @@ function load_data_info(page) {
 function load_data_error(page) {
 
     $.ajax({
-      url: "assets/src/history/ViewAllError.php",
+      url: "Assets/Src/History/ViewAllError.php",
       method: "post",
       dataType: 'json', 
       data: { page: page },
@@ -274,7 +274,7 @@ function load_data_error(page) {
   e.preventDefault();
   load_data_error()
   $.ajax({  
-       url:"assets/src/history/ViewAllError.php",  
+       url:"Assets/Src/History/ViewAllError.php",  
        method:"post",
        dataType: 'json', 
        success:function(data){  
@@ -298,7 +298,7 @@ function load_data_error(page) {
 function load_data_warning(page) {
 
     $.ajax({
-      url: "assets/src/history/ViewAllWarning.php",
+      url: "Assets/Src/History/ViewAllWarning.php",
       method: "post",
       dataType: 'json', 
       data: { page: page },
@@ -322,7 +322,7 @@ function load_data_warning(page) {
   e.preventDefault();
   load_data_warning()
   $.ajax({  
-       url:"assets/src/history/ViewAllWarning.php",  
+       url:"Assets/Src/History/ViewAllWarning.php",  
        method:"post",
        dataType: 'json', 
        success:function(data){  
@@ -346,7 +346,7 @@ function load_data_warning(page) {
   e.preventDefault();
 
   $.ajax({  
-       url:"assets/src/history/ResetViewAll.php",  
+       url:"Assets/Src/History/ResetViewAll.php",  
        method:"post",
        dataType: 'json', 
        success:function(data){  

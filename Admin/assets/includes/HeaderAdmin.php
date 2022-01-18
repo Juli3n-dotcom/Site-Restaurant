@@ -1,13 +1,20 @@
+<?php
+require_once __DIR__ . '/../Config/Bootstrap.php';
+
+use App\Team;
+
+
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= 'BackOffice' ?> | <?= 'Fair' ?></title>
-  <link rel="icon" href="assets/images/dashboard.svg">
-  <link rel="apple-touch-icon" href="assets/images/dashboard.svg">
+  <title><?= $page_title ?> | <?= 'QrMenu' ?></title>
+  <link rel="icon" href="Assets/Images/dashboard.svg">
+  <link rel="apple-touch-icon" href="Assets/Images/dashboard.svg">
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
@@ -18,9 +25,12 @@
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
   <!-- CSS -->
 
-  <link href="assets/style/style.css" rel="stylesheet" type="text/css">
+
+  <link href="Assets/Style/style.css" rel="stylesheet" type="text/css">
 
 </head>
+
+
 
 <body>
 
@@ -94,24 +104,28 @@
         </ul>
       </li>
 
+      <?php if ($user['statut'] == 0) : ?>
+        <li>
+          <a href="History.php">
+            <i class="fas fa-history"></i>
+            <span class="link_name">History</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="History.php">History</a></li>
+          </ul>
+        </li>
+      <?php endif; ?>
+
       <li>
-        <a href="#">
-          <i class='bx bx-compass'></i>
-          <span class="link_name">Explore</span>
+        <a href="Profil.php">
+          <i class="fas fa-user-circle"></i>
+          <span class="link_name">Mon Compte</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Explore</a></li>
+          <li><a class="link_name" href="Profil.php">Mon Compte</a></li>
         </ul>
       </li>
-      <li>
-        <a href="History.php">
-          <i class='bx bx-history'></i>
-          <span class="link_name">History</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="History.php">History</a></li>
-        </ul>
-      </li>
+
       <li>
         <a href="#">
           <i class="fas fa-cog"></i>
@@ -127,13 +141,13 @@
     <div class="profile_content">
       <div class="profile">
         <div class="profile_details">
-          <img src="assets/uploads/profil.png" alt="">
+          <img src="<?= Team::getPhoto($pdo, $user['photo_id'], $user['civilite']) ?>" alt="">
           <div class="name_job">
-            <div class="name">Ju QUENTIER</div>
-            <div class="job">CEO</div>
+            <div class="name"><?= $user['username'] ?></div>
+            <div class="job"><?= Team::getPoste($user['statut']) ?></div>
           </div>
         </div>
-        <i class="fa fa-sign-out" aria-hidden="true" id="log_out"></i>
+        <a href="Assets/Src/Login/Logout.php"><i class="fa fa-sign-out" aria-hidden="true" id="log_out"></i></a>
       </div>
     </div>
 
@@ -149,15 +163,14 @@
       <!-- Menu USER -->
       <div class="member_menu-action">
         <div class="profile" onclick="menuTeamToggle();">
-          <img src='assets/images/profil.svg' alt='photo_profil_other'>
+          <img src='<?= Team::getPhoto($pdo, $user['photo_id'], $user['civilite']) ?>' alt='photo_profil_other'>
         </div>
         <div class="member_menu">
-          <!-- <h3><?= $Membre['prenom'] ?> <?= $Membre['nom'] ?></h3> -->
-          <h3>Julien QUENTIER</h3>
+          <h3><?= $user['username'] ?></h3>
           <ul>
             <li>
               <i class='bx bxs-user-circle'></i>
-              <a href="my-profil"> Mon Profil</a>
+              <a href="Profil.php"> Mon Profil</a>
             </li>
             <li>
               <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -165,11 +178,11 @@
             </li>
             <li>
               <i class="fa fa-info-circle" aria-hidden="true"></i>
-              <a href="#"> Help</a>
+              <a href="#" class="help__btn"> Help</a>
             </li>
             <li>
               <i class="fa fa-sign-out" aria-hidden="true"></i>
-              <a href="assets/scripts/login/logout.php"> Déconnexion</a>
+              <a href="Assets/Src/Login/Logout.php"> Déconnexion</a>
             </li>
           </ul>
         </div>

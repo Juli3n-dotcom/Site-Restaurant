@@ -38,6 +38,7 @@ body {
   left: 0;
   background: var(--main-color);
   transition: all 0.5s ease;
+  z-index: 2;
 }
 
 .sidebar.active {
@@ -255,6 +256,7 @@ body {
 }
 
 .profile #log_out {
+  color: #fff;
   position: absolute;
   left: 50%;
   bottom: 5px;
@@ -843,6 +845,14 @@ div.history_statut div.error {
 div.list_container.history p {
   max-width: none;
   width: 100%;
+}
+
+/* **** Help Modal **** */
+
+#help_detail label {
+  text-align: center;
+  font-size: 16px;
+  color: #666666;
 }
 
 @media only screen and (max-width: 860px) {

@@ -52,26 +52,26 @@ if (isset($_POST['member_id'])) {
 
     $result .= '</li>';
 
-    if ($Membre['statut'] == 0) {
+    // if ($Membre['statut'] == 0) {
 
-      $result .= '<li>';
-      $result .= '<h6>Confirmation : </h6>';
-      $result .= '<p>';
+    $result .= '<li>';
+    $result .= '<h6>Confirmation : </h6>';
+    $result .= '<p>';
 
-      $result .= Team::getConfirmation($row['confirmation']);
+    $result .= Team::getConfirmation($row['confirmation']);
 
-      $result .= '</p>';
-      $result .= '</li>';
+    $result .= '</p>';
+    $result .= '</li>';
 
-      $result .= '<li>
+    $result .= '<li>
                     <h6>Derniére connexion : </h6>
                     <p>' . date('d-m-Y', strtotime($last_date)) . '</p>
                   </li>';
-      $result .= '<li>
+    $result .= '<li>
                       <h6>Date d\'enregistrement : </h6>
                       <p>' . date('d-m-Y', strtotime($date)) . '</p>
                     </li>';
-    }
+    // }
   }
 
   $result .= '</ul>';

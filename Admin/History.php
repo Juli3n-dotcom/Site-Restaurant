@@ -1,11 +1,10 @@
 <?php
-require_once __DIR__ . '/assets/config/Bootstrap.php';
-require_once __DIR__ . '/assets/functions/HistoryFunctions.php';
+require_once __DIR__ . '/Assets/Config/Bootstrap.php';
+require_once __DIR__ . '/Assets/Functions/HistoryFunctions.php';
 $page_title = 'History';
-include __DIR__ . '/assets/includes/HeaderAdmin.php';
+include __DIR__ . '/Assets/Includes/HeaderAdmin.php';
 ?>
 
-<!-- <?php include __DIR__ . '/../global/includes/flash.php'; ?> -->
 
 <div class="notif" id='notif'></div>
 
@@ -16,7 +15,7 @@ include __DIR__ . '/assets/includes/HeaderAdmin.php';
       <div class="card__body">
         <i class="fas fa-plus"></i>
         <div>
-          <h5>ADD</h5>
+          <h5>SUCCESS</h5>
           <h4><?= countHistoryAdd($pdo) ?></h4>
         </div>
       </div>
@@ -128,5 +127,5 @@ include __DIR__ . '/assets/includes/HeaderAdmin.php';
   </div>
 
   <?php
-  include __DIR__ . '/assets/includes/FooterAdmin.php';
+  include __DIR__ . '/Assets/Includes/FooterAdmin.php';
   ?>

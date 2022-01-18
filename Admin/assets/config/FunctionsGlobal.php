@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/Bootstrap.php';
-function postJournal(PDO $pdo, INT $member, INT $statut, string $title, string $contenu)
+
+function postJournal(PDO $pdo, $member, INT $statut, string $title, string $contenu)
 {
 
   $req = $pdo->prepare('INSERT INTO journal(
@@ -22,4 +23,18 @@ function postJournal(PDO $pdo, INT $member, INT $statut, string $title, string $
   $req->bindValue(':statut', $statut);
   $req->bindValue(':date', (new DateTime())->format('Y-m-d H:i:s'));
   $req->execute();
+}
+
+function getUser(PDO $pdo, string $token)
+{
+  $req = $pdo->prepare(
+    'SELECT *
+       FROM team
+       WHERE token = :token'
+  );
+  $req->bindParam(':token', $token);
+  $req->execute();
+
+  $user = $req->fetch(PDO::FETCH_ASSOC);
+  return $user ?: null;
 }

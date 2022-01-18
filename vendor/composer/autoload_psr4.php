@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Julienquentier\\Admin\\' => array($baseDir . '/assets/src'),
+    'Sign\\' => array('/Global/Class'),
+    'App\\' => array('/Admin/Assets/Class'),
 );

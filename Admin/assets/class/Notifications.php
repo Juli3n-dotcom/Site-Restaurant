@@ -24,19 +24,19 @@ class Notifications
 
 
     $output .= '<script>
-  $(document).ready(function (){
+    $(document).ready(function (){
+        setTimeout(function(){
+        $(".notification").addClass("hide");
+        $(".notification").removeClass("show");
+        },3000);
+      $(".close-btn").click(function(){
+        $(".notification").addClass("hide");
+        $(".notification").removeClass("show"); 
+      });
       setTimeout(function(){
-      $(".notification").addClass("hide");
-      $(".notification").removeClass("show");
-      },3000);
-    $(".close-btn").click(function(){
-      $(".notification").addClass("hide");
-      $(".notification").removeClass("show"); 
-    });
-    setTimeout(function(){
-      $(".notification").remove();
-      },5000);
-  })</script>';
+        $(".notification").remove();
+        },5000);
+    })</script>';
 
     return  $output;
   }

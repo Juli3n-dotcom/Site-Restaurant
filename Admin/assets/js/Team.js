@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-
   /*
   * --> View data
   */
@@ -8,7 +7,7 @@ $(document).ready(function () {
   function load_data(page) {
 
     $.ajax({
-      url: "assets/src/team/AffichageTeam.php",
+      url: "Assets/Src/Team//AffichageTeam.php",
       method: "post",
       data: { page: page },
       success: function (data) {
@@ -51,7 +50,7 @@ $("#add_member").on('submit', function(e){
     $.ajax({
 
       type: 'POST',
-      url: 'assets/src/team/AddTeamMember.php',
+      url: 'Assets/Src/Team//AddTeamMember.php',
       data: new FormData(this),
       dataType: 'json',
       contentType: false,
@@ -67,7 +66,7 @@ $("#add_member").on('submit', function(e){
           $('#table').html(data.resultat); 
                 
         }else{
-          console.log(data.test);
+          
           $('#notif').html(data.notif);
           
          
@@ -93,7 +92,7 @@ $(document).on('click','.viewbtn', function(){
   var member_id = $(this).attr("id");  
 
   $.ajax({  
-       url:"assets/src/team/ViewTeamMember.php",  
+       url:"Assets/Src/Team//ViewTeamMember.php",  
        method:"post",  
        data:{member_id:member_id},  
        success:function(data){  
@@ -116,7 +115,7 @@ $(document).on('click','.viewbtn', function(){
  */
 
 
-// # modal delete langage
+// # modal delete team member
 $(document).on('click','.deletebtn', function () {
 
   $('#deletemodal').modal('show');
@@ -162,7 +161,7 @@ $('#delete_member').on('submit', function(e){
     var confirme = $('#confirmedelete').val();
     var parameters = "id="+ id + '&confirmedelete=' + confirme;
 
-    $.post('assets/src/team/DeleteTeamMember.php', parameters, function(data){
+    $.post('Assets/Src/Team//DeleteTeamMember.php', parameters, function(data){
 
             if(data.status == true){ 
 
@@ -197,7 +196,7 @@ $('#delete_member').on('submit', function(e){
     var team_id = $(this).attr("id");  
   
     $.ajax({  
-         url:"assets/src/team/ModalUpdateTeamMember.php",  
+         url:"Assets/Src/Team//ModalUpdateTeamMember.php",  
          method:"post",  
          data:{team_id:team_id},  
          success:function(data){  
@@ -214,7 +213,7 @@ $(document).on('submit', '#update_member', function(e){
   $.ajax({
 
     type: 'POST',
-    url: 'assets/src/team/UpdateTeamMemberScrip.php',
+    url: 'Assets/Src/Team//UpdateTeamMemberScrip.php',
     data: new FormData(this),
     dataType: 'json',
     contentType: false,

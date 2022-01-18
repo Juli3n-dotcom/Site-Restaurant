@@ -1,11 +1,11 @@
 <?php
-require_once __DIR__ . '/assets/config/Bootstrap.php';
+require_once __DIR__ . '/Assets/Config/Bootstrap.php';
 
 $page_title = 'Team';
-include __DIR__ . '/assets/includes/HeaderAdmin.php';
+include __DIR__ . '/Assets/Includes/HeaderAdmin.php';
 ?>
 
-<!-- <?php include __DIR__ . '/../global/includes/flash.php'; ?> -->
+
 
 <div class="notif" id='notif'></div>
 
@@ -19,7 +19,7 @@ include __DIR__ . '/assets/includes/HeaderAdmin.php';
       <div class="card__header">
         <h3>Team Members </h3>
 
-        <!-- <?php if ($Membre['statut'] == 0) : ?> -->
+
         <button id="add_team_member">
           <i class="fas fa-user-plus"></i>
           Ajouter
@@ -27,7 +27,7 @@ include __DIR__ . '/assets/includes/HeaderAdmin.php';
         <button id="add_team_member_min">
           <i class="fas fa-user-plus"></i>
         </button>
-        <!-- <?php endif; ?> -->
+
       </div>
 
       <div class="table-responsive" id="table">
@@ -40,7 +40,7 @@ include __DIR__ . '/assets/includes/HeaderAdmin.php';
 
 
 <!-- ############################################## ***** Modal add team member ***** ########################################################## -->
-<!-- <?php if ($Membre['statut'] == 0) : ?> -->
+
 
 <div class="modal fade" id="addmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -148,7 +148,6 @@ include __DIR__ . '/assets/includes/HeaderAdmin.php';
 </div>
 
 
-<!-- <?php endif; ?> -->
 
 <!-- ############################################## ***** Modal view member ***** ########################################################## -->
 
@@ -170,5 +169,5 @@ include __DIR__ . '/assets/includes/HeaderAdmin.php';
 
 
   <?php
-  include __DIR__ . '/assets/includes/FooterAdmin.php';
+  include __DIR__ . '/Assets/Includes/FooterAdmin.php';
   ?>

@@ -10,17 +10,47 @@ class Team
 
     if ($photo_id == NULL) {
       if ($civilite == 0) {
-        return "<div class='img-profil' style='background-image: url(assets/images/male.svg)'></div>";
+        return "<div class='img-profil' style='background-image: url(Assets/Images/male.svg)'></div>";
       } elseif ($civilite == 1) {
-        return "<div class='img-profil' style='background-image: url(assets/images/female.svg)'></div>";
+        return "<div class='img-profil' style='background-image: url(Assets/Images/female.svg)'></div>";
       } else {
-        return "<div class='img-profil' style='background-image: url(assets/images/profil.svg)'></div>";
+        return "<div class='img-profil' style='background-image: url(Assets/Images/profil.svg)'></div>";
       }
     } else {
       $data = $pdo->query("SELECT * from team_photo WHERE id_photo = '$photo_id'");
       $photo = $data->fetch($pdo::FETCH_ASSOC);
 
-      return "<div class='img-profil' style='background-image: url(assets/uploads/" . $photo . " )'></div>";
+      return "<div class='img-profil' style='background-image: url(Assets/Uploads/" . $photo . " )'></div>";
+    }
+  }
+
+  public static function getPhoto($pdo, $photo_id, $civilite)
+  {
+
+    if ($photo_id == NULL) {
+      if ($civilite == 0) {
+        return "Assets/Images/male.svg";
+      } elseif ($civilite == 1) {
+        return "Assets/Images/female.svg";
+      } else {
+        return "Assets/Images/profil.svg";
+      }
+    } else {
+      $data = $pdo->query("SELECT * from team_photo WHERE id_photo = '$photo_id'");
+      $photo = $data->fetch($pdo::FETCH_ASSOC);
+
+      return "Assets/Uploads/" . $photo . "";
+    }
+  }
+
+  public static function getPoste($statut)
+  {
+    if ($statut == 0) {
+      return 'Admin';
+    } else if ($statut == 1) {
+      return 'Gérant';
+    } else {
+      return 'Editeur';
     }
   }
 

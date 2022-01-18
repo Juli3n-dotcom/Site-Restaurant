@@ -3,13 +3,14 @@
     "type": "no",
     "autoload": {
         "psr-4": {
-            "App\\": "/assets/class/"
+            "App\\": "/Admin/Assets/Class/",
+            "Sign\\": "/Global/Class/"
         }
     },
     "authors": [
         {
             "name": "Julien QUENTIER",
-            "email": "j.quentier@gmail.com"
+            "email": "julien@webupdesing.fr"
         }
     ],
     "require": {}

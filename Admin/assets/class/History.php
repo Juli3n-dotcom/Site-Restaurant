@@ -8,7 +8,7 @@ class History
   public static function getStatut($statut)
   {
     if ($statut == 0) {
-      return "<td class='history_statut add'><div class='add'><i class='fas fa-plus'></i> ADD</div></td>";
+      return "<td class='history_statut add'><div class='add'><i class='fas fa-plus'></i> SUCCESS</div></td>";
     } elseif ($statut == 1) {
       return "<td class='history_statut update'><div class='update'><i class='fas fa-edit'></i> UPDATE</div></td>";
     } elseif ($statut == 2) {
@@ -24,9 +24,13 @@ class History
 
   public static function getMembre($pdo, $id)
   {
-    $data = $pdo->query("SELECT * from team WHERE id_team_member = '$id'");
-    $member = $data->fetch($pdo::FETCH_ASSOC);
+    if ($id != NULL) {
+      $data = $pdo->query("SELECT * from team WHERE id_team_member = '$id'");
+      $member = $data->fetch($pdo::FETCH_ASSOC);
 
-    return $member['username'];
+      return $member['username'];
+    } else {
+      return '';
+    }
   }
 }
