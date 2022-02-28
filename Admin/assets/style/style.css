@@ -25,6 +25,38 @@ body {
   -o-transition: opacity 0.5s ease-in;
 }
 
+/* **** Loader **** */
+
+#load-add,
+#load-delete,
+#load-update {
+  justify-content: center;
+  display: flex;
+}
+
+.modal-footer.load-update {
+  display: flex;
+}
+
+#load-add.hide,
+#load-delete.hide,
+#load-update.hide {
+  display: none;
+}
+
+#load-add img,
+#load-delete img,
+#load-update img {
+  width: 10%;
+}
+
+#load-update img {
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  margin: initial;
+}
+
 .show {
   opacity: 1;
   display: block;
@@ -408,7 +440,7 @@ header {
   margin-top: 60px;
   background: #f1f5f9;
   min-height: 100vh;
-  padding: 1rem 3rem;
+  padding: 1rem 0.5rem;
   transition: all 0.5s ease;
 }
 
@@ -496,9 +528,18 @@ header {
 
 /* **** grid **** */
 
+.tab,
+.desktop {
+  display: none;
+}
+
 .grid {
   margin-top: 3rem;
   margin-bottom: 3rem;
+}
+.option-grid {
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 .recent__grid {
@@ -526,6 +567,7 @@ header {
 .grid__card h3 {
   color: var(--text-grey);
   /* margin: 1rem;*/
+  font-size: 16px;
 }
 
 .activity__card table,
@@ -561,7 +603,8 @@ header {
   cursor: pointer;
 }
 
-#add_team_member {
+#add_team_member,
+#add_cat {
   display: none;
 }
 
@@ -596,6 +639,9 @@ header {
 }
 
 .table-responsive {
+  -webkit-box-shadow: 0px 25px 25px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 25px 25px 0px rgba(0, 0, 0, 0.15);
+
   overflow-x: auto;
   text-align: center;
 }
@@ -609,6 +655,18 @@ td {
   padding: 1rem 1rem;
   color: var(--color-dark);
 }
+/* tr {
+  cursor: pointer;
+}
+
+.unselectable {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #cc0000;
+} */
 
 tbody tr:nth-child(even) {
   background: #f9fafc;
@@ -847,6 +905,22 @@ div.list_container.history p {
   width: 100%;
 }
 
+/* ****Catégories **** */
+
+.img-cat-container {
+  margin-bottom: 2rem;
+}
+.img-cat-container img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
 /* **** Help Modal **** */
 
 #help_detail label {
@@ -877,17 +951,34 @@ div.list_container.history p {
   }
 }
 
+@media only screen and (min-width: 1199px) {
+  #main {
+    padding: 1rem 3rem !important;
+  }
+  .desktop {
+    display: revert;
+  }
+}
+
 @media only screen and (min-width: 768px) {
+  #main {
+    padding: 1rem 1rem;
+  }
+  .tab {
+    display: revert;
+  }
   .activity__card h3,
   .grid__card h3 {
     margin: 1rem;
   }
 
-  #add_team_member {
+  #add_team_member,
+  #add_cat {
     display: block;
   }
 
-  #add_team_member_min {
+  #add_team_member_min,
+  #add_cat_min {
     display: none;
   }
 }

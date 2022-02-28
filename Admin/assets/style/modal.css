@@ -39,8 +39,15 @@
   padding: 0;
 }
 
-#update_modal .img-logo {
-  font-size: 2rem;
+#update_modal img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: 0 0 2px 1px rgb(0 140 186 / 50%);
 }
 
 .iframe_container {
@@ -69,6 +76,10 @@
   max-width: 100px;
 }
 
+.list_container ul li p.description {
+  max-width: none;
+}
+
 /* **** Modal update **** */
 
 .hiddenFileInput > input {
@@ -78,9 +89,6 @@
   cursor: pointer;
 }
 .hiddenFileInput {
-  position: relative;
-  left: -40px;
-  top: 60px;
   width: 30px;
   height: 30px;
   display: inline-block;
@@ -88,15 +96,15 @@
   cursor: pointer;
   background: center center no-repeat;
   background-size: 75% 75%;
-  background-image: url("../../../global/img/plus-circle-solid.svg");
+  background-image: url("../Images/plus-circle-solid.svg");
 }
 
 .hiddenFileInput.minus {
-  background-image: url("../../../global/img/plus-circle-solid.svg");
+  background-image: url("../Images/plus-circle-solid.svg");
 }
 
 .hiddenFileInput.minus {
-  background-image: url("../../../global/img/minus-circle-solid.svg");
+  background-image: url("../Images/plus-circle-solid.svg");
 }
 
 .hiddenFileInput.hidden__delete {
@@ -104,7 +112,7 @@
   width: 30px;
   height: 30px;
   color: #f00134;
-  background-image: url("../../../global/img/trash-alt-regular.svg");
+  background-image: url("../Images/");
 }
 
 #update_lang .hiddenFileInput,

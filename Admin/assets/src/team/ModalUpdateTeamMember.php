@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config/Bootstrap.php';
+require_once __DIR__ . '/../../config/Init.php';
 require_once __DIR__ . '/../../functions/TeamFunctions.php';
 
 use App\Team;

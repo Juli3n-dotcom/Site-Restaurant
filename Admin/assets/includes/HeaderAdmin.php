@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../Config/Bootstrap.php';
+require_once __DIR__ . '/../Config/Init.php';
 
 use App\Team;
 
@@ -28,11 +28,12 @@ use App\Team;
 
   <link href="Assets/Style/style.css" rel="stylesheet" type="text/css">
 
+
+
 </head>
 
-
-
 <body>
+
 
   <section class="sidebar close">
 
@@ -74,13 +75,13 @@ use App\Team;
         <div class="icon-link">
           <a href="#">
             <i class='bx bx-book-alt'></i>
-            <span class="link_name">Posts</span>
+            <span class="link_name">Plats</span>
           </a>
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="#">Posts</a></li>
-          <li><a href="#">Web Design</a></li>
+          <li><a class="link_name" href="#">Plats</a></li>
+          <li><a href="Categories.php">Catégories</a></li>
           <li><a href="#">Login Form</a></li>
           <li><a href="#">Card Design</a></li>
         </ul>
@@ -104,17 +105,6 @@ use App\Team;
         </ul>
       </li>
 
-      <?php if ($user['statut'] == 0) : ?>
-        <li>
-          <a href="History.php">
-            <i class="fas fa-history"></i>
-            <span class="link_name">History</span>
-          </a>
-          <ul class="sub-menu blank">
-            <li><a class="link_name" href="History.php">History</a></li>
-          </ul>
-        </li>
-      <?php endif; ?>
 
       <li>
         <a href="Profil.php">
@@ -126,15 +116,42 @@ use App\Team;
         </ul>
       </li>
 
-      <li>
-        <a href="#">
-          <i class="fas fa-cog"></i>
-          <span class="link_name">Setting</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Setting</a></li>
-        </ul>
-      </li>
+
+      <?php if ($user['statut'] == 0) : ?>
+        <li>
+          <div class="icon-link">
+            <a href="#">
+              <i class="fas fa-cog"></i>
+              <span class="link_name">Settings</span>
+            </a>
+            <i class='bx bxs-chevron-down arrow'></i>
+          </div>
+          <ul class="sub-menu">
+            <li><a class="link_name" href="#">Settings</a></li>
+            <li><a href="#">Card Design</a></li>
+          </ul>
+        </li>
+
+      <?php endif; ?>
+
+      <?php if ($user['statut'] == 0) : ?>
+        <li>
+          <div class="icon-link">
+            <a href="#">
+              <i class="fas fa-users-cog"></i>
+              <span class="link_name">Admin</span>
+            </a>
+            <i class='bx bxs-chevron-down arrow'></i>
+          </div>
+          <ul class="sub-menu">
+            <li><a class="link_name" href="#">Admin</a></li>
+            <li><a href="Options.php">Options</a></li>
+            <li><a href="History.php">Journal</a></li>
+            <li><a href="#">Card Design</a></li>
+          </ul>
+        </li>
+
+      <?php endif; ?>
 
     </ul>
 

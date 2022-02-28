@@ -1,8 +1,7 @@
 <?php
-require_once __DIR__ . '/Assets/Config/Bootstrap.php';
+require_once __DIR__ . '/Assets/Config/Init.php';
 $page_title = 'Accueil';
 include __DIR__ . '/Assets/Includes/HeaderAdmin.php';
-
 ?>
 
 <div class="notif" id='notif'></div>

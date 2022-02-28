@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../config/Bootstrap.php';
+require_once __DIR__ . '/../../config/Init.php';
 
 use App\History;
 

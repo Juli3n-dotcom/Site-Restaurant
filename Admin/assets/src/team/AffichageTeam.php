@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../config/Bootstrap.php';
+require_once __DIR__ . '/../../config/Init.php';
 
 
 use App\Team;
@@ -25,7 +25,6 @@ $output .= '<table>
 
           <thead>
             <tr>
-              <th>ID</th>
               <th class="dnone">Civilité</th>
               <th>Nom</th>
               <th>Prénom</th>
@@ -40,11 +39,10 @@ $output .= '<th>Confirmation</th>
 //prévoir fin elseif $Membre['statut']
 $output .= ' </tr>
           </thead>';
-$output .= '<tbody';
+$output .= '<tbody>';
 
 while ($row = $query->fetch()) {
   $output .= '<tr>';
-  $output .= '<td>' . $row['id_team_member'] . '</td>';
   $output .= '<td class="dnone">' . $row['id_team_member'] . '</td>';
   $output .= '<td>' . $row['nom'] . '</td>';
   $output .= '<td>' . $row['prenom'] . '</td>';

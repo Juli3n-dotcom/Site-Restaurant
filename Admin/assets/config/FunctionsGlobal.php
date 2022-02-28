@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/Bootstrap.php';
+require_once __DIR__ . '/Init.php';
 
 function postJournal(PDO $pdo, $member, INT $statut, string $title, string $contenu)
 {
@@ -37,4 +37,18 @@ function getUser(PDO $pdo, string $token)
 
   $user = $req->fetch(PDO::FETCH_ASSOC);
   return $user ?: null;
+}
+
+
+function getOptions(PDO $pdo)
+{
+  $req = $pdo->prepare(
+    'SELECT *
+       FROM options'
+  );
+
+  $req->execute();
+
+  $options = $req->fetch(PDO::FETCH_ASSOC);
+  return $options;
 }

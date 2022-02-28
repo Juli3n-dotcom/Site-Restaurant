@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config/Bootstrap.php';
+require_once __DIR__ . '/../../config/Init.php';
 require_once __DIR__ . '/../../functions/TeamFunctions.php';
 
 use App\Notifications;
@@ -223,7 +223,6 @@ if (!empty($_POST)) {
 
           <thead>
             <tr>
-              <th>ID</th>
               <th class="dnone">Civilité</th>
               <th>Nom</th>
               <th>Prénom</th>
@@ -242,7 +241,6 @@ if (!empty($_POST)) {
 
   while ($row = $query->fetch()) {
     $result['resultat'] .= '<tr>';
-    $result['resultat'] .= '<td>' . $row['id_team_member'] . '</td>';
     $result['resultat'] .= '<td class="dnone">' . $row['id_team_member'] . '</td>';
     $result['resultat'] .= '<td>' . $row['nom'] . '</td>';
     $result['resultat'] .= '<td>' . $row['prenom'] . '</td>';

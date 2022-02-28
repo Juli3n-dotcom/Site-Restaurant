@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../Config/Bootstrap.php';
+require_once __DIR__ . '/../../Config/Init.php';
 
 if (isset($_COOKIE['SESSION'])) {
 

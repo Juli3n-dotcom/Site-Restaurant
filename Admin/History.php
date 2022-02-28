@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/Assets/Config/Bootstrap.php';
+require_once __DIR__ . '/Assets/Config/Init.php';
 require_once __DIR__ . '/Assets/Functions/HistoryFunctions.php';
 $page_title = 'History';
 include __DIR__ . '/Assets/Includes/HeaderAdmin.php';

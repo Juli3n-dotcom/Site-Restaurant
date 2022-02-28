@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/Assets/Config/Bootstrap.php';
+require_once __DIR__ . '/Assets/Config/Init.php';
 
 $page_title = 'Connexion';
 include __DIR__ . '/Assets/Includes/HeaderLogin.php';
