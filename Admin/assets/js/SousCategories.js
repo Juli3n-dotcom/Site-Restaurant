@@ -1,7 +1,5 @@
+$(document).ready(function () { 
 
-$(document).ready(function () {
-
-  
   /*
   * --> View data
   */
@@ -9,7 +7,7 @@ $(document).ready(function () {
   function load_data(page) {
 
     $.ajax({
-      url: "Assets/Src/Categories/AffichageCategories.php",
+      url: "Assets/Src/SousCategories/AffichageSousCategories.php",
       method: "post",
       data: { page: page },
       success: function (data) {
@@ -24,10 +22,8 @@ $(document).ready(function () {
     load_data(page);
   })
 
-
-  
 /*
- * --> Add Cat
+ * --> Add Sous Cat
  * 
  * # Ouverture du Modal d'ajout
  * 
@@ -54,7 +50,7 @@ $("#add_cat_form").on('submit', function(e){
     $.ajax({
 
       type: 'POST',
-      url: 'Assets/Src/Categories/AddCategories.php',
+      url: 'Assets/Src/SousCategories/AddSousCategories.php',
       data: new FormData(this),
       dataType: 'json',
       contentType: false,
@@ -80,7 +76,6 @@ $("#add_cat_form").on('submit', function(e){
           $('#notif').html(data.notif);
           $('#load-add').addClass('hide').fadeOut(1000);
           $('#footer-action').show().fadeIn(1000)
-           
         } 
 
       }
@@ -92,8 +87,8 @@ $("#add_cat_form").on('submit', function(e){
   });
 
 
-  /*
- * --> view Categorie
+   /*
+ * --> view sous catégorie
  * 
  * # Ouverture du Modal de vue
  * 
@@ -104,7 +99,7 @@ $(document).on('click','.viewbtn', function(){
   var cat_id = $(this).attr("id");  
 console.log(cat_id);
   $.ajax({  
-       url:"Assets/Src/Categories/ViewCategorie.php",  
+       url:"Assets/Src/SousCategories/ViewSousCategorie.php",  
        method:"post",  
        data:{cat_id:cat_id},  
        success:function(data){  
@@ -115,8 +110,8 @@ console.log(cat_id);
 }); 
   
   
-/*
- * --> Delete Categorie
+  /*
+ * --> Delete Sous Categorie
  * 
  * # Ouverture du Modal de suppresion
  * 
@@ -176,7 +171,7 @@ $('#delete_cat').on('submit', function(e){
     var parameters = "id=" + id + '&confirmedelete=' + confirme;
 
     
-    $.post('Assets/Src/Categories/DeleteCategories.php', parameters, function(data){
+    $.post('Assets/Src/SousCategories/DeleteSousCategories.php', parameters, function(data){
 
             if(data.status == true){ 
               
@@ -198,8 +193,7 @@ $('#delete_cat').on('submit', function(e){
 
 });
   
-  
-/*
+  /*
  * --> Update Categorie
  * 
  * # Ouverture du Modal d'edition
@@ -215,7 +209,7 @@ $('#delete_cat').on('submit', function(e){
     var cat_id = $(this).attr("id");  
   
     $.ajax({  
-         url:"Assets/Src/Categories/ModalUpdateCategories.php",  
+         url:"Assets/Src/SousCategories/ModalUpdateSousCategories.php",  
          method:"post",  
          data:{cat_id:cat_id},  
          success:function(data){  
@@ -246,14 +240,14 @@ $(document).on('change',"#new_img", function (e) {
   img = e.target.value;
 });
 
-// ### update cat ajax
+// ### update sous catégorie ajax
 $(document).on('submit', '#update_cat', function(e){
   e.preventDefault();
 
   $.ajax({
 
     type: 'POST',
-    url: 'Assets/Src/Categories/UpdateCategories.php',
+    url: 'Assets/Src/SousCategories/UpdateSousCategories.php',
     data: new FormData(this),
     dataType: 'json',
     contentType: false,
@@ -278,6 +272,7 @@ $(document).on('submit', '#update_cat', function(e){
         $('#notif').html(data.notif); 
         $('#load-update').addClass('hide').fadeOut(1000);
         $('.modal-footer').show().fadeIn(1000)
+        
       } 
 
     }
@@ -313,7 +308,7 @@ $(document).on('submit', '#update_cat', function(e){
     var id = data[1];
     var parameters = "id="+id + "&publie="+publie;
 
-    $.post('Assets/Src/Categories/UpdatePublie.php', parameters, function(data){
+    $.post('Assets/Src/SousCategories/UpdatePublie.php', parameters, function(data){
 
             if(data.status == true){ 
 
@@ -332,8 +327,7 @@ $(document).on('submit', '#update_cat', function(e){
 
  });
   
-  
-/*
+  /*
 * --> Update Position
 *
 * # création du retour json
@@ -368,7 +362,7 @@ $(document).on('submit', '#update_cat', function(e){
       
      
       $.ajax({  
-        url:"Assets/Src/Categories/UpdatePositionCategories.php",  
+        url:"Assets/Src/SousCategories/UpdatePositionSousCategories.php",  
         method: "POST", 
         dataType: 'JSON',
         data: {data: data},  
@@ -392,7 +386,4 @@ $(document).on('submit', '#update_cat', function(e){
   });
   
 
-  
-  });
-
- 
+});

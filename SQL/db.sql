@@ -148,3 +148,25 @@ CREATE TABLE plats_stats_categories
       REFERENCES  plats_categories(id)
       ON DELETE SET NULL
 )ENGINE=INNODB;
+
+CREATE TABLE plats_sous_categories
+(
+  id INT(3)NOT NULL AUTO_INCREMENT,
+  titre VARCHAR (255) NOT NULL,
+  description TEXT DEFAULT NULL,
+  photo_id INT (3) DEFAULT NULL,
+  pieces INT (2) DEFAULT NULL, 
+  cat_id INT(3) DEFAULT NULL,
+  est_publie TINYINT NOT NULL,
+  position INT (2) DEFAULT NULL,
+  date_enregistrement DATETIME NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_plats_categories_souscat
+      FOREIGN KEY  (cat_id)
+      REFERENCES  plats_categories(id)
+      ON DELETE SET NULL,
+    CONSTRAINT fk_plats_sous_categories_photo
+      FOREIGN KEY (photo_id)
+      REFERENCES  plats_photo_categories(id_photo)
+      ON DELETE SET NULL
+)ENGINE=INNODB;

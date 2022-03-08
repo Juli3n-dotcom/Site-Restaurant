@@ -12,6 +12,7 @@ require_once __DIR__ . '/../Class/Notifications.php';
 require_once __DIR__ . '/../Class/Team.php';
 require_once __DIR__ . '/../Class/History.php';
 require_once __DIR__ . '/../Class/Categories.php';
+require_once __DIR__ . '/../Class/SousCategories.php';
 
 if (!stripos($_SERVER['REQUEST_URI'], 'connexion') && !stripos($_SERVER['REQUEST_URI'], 'Login.php') && !stripos($_SERVER['REQUEST_URI'], 'LostPassWord.php')) {
 

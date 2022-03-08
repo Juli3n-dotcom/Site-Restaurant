@@ -82,7 +82,7 @@ use App\Team;
         <ul class="sub-menu">
           <li><a class="link_name" href="#">Plats</a></li>
           <li><a href="Categories.php">Catégories</a></li>
-          <li><a href="#">Login Form</a></li>
+          <li><a href="SousCat.php">Sous Catégories</a></li>
           <li><a href="#">Card Design</a></li>
         </ul>
       </li>
@@ -175,8 +175,6 @@ use App\Team;
 
     </div>
     <div class="social-icons">
-      <span class="ti-bell"></span>
-      <span class="ti-comment"></span>
       <!-- Menu USER -->
       <div class="member_menu-action">
         <div class="profile" onclick="menuTeamToggle();">
