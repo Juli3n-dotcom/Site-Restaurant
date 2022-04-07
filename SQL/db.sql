@@ -72,7 +72,9 @@ PRIMARY KEY (id)
 CREATE TABLE team_photo
 (
 id_photo INT(3) NOT NULL AUTO_INCREMENT,
- photo VARCHAR (255) NOT NULL,
+ img__jpeg VARCHAR (255) NOT NULL,
+ img__webp VARCHAR (255) NOT NULL,
+ original VARCHAR (255) NOT NULL,
  PRIMARY KEY (id_photo)
 )ENGINE=INNODB;
 

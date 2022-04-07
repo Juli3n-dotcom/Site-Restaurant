@@ -3,6 +3,7 @@ require_once __DIR__ . '/../Config/Init.php';
 
 use App\Team;
 
+$ua = getBrowser();
 
 ?>
 <!DOCTYPE html>
@@ -176,8 +177,8 @@ use App\Team;
 
     <div class="profile_content">
       <div class="profile">
-        <div class="profile_details">
-          <img src="<?= Team::getPhoto($pdo, $user['photo_id'], $user['civilite']) ?>" alt="">
+        <div class="profile_details" id="profile_details">
+          <img src="<?= Team::getPhoto($pdo, $user['photo_id'], $user['civilite'], $ua['name'])  ?>" alt="">
           <div class="name_job">
             <div class="name"><?= $user['username'] ?></div>
             <div class="job"><?= Team::getPoste($user['statut']) ?></div>
@@ -195,9 +196,9 @@ use App\Team;
     </div>
     <div class="social-icons">
       <!-- Menu USER -->
-      <div class="member_menu-action">
+      <div class="member_menu-action" id="member_menu-action">
         <div class="profile" onclick="menuTeamToggle();">
-          <img src='<?= Team::getPhoto($pdo, $user['photo_id'], $user['civilite']) ?>' alt='photo_profil_other'>
+          <img src='<?= Team::getPhoto($pdo, $user['photo_id'], $user['civilite'], $ua['name'])  ?>' alt='photo_profil_other'>
         </div>
         <div class="member_menu">
           <h3><?= $user['username'] ?></h3>
@@ -205,10 +206,6 @@ use App\Team;
             <li>
               <i class='bx bxs-user-circle'></i>
               <a href="Profil.php"> Mon Profil</a>
-            </li>
-            <li>
-              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-              <a href="update-profil">Modifier Profil</a>
             </li>
             <li>
               <i class="fa fa-info-circle" aria-hidden="true"></i>

@@ -22,6 +22,9 @@ include __DIR__ . '/HelpModal.php';
 if (stripos($_SERVER['REQUEST_URI'], 'Team.php')) {
   echo '<script type="text/javascript" src="Assets/Js/Team.js"></script>';
 }
+if (stripos($_SERVER['REQUEST_URI'], 'Profil.php')) {
+  echo '<script type="text/javascript" src="Assets/Js/Profil.js"></script>';
+}
 if (stripos($_SERVER['REQUEST_URI'], 'History.php')) {
   echo '<script type="text/javascript" src="Assets/Js/History.min.js"></script>';
 }

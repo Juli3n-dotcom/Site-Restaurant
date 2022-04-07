@@ -4,6 +4,9 @@ require_once __DIR__ . '/../../Functions/TeamFunctions.php';
 
 use App\General;
 use App\Team;
+
+$ua = getBrowser();
+
 /* #############################################################################
 
 Ajout d'un member a partir team.php en Ajax
@@ -161,7 +164,7 @@ if (!empty($_POST)) {
       $result['resultat'] .= '<td class="dnone">' . $row['id_team_member'] . '</td>';
       $result['resultat'] .= '<td>' . $row['nom'] . '</td>';
       $result['resultat'] .= '<td>' . $row['prenom'] . '</td>';
-      $result['resultat'] .= '<td class="td-team">' . Team::getProfil($pdo, $row['photo_id'], $row['civilite']) . '</td>';
+      $result['resultat'] .= '<td class="td-team">' . Team::getProfil($pdo, $user['photo_id'], $user['civilite'], $ua['name']) . '</td>';
       $result['resultat'] .= '<td><a href="mailto:' . $row['email'] . '" class="email_member">' . $row['email'] . '</a></td>';
       $result['resultat'] .= '<td>' . Team::getStatut($row['statut']) . '</td>';
       $result['resultat'] .= '<td>' . Team::getConfirmation($row['confirmation']) . '</td>';

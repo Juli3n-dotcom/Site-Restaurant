@@ -5,7 +5,7 @@ namespace App;
 class Team
 {
 
-  public static function getProfil($pdo, $photo_id, $civilite)
+  public static function getProfil($pdo, $photo_id, $civilite, $ua)
   {
 
     if ($photo_id == NULL) {
@@ -20,11 +20,15 @@ class Team
       $data = $pdo->query("SELECT * from team_photo WHERE id_photo = '$photo_id'");
       $photo = $data->fetch($pdo::FETCH_ASSOC);
 
-      return "<div class='img-profil' style='background-image: url(Assets/Uploads/" . $photo . " )'></div>";
+      if ($ua == 'Safari') {
+        return "<div class='img-profil' style='background-image: url(Assets/Uploads/" . $photo['img__jpeg'] . " )'></div>";
+      } else {
+        return "<div class='img-profil' style='background-image: url(Assets/Uploads/" . $photo['img__webp'] . " )'></div>";
+      }
     }
   }
 
-  public static function getPhoto($pdo, $photo_id, $civilite)
+  public static function getPhoto($pdo, $photo_id, $civilite, $ua)
   {
 
     if ($photo_id == NULL) {
@@ -39,7 +43,11 @@ class Team
       $data = $pdo->query("SELECT * from team_photo WHERE id_photo = '$photo_id'");
       $photo = $data->fetch($pdo::FETCH_ASSOC);
 
-      return "Assets/Uploads/" . $photo . "";
+      if ($ua == 'Safari') {
+        return "Assets/Uploads/" . $photo['img__jpeg'] . "";
+      } else {
+        return "Assets/Uploads/" . $photo['img__webp'] . "";
+      }
     }
   }
 

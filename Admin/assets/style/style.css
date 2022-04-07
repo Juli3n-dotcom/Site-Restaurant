@@ -1040,7 +1040,8 @@ input:checked[type="checkbox"].est_en_avant {
 
 .plat_container .left_part button,
 .plat_container .right_part button,
-.plat_container .right_part .plat_container-element #new_img+label{
+.plat_container .right_part .plat_container-element #new_img+label
+{
   padding:10px;
   border-radius: 20px;
   font-weight: 700;
@@ -1119,6 +1120,111 @@ input:checked[type="checkbox"].est_en_avant {
 
 .plat_container .input-block .input_help{
   width: 100%;
+}
+
+/* **** Profil **** */
+
+.container_profil {
+  margin-top: 4rem;
+}
+
+.profil_container .left_part button,
+.profil_container .right_part button,
+.profil_container .right_part .profil_container-element #new_img+label {
+  padding: 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.7rem;
+  background: var(--main-color);
+  color: #fff;
+  transition: 0.5s;
+  border: none;
+  cursor: pointer;
+}
+
+.profil_container .left_part .submit_container {
+  display: none; 
+  visibility: hidden;
+  opacity: 0;
+}
+
+.profil_container .right_part .profil_container-element #new_img {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.profil_container .left_part button:hover,
+.profil_container .right_part .profil_container-element #new_img+label:hover {
+  color: var(--main-color);
+  background: #fff;
+  border: 1px solid var(--main-color);
+}
+
+.profil_container .left_part .submit_container {
+  display: flex;
+}
+
+.profil_container .left_part .load-update {
+  display: flex;
+  justify-content: inherit !important;
+  align-items: center;
+}
+
+.profil_container .left_part .load-update img {
+  width: 50px;
+}
+
+.profil_container .left_part .load-update p {
+  margin-bottom: 0;
+}
+
+.img-profil-container{
+  margin-bottom: 2rem;
+}
+
+.img-profil-container img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.img-profil-container img.img-profil{
+  height: auto;
+  max-width: 50%;
+}
+
+.profil_container .right_part .profil_container-element {
+  background-color: #FFFFFF;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+}
+
+.profil-img-btn-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.profil-img-btn-container #delete_photo{
+  background-color: rgba(240, 52, 52, 0.8);
+  color: #fff;
+  border: 1px solid rgba(240, 52, 52, 0.8);
+}
+
+.profil-img-btn-container #delete_photo:hover{
+background-color: #FFF;
+color: rgba(240, 52, 52, 0.8);
 }
 
 
@@ -1209,6 +1315,17 @@ input:checked[type="checkbox"].est_en_avant {
   }
   
   .plat_container .right_part .submit_container {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .profil_container .left_part .submit_container {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+  }
+  .profil_container .right_part .submit_container {
     display: none;
     visibility: hidden;
     opacity: 0;

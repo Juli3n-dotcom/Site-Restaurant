@@ -5,6 +5,8 @@ require_once __DIR__ . '/../../config/Init.php';
 
 use App\Team;
 
+$ua = getBrowser();
+
 $record_per_page = 10;
 $page = 0;
 $output = '';
@@ -46,7 +48,7 @@ while ($row = $query->fetch()) {
   $output .= '<td class="dnone">' . $row['id_team_member'] . '</td>';
   $output .= '<td>' . $row['nom'] . '</td>';
   $output .= '<td>' . $row['prenom'] . '</td>';
-  $output .= '<td class="td-team">' . Team::getProfil($pdo, $row['photo_id'], $row['civilite']) . '</td>';
+  $output .= '<td class="td-team">' . Team::getProfil($pdo, $user['photo_id'], $user['civilite'], $ua['name'])  . '</td>';
   $output .= '<td><a href="mailto:' . $row['email'] . '" class="email_member">' . $row['email'] . '</a></td>';
   $output .= '<td>' . Team::getStatut($row['statut']) . '</td>';
   $output .= '<td>' . Team::getConfirmation($row['confirmation']) . '</td>';
