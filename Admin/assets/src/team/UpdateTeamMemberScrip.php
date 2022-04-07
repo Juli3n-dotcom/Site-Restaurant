@@ -6,6 +6,7 @@ use App\General;
 use App\Team;
 
 $ua = getBrowser();
+$user = $user['id_team_member'];
 
 /* #############################################################################
 
@@ -37,11 +38,11 @@ if (!empty($_POST)) {
   if (empty($name)) {
     $result['status'] = false;
     $result['notif'] = General::notif('warning', 'oups! il manque le nom');
-    postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Nom manquant');
+    postJournal($pdo, $user, 5, 'Tentative de modification d\'un membre', 'Nom manquant');
   } elseif (!preg_match('~^[a-zA-Z- ]+$~', $name)) {
     $result['status'] = false;
     $result['notif'] = General::notif('warning', 'oups! le nom est pas bon');
-    postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Nom non valide');
+    postJournal($pdo, $user, 5, 'Tentative de modification d\'un membre', 'Nom non valide');
   } elseif ($name !== $thisMember['nom']) {
     $requete .= 'nom = :nom';
     $param = TRUE;
@@ -51,11 +52,11 @@ if (!empty($_POST)) {
   if (empty($fname)) {
     $result['status'] = false;
     $result['notif'] = General::notif('warning', 'oups! il manque le prénom');
-    postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Prénom manquant');
+    postJournal($pdo, $user, 5, 'Tentative de modification d\'un membre', 'Prénom manquant');
   } elseif (!preg_match('~^[a-zA-Z- ]+$~', $fname)) {
     $result['status'] = false;
     $result['notif'] = General::notif('warning', 'oups! le prénom est pas bon');
-    postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Prénom non valide');
+    postJournal($pdo, $user, 5, 'Tentative de modification d\'un membre', 'Prénom non valide');
   } elseif ($fname !== $thisMember['prenom']) {
 
     if ($param == TRUE) {
@@ -73,17 +74,17 @@ if (!empty($_POST)) {
   if (empty($username)) {
     $result['status'] = false;
     $result['notif'] = General::notif('warning', 'oups! il manque le pseudo');
-    postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Pseudo manquant');
+    postJournal($pdo, $user, 5, 'Tentative de modification d\'un membre', 'Pseudo manquant');
   } elseif ($username !== $thisMember['username']) {
 
     if (getMemberBy($pdo, 'username', $username) !== null) {
       $result['status'] = false;
       $result['notif'] = General::notif('warning', 'pseudo déjà utilisé');
-      postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'pseudo déjà utilisé');
+      postJournal($pdo, $user, 5, 'Tentative de modification d\'un membre', 'pseudo déjà utilisé');
     } elseif (!preg_match('~^[a-zA-Z0-9_-]+$~', $username)) {
       $result['status'] = false;
       $result['notif'] = General::notif('warning', 'oups! le pseudo est pas bon');
-      postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Pseudo non valide');
+      postJournal($pdo, $user, 5, 'Tentative de modification d\'un membre', 'Pseudo non valide');
     } else {
 
       if ($param == TRUE) {
@@ -102,19 +103,19 @@ if (!empty($_POST)) {
   if (empty($email)) {
     $result['status'] = false;
     $result['notif'] = General::notif('warning', 'oups! il manque le mail');
-    postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Email manquant');
+    postJournal($pdo, $user, 5, 'Tentative de modification d\'un membre', 'Email manquant');
   } elseif ($email !== $thisMember['email']) {
 
     if (getMemberBy($pdo, 'email', $email) !== null) {
 
       $result['status'] = false;
       $result['notif'] = General::notif('warning', 'email déjà utilisé');
-      postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Email déjà utilisé');
+      postJournal($pdo, $user, 5, 'Tentative de modification d\'un membre', 'Email déjà utilisé');
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
       $result['status'] = false;
       $result['notif'] = General::notif('warning', 'email non valide');
-      postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'email non valide');
+      postJournal($pdo, $user, 5, 'Tentative de modification d\'un membre', 'email non valide');
     } else {
 
       if ($param == TRUE) {
@@ -205,7 +206,7 @@ if (!empty($_POST)) {
   $result['notif'] = General::notif('success', 'Membre modifiée');
   $data = $pdo->query("SELECT username FROM team WHERE id_team_member = '$id'");
   $username = $data->fetch(PDO::FETCH_ASSOC);
-  postJournal($pdo, 3, 1, 'Membre Modifié', $username['username'] . ' a été Modifié');
+  postJournal($pdo, $user, 1, 'Membre Modifié', $username['username'] . ' a été Modifié');
 
 
   $record_per_page = 10;
@@ -247,7 +248,7 @@ if (!empty($_POST)) {
     $result['resultat'] .= '<td class="dnone">' . $row['id_team_member'] . '</td>';
     $result['resultat'] .= '<td>' . $row['nom'] . '</td>';
     $result['resultat'] .= '<td>' . $row['prenom'] . '</td>';
-    $result['resultat'] .= '<td class="td-team">' . Team::getProfil($pdo, $user['photo_id'], $user['civilite'], $ua['name']) . '</td>';
+    $result['resultat'] .= '<td class="td-team">' . Team::getProfil($pdo, $row['photo_id'], $row['civilite'], $ua['name']) . '</td>';
     $result['resultat'] .= '<td><a href="mailto:' . $row['email'] . '" class="email_member">' . $row['email'] . '</a></td>';
     $result['resultat'] .= '<td>' . Team::getStatut($row['statut']) . '</td>';
     $result['resultat'] .= '<td>' . Team::getConfirmation($row['confirmation']) . '</td>';
@@ -260,27 +261,33 @@ if (!empty($_POST)) {
     $result['resultat'] .= '</td>';
     $result['resultat'] .= '</tr>';
   }
-  $result['resultat'] .= '</tbody></table><br /><div  class="custom_pagination">';
+  $result['resultat'] .= '</tbody></table>';
 
-  $page_query = $pdo->query('SELECT * FROM team ORDER BY id_team_member DESC');
-  $total_records = $page_query->rowCount();
-  $total_pages = ceil($total_records / $record_per_page);
+  if (countTeam($pdo) > 10) {
+    $result['resultat'] .= 'br /><div  class="custom_pagination">';
 
-  $result['resultat'] .= '<ul class="pagination">';
+    $page_query = $pdo->query('SELECT * FROM team ORDER BY id_team_member DESC');
+    $total_records = $page_query->rowCount();
+    $total_pages = ceil($total_records / $record_per_page);
 
-  if ($page > 1) {
-    $previous = $page - 1;
-    $result['resultat'] .= '<li class="pagination_link" id="' . $previous . '"><span class="page-link"><i class="fas fa-caret-left"></i> Précédent</span></li>';
+    $result['resultat'] .= '<ul class="pagination">';
+
+    if (
+      $page > 1
+    ) {
+      $previous = $page - 1;
+      $result['resultat'] .= '<li class="pagination_link" id="' . $previous . '"><span class="page-link"><i class="fas fa-caret-left"></i> Précédent</span></li>';
+    }
+
+    if ($page < $total_pages) {
+      $page++;
+      $result['resultat'] .= '<li class="pagination_link" id="' . $page . '"><span class="page-link">Suivant <i class="fas fa-caret-right"></i></span></li>';
+    }
+
+    $result['resultat'] .= '</ul>';
+
+    $result['resultat'] .= '</div>';
   }
-
-  if ($page < $total_pages) {
-    $page++;
-    $result['resultat'] .= '<li class="pagination_link" id="' . $page . '"><span class="page-link">Suivant <i class="fas fa-caret-right"></i></span></li>';
-  }
-
-  $result['resultat'] .= '</ul>';
-
-  $result['resultat'] .= '</div>';
 }
 // Return result 
 echo json_encode($result);

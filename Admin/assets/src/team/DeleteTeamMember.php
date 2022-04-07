@@ -6,6 +6,7 @@ use App\General;
 use App\Team;
 
 $ua = getBrowser();
+$user = $user['id_team_member'];
 
 /* #############################################################################
 
@@ -27,7 +28,7 @@ if (!empty($_POST)) {
 
     $result['status'] = false;
     $result['notif'] = General::notif('error', 'Merci de confirmer la suppression');
-    postJournal($pdo, 3, 4, 'Tentative de suppresion d\'un membre', 'Tentative de suppresion sans confirmation');
+    postJournal($pdo, $user, 4, 'Tentative de suppresion d\'un membre', 'Tentative de suppresion sans confirmation');
   } else {
 
     //recherche si il existe une photo de profil
@@ -59,7 +60,7 @@ if (!empty($_POST)) {
 
     $result['status'] = true;
     $result['notif'] = General::notif('success', 'Membre supprimé');
-    postJournal($pdo, 3, 2, 'Suppresion membre de l\'équipe',  $username['username'] . ' a été supprimé');
+    postJournal($pdo, $user, 2, 'Suppresion membre de l\'équipe',  $username['username'] . ' a été supprimé');
 
 
     $record_per_page = 10;
@@ -103,7 +104,7 @@ if (!empty($_POST)) {
       $result['resultat']  .= '<td class="dnone">' . $row['id_team_member'] . '</td>';
       $result['resultat']  .= '<td>' . $row['nom'] . '</td>';
       $result['resultat']  .= '<td>' . $row['prenom'] . '</td>';
-      $result['resultat']  .= '<td class="td-team">' . Team::getProfil($pdo, $user['photo_id'], $user['civilite'], $ua['name']) . '</td>';
+      $result['resultat']  .= '<td class="td-team">' . Team::getProfil($pdo, $row['photo_id'], $row['civilite'], $ua['name']) . '</td>';
       $result['resultat']  .= '<td><a href="mailto:' . $row['email'] . '" class="email_member">' . $row['email'] . '</a></td>';
       $result['resultat']  .= '<td>' . Team::getStatut($row['statut']) . '</td>';
       $result['resultat']  .= '<td>' . Team::getConfirmation($row['confirmation']) . '</td>';
@@ -116,27 +117,33 @@ if (!empty($_POST)) {
       $result['resultat']  .= '</td>';
       $result['resultat']  .= '</tr>';
     }
-    $result['resultat'] .= '</tbody></table><br /><div  class="custom_pagination">';
+    $result['resultat'] .= '</tbody></table>';
 
-    $page_query = $pdo->query('SELECT * FROM team ORDER BY id_team_member DESC');
-    $total_records = $page_query->rowCount();
-    $total_pages = ceil($total_records / $record_per_page);
+    if (countTeam($pdo) > 10) {
+      $result['resultat'] .= 'br /><div  class="custom_pagination">';
 
-    $result['resultat'] .= '<ul class="pagination">';
+      $page_query = $pdo->query('SELECT * FROM team ORDER BY id_team_member DESC');
+      $total_records = $page_query->rowCount();
+      $total_pages = ceil($total_records / $record_per_page);
 
-    if ($page > 1) {
-      $previous = $page - 1;
-      $result['resultat'] .= '<li class="pagination_link" id="' . $previous . '"><span class="page-link"><i class="fas fa-caret-left"></i> Précédent</span></li>';
+      $result['resultat'] .= '<ul class="pagination">';
+
+      if (
+        $page > 1
+      ) {
+        $previous = $page - 1;
+        $result['resultat'] .= '<li class="pagination_link" id="' . $previous . '"><span class="page-link"><i class="fas fa-caret-left"></i> Précédent</span></li>';
+      }
+
+      if ($page < $total_pages) {
+        $page++;
+        $result['resultat'] .= '<li class="pagination_link" id="' . $page . '"><span class="page-link">Suivant <i class="fas fa-caret-right"></i></span></li>';
+      }
+
+      $result['resultat'] .= '</ul>';
+
+      $result['resultat'] .= '</div>';
     }
-
-    if ($page < $total_pages) {
-      $page++;
-      $result['resultat'] .= '<li class="pagination_link" id="' . $page . '"><span class="page-link">Suivant <i class="fas fa-caret-right"></i></span></li>';
-    }
-
-    $result['resultat'] .= '</ul>';
-
-    $result['resultat'] .= '</div>';
   }
 
   // Return result 

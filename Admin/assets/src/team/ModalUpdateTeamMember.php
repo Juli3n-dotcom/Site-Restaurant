@@ -57,7 +57,7 @@ if (isset($_POST['team_id'])) {
     $result .= '<select class="form-select" name="update_statut" aria-label="">';
     $result .= '<option value="' . $row['statut'] . '">' . Team::getStatut($row['statut']) . '</option>';
     $result .= '<option value="' . ROLE_ADMIN . '">Admin</option>';
-    $result .= ' <option value="' . ROLE_GERANT . '">User</option>';
+    $result .= ' <option value="' . ROLE_GERANT . '">Gérant</option>';
     $result .= ' <option value="' . ROLE_EDITEUR . '">Editeur</option>';
     $result .= '</select>';
     $result .= '</div>';

@@ -6,6 +6,8 @@ use App\General;
 use App\Team;
 
 $ua = getBrowser();
+$user = $user['id_team_member'];
+
 
 /* #############################################################################
 
@@ -22,25 +24,25 @@ if (!empty($_POST)) {
   $email = htmlspecialchars($_POST['add_email_member']);
   $statut = $_POST['add_statut'];
 
-  if (!preg_match('~^[a-zA-Z- ]+$~', $name)) {
+  if (!preg_match('~^[a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ ]+$~', $name)) {
     $result['status'] = false;
     $result['notif'] = General::notif('warning', 'oups! il manque le nom');
-    postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Nom manquant');
-  } elseif (!preg_match('~^[a-zA-Z- ]+$~', $fname)) {
+    postJournal($pdo, $user, 5, 'Tentative d\'ajout d\'un membre', 'Nom manquant');
+  } elseif (!preg_match('~^[a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ ]+$~', $fname)) {
 
     $result['status'] = false;
     $result['notif'] = General::notif('warning', 'oups! il manque le prénom');
-    postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Prénom manquant');
+    postJournal($pdo, $user, 5, 'Tentative d\'ajout d\'un membre', 'Prénom manquant');
   } elseif (getMemberBy($pdo, 'email', $email) !== null) {
 
     $result['status'] = false;
     $result['notif'] = General::notif('warning', 'email déjà utilisé');
-    postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Email déjà utilisé');
+    postJournal($pdo, $user, 5, 'Tentative d\'ajout d\'un membre', 'Email déjà utilisé');
   } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
     $result['status'] = false;
     $result['notif'] = General::notif('warning', 'email non valide ou manquant');
-    postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Email non valide');
+    postJournal($pdo, $user, 5, 'Tentative d\'ajout d\'un membre', 'Email non valide');
   } else {
 
     //création d'un mot de passe aléatoire
@@ -77,7 +79,6 @@ if (!empty($_POST)) {
                 prenom,
                 email,
                 password,
-                mdp,
                 photo_id,
                 statut,
                 date_enregistrement,
@@ -91,7 +92,6 @@ if (!empty($_POST)) {
                 :prenom,
                 :email,
                 :password,
-                :mdp,
                 :photo_id,
                 :statut,
                 :date,
@@ -107,7 +107,6 @@ if (!empty($_POST)) {
     $req->bindParam(':prenom', $fname);
     $req->bindParam(':email', $email);
     $req->bindParam(':password', $hash);
-    $req->bindParam(':mdp', $mdp);
     $req->bindValue(':photo_id', NULL);
     $req->bindValue(':statut', $statut);
     $req->bindValue(':date', $date);
@@ -123,7 +122,7 @@ if (!empty($_POST)) {
     $data = $pdo->query("SELECT username FROM team WHERE id_team_member = '$new_member'");
     $username = $data->fetch(PDO::FETCH_ASSOC);
 
-    postJournal($pdo, 3, 0, 'Nouveau membre de l\'équipe', $username['username'] . ' a été ajouté');
+    postJournal($pdo, $user, 0, 'Nouveau membre de l\'équipe', $username['username'] . ' a été ajouté');
 
     $record_per_page = 10;
     $page = 0;
@@ -164,7 +163,7 @@ if (!empty($_POST)) {
       $result['resultat'] .= '<td class="dnone">' . $row['id_team_member'] . '</td>';
       $result['resultat'] .= '<td>' . $row['nom'] . '</td>';
       $result['resultat'] .= '<td>' . $row['prenom'] . '</td>';
-      $result['resultat'] .= '<td class="td-team">' . Team::getProfil($pdo, $user['photo_id'], $user['civilite'], $ua['name']) . '</td>';
+      $result['resultat'] .= '<td class="td-team">' . Team::getProfil($pdo, $row['photo_id'], $row['civilite'], $ua['name']) . '</td>';
       $result['resultat'] .= '<td><a href="mailto:' . $row['email'] . '" class="email_member">' . $row['email'] . '</a></td>';
       $result['resultat'] .= '<td>' . Team::getStatut($row['statut']) . '</td>';
       $result['resultat'] .= '<td>' . Team::getConfirmation($row['confirmation']) . '</td>';
@@ -177,29 +176,33 @@ if (!empty($_POST)) {
       $result['resultat'] .= '</td>';
       $result['resultat'] .= '</tr>';
     }
-    $result['resultat'] .= '</tbody></table><br /><div  class="custom_pagination">';
+    $result['resultat'] .= '</tbody></table>';
 
-    $page_query = $pdo->query('SELECT * FROM team ORDER BY id_team_member DESC');
-    $total_records = $page_query->rowCount();
-    $total_pages = ceil($total_records / $record_per_page);
+    if (countTeam($pdo) > 10) {
+      $result['resultat'] .= 'br /><div  class="custom_pagination">';
 
-    $result['resultat'] .= '<ul class="pagination">';
+      $page_query = $pdo->query('SELECT * FROM team ORDER BY id_team_member DESC');
+      $total_records = $page_query->rowCount();
+      $total_pages = ceil($total_records / $record_per_page);
 
-    if (
-      $page > 1
-    ) {
-      $previous = $page - 1;
-      $result['resultat'] .= '<li class="pagination_link" id="' . $previous . '"><span class="page-link"><i class="fas fa-caret-left"></i> Précédent</span></li>';
+      $result['resultat'] .= '<ul class="pagination">';
+
+      if (
+        $page > 1
+      ) {
+        $previous = $page - 1;
+        $result['resultat'] .= '<li class="pagination_link" id="' . $previous . '"><span class="page-link"><i class="fas fa-caret-left"></i> Précédent</span></li>';
+      }
+
+      if ($page < $total_pages) {
+        $page++;
+        $result['resultat'] .= '<li class="pagination_link" id="' . $page . '"><span class="page-link">Suivant <i class="fas fa-caret-right"></i></span></li>';
+      }
+
+      $result['resultat'] .= '</ul>';
+
+      $result['resultat'] .= '</div>';
     }
-
-    if ($page < $total_pages) {
-      $page++;
-      $result['resultat'] .= '<li class="pagination_link" id="' . $page . '"><span class="page-link">Suivant <i class="fas fa-caret-right"></i></span></li>';
-    }
-
-    $result['resultat'] .= '</ul>';
-
-    $result['resultat'] .= '</div>';
   } //fin else
 
   // Return result 

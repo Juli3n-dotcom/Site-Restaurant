@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../../config/Init.php';
+require_once __DIR__ . '/../../Functions/TeamFunctions.php';
 
 
 use App\Team;
@@ -48,7 +49,7 @@ while ($row = $query->fetch()) {
   $output .= '<td class="dnone">' . $row['id_team_member'] . '</td>';
   $output .= '<td>' . $row['nom'] . '</td>';
   $output .= '<td>' . $row['prenom'] . '</td>';
-  $output .= '<td class="td-team">' . Team::getProfil($pdo, $user['photo_id'], $user['civilite'], $ua['name'])  . '</td>';
+  $output .= '<td class="td-team">' . Team::getProfil($pdo, $row['photo_id'], $row['civilite'], $ua['name'])  . '</td>';
   $output .= '<td><a href="mailto:' . $row['email'] . '" class="email_member">' . $row['email'] . '</a></td>';
   $output .= '<td>' . Team::getStatut($row['statut']) . '</td>';
   $output .= '<td>' . Team::getConfirmation($row['confirmation']) . '</td>';
@@ -61,27 +62,32 @@ while ($row = $query->fetch()) {
   $output .= '</td>';
   $output .= '</tr>';
 }
-$output .= '</tbody></table><br /><div  class="custom_pagination">';
+$output .= '</tbody></table>';
 
-$page_query = $pdo->query('SELECT * FROM team ORDER BY id_team_member DESC');
-$total_records = $page_query->rowCount();
-$total_pages = ceil($total_records / $record_per_page);
+if (countTeam($pdo) > 10) {
+  $output .= '<br /><div  class="custom_pagination">';
 
-$output .= '<ul class="pagination">';
+  $page_query = $pdo->query('SELECT * FROM team ORDER BY id_team_member DESC');
+  $total_records = $page_query->rowCount();
+  $total_pages = ceil($total_records / $record_per_page);
 
-if ($page > 1) {
-  $previous = $page - 1;
-  $output .= '<li class="pagination_link" id="' . $previous . '"><span class="page-link"><i class="fas fa-caret-left"></i> Précédent</span></li>';
+  $output .= '<ul class="pagination">';
+
+  if ($page > 1) {
+    $previous = $page - 1;
+    $output .= '<li class="pagination_link" id="' . $previous . '"><span class="page-link"><i class="fas fa-caret-left"></i> Précédent</span></li>';
+  }
+
+  if ($page < $total_pages) {
+    $page++;
+    $output .= '<li class="pagination_link" id="' . $page . '"><span class="page-link">Suivant <i class="fas fa-caret-right"></i></span></li>';
+  }
+
+  $output .= '</ul>';
+
+  $output .= '</div>';
 }
 
-if ($page < $total_pages) {
-  $page++;
-  $output .= '<li class="pagination_link" id="' . $page . '"><span class="page-link">Suivant <i class="fas fa-caret-right"></i></span></li>';
-}
-
-$output .= '</ul>';
-
-$output .= '</div>';
 
 
 echo $output;
