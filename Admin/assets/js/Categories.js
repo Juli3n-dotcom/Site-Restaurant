@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 
   
@@ -92,7 +91,7 @@ $("#add_cat_form").on('submit', function(e){
   });
 
 
-  /*
+/*
  * --> view Categorie
  * 
  * # Ouverture du Modal de vue
@@ -102,7 +101,6 @@ $("#add_cat_form").on('submit', function(e){
 // # Ouverture du Modal de vue
 $(document).on('click','.viewbtn', function(){  
   var cat_id = $(this).attr("id");  
-console.log(cat_id);
   $.ajax({  
        url:"Assets/Src/Categories/ViewCategorie.php",  
        method:"post",  

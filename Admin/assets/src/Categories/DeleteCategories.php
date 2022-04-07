@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../Config/Init.php';
 require_once __DIR__ . '/../../Functions/CategoriesFunctions.php';
 
-use App\Notifications;
+use App\General;
 use App\Categories;
 
 $user = $user['id_team_member'];
@@ -29,7 +29,7 @@ if (!empty($_POST)) {
   if (($_POST['confirmedelete']) !== $confirme) {
     #1
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('error', 'Merci de confirmer la suppression');
+    $result['notif'] = General::notif('error', 'Merci de confirmer la suppression');
     postJournal($pdo, $user, 4, 'Tentative de suppresion d\'une catégorie', 'Suppression non confirmée');
   } else {
     #2
@@ -55,7 +55,7 @@ if (!empty($_POST)) {
 
       //suppresion des images de catégories
 
-      $data = $pdo->query("SELECT * FROM plats_photo_categories WHERE id_photo = '$pics'");
+      $data = $pdo->query("SELECT * FROM plats_photo WHERE id_photo = '$pics'");
       $photo = $data->fetch(PDO::FETCH_ASSOC);
 
       $file = __DIR__ . '/../../../../Global/Uploads/';
@@ -72,7 +72,7 @@ if (!empty($_POST)) {
       closedir($dirOriginal);
 
 
-      $req1 = $pdo->exec("DELETE FROM plats_photo_categories WHERE id_photo = '$pics'");
+      $req1 = $pdo->exec("DELETE FROM plats_photo WHERE id_photo = '$pics'");
     }
 
 
@@ -80,7 +80,7 @@ if (!empty($_POST)) {
     $req2 = $pdo->exec("DELETE FROM plats_categories WHERE id = '$id'");
 
     $result['status'] = true;
-    $result['notif'] = Notifications::notif('success', 'Categorie supprimée');
+    $result['notif'] = General::notif('success', 'Categorie supprimée');
     postJournal($pdo, $user, 2, 'Catégorie supprimée', 'Catégorie ' . $titre . ' supprimée');
 
     $record_per_page = 10;
@@ -146,7 +146,7 @@ if (!empty($_POST)) {
       if ($options['show_cat_pieces'] == 1) {
         $result['resultat'] .= '<td class="desktop">' . $row['pieces'] . '</td>';
       }
-      $result['resultat'] .= '<td class="desktop">0</td>';
+      $result['resultat'] .= '<td class="desktop">' . Categories::getNbPlats($pdo, $row['id']) . '</td>';
       if ($options['show_cat_stats'] == 1) {
         $result['resultat'] .= '<td class="desktop">0</td>';
       }

@@ -66,7 +66,7 @@ while ($row = $query->fetch()) {
   if ($options['show_cat_pieces'] == 1) {
     $output .= '<td class="desktop">' . $row['pieces'] . '</td>';
   }
-  $output .= '<td class="desktop">0</td>';
+  $output .= '<td class="desktop">' . SousCategories::getNbPlats($pdo, $row['id']) . '</td>';
 
   if ($row['est_publie'] == 1) {
 

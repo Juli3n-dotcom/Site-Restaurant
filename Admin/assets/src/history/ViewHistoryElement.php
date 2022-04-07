@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../config/Init.php';
 require_once __DIR__ . '/../../functions/TeamFunctions.php';
 
+use App\General;
 use App\History;
 
 /* #############################################################################
@@ -47,7 +48,7 @@ if (isset($_POST['history_id'])) {
                   </li>';
     $result .= '<li>
                     <h6>Username : </h6>
-                    <p>' . History::getMembre($pdo, $row['member_id']) . '</p>
+                    <p>' . General::getMembre($pdo, $row['member_id']) . '</p>
                 </li>';
   }
 

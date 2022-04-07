@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../Config/Init.php';
 require_once __DIR__ . '/../../Functions/SousCategoriesFunctions.php';
 
-use App\Notifications;
+use App\General;
 use App\SousCategories;
 /* #############################################################################
 
@@ -41,16 +41,16 @@ if (!empty($_POST)) {
   if (empty($titre) && !preg_match('~^[a-zA-Z- ]+$~', $titre)) {
 
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups! il manque le titre');
+    $result['notif'] = General::notif('warning', 'oups! il manque le titre');
     postJournal($pdo, $user, 5, 'Tentative d\'ajout d\'une sous catégorie de plats', 'Titre manquant');
   } else if (getCatBy($pdo, 'titre', $titre) !== null) {
 
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups cette catégorie existe déjà');
+    $result['notif'] = General::notif('warning', 'oups cette catégorie existe déjà');
     postJournal($pdo, $user, 5, 'Tentative d\'ajout d\'une sous catégorie de plats', 'Catégorie déjà existante');
   } else if ($cat == NULL) {
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups il manque la catégorie parente');
+    $result['notif'] = General::notif('warning', 'oups il manque la catégorie parente');
     postJournal($pdo, $user, 5, 'Tentative d\'ajout d\'une sous catégorie de plats', 'il manque la catégorie parente');
   } else {
 
@@ -60,7 +60,7 @@ if (!empty($_POST)) {
       if (empty($_FILES['add_img']['name'])) {
 
         $result['status'] = false;
-        $result['notif'] = Notifications::notif('warning', 'oups il manque la photo de catégorie');
+        $result['notif'] = General::notif('warning', 'oups il manque la photo de catégorie');
         postJournal($pdo, $user, 5, 'Tentative d\'ajout d\'une sous catégorie de plats', 'oups il manque la photo de catégorie');
       } else {
 
@@ -71,16 +71,16 @@ if (!empty($_POST)) {
         if ($_FILES['add_img']['error'] !== UPLOAD_ERR_OK) {
 
           $result['status'] = false;
-          $result['notif'] = Notifications::notif('warning', 'Probléme lors de l\'envoi du fichier.code ' . $_FILES['add_img']['error']);
+          $result['notif'] = General::notif('warning', 'Probléme lors de l\'envoi du fichier.code ' . $_FILES['add_img']['error']);
           postJournal($pdo, $user, 5, 'Tentative d\'ajout d\'une sous catégorie de plats', 'Probléme lors de l\'envoi du fichier.code ' . $_FILES['add_img']['error']);
         } elseif ($_FILES['add_img']['size'] < 12) {
 
           $result['status'] = false;
-          $result['notif'] = Notifications::notif('error', 'Le fichier envoyé n\'est pas une image');
+          $result['notif'] = General::notif('error', 'Le fichier envoyé n\'est pas une image');
           postJournal($pdo, $user, 4, 'Tentative d\'ajout d\'une sous catégorie de plats', 'Le fichier envoyé n\'est pas une image');
         } elseif (!in_array($extension, $allowTypes)) {
           $result['status'] = false;
-          $result['notif'] = Notifications::notif('warning', 'Format d\'image non pris en charge');
+          $result['notif'] = General::notif('warning', 'Format d\'image non pris en charge');
           postJournal($pdo, $user, 5, 'Tentative d\'ajout d\'une sous catégorie de plats', 'Format d\'image non pris en charge');
         } else {
 
@@ -91,7 +91,7 @@ if (!empty($_POST)) {
 
           if (!move_uploaded_file($_FILES['add_img']['tmp_name'], $complete_path)) {
             $result['status'] = false;
-            $result['notif'] = Notifications::notif('error', 'La photo n\'a pas pu être enregistrée');
+            $result['notif'] = General::notif('error', 'La photo n\'a pas pu être enregistrée');
             postJournal($pdo, $user, 4, 'Tentative d\'ajout d\'une sous catégorie de plats', 'La photo n\'a pas pu être enregistrée');
           } else {
 
@@ -120,7 +120,7 @@ if (!empty($_POST)) {
             }
 
             $req1 = $pdo->prepare(
-              'INSERT INTO plats_photo_categories(img__jpeg, img__webp, original)
+              'INSERT INTO plats_photo(img__jpeg, img__webp, original)
                          VALUES (:img__jpeg,:img__webp,:original)'
             );
 
@@ -155,6 +155,7 @@ if (!empty($_POST)) {
                                                         photo_id, 
                                                         pieces,
                                                         cat_id,
+                                                        author_id,
                                                         position,
                                                         est_publie,
                                                         date_enregistrement)
@@ -163,6 +164,7 @@ if (!empty($_POST)) {
                                   :photo_id,
                                   :pieces,
                                   :cat_id,
+                                  :author_id,
                                   :position,
                                   :publie,
                                   :date)');
@@ -171,6 +173,7 @@ if (!empty($_POST)) {
     $req2->bindParam(':description', $description);
     $req2->bindParam(':pieces', $pieces);
     $req2->bindParam(':cat_id', $cat, PDO::PARAM_INT);
+    $req2->bindvalue(':author_id', $user);
     $req2->bindValue(':position', getLastPosition($pdo));
     $req2->bindValue(':photo_id', $img);
     $req2->bindValue(':publie', 1);
@@ -179,7 +182,7 @@ if (!empty($_POST)) {
 
 
     $result['status'] = true;
-    $result['notif'] = Notifications::notif('success', 'Nouvelle sous catégorie créée');
+    $result['notif'] = General::notif('success', 'Nouvelle sous catégorie créée');
     postJournal($pdo, $user, 0, 'Nouvelle sous catégorie', 'Nouvelle sous catégorie créée');
 
     $record_per_page = 10;

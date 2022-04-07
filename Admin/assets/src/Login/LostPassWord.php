@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../Config/Init.php';
 
-use App\Notifications;
+use App\General;
 
 if (!empty($_POST)) {
 
@@ -114,21 +114,21 @@ if (!empty($_POST)) {
                                 </div>
                               </form>';
 
-        $result['notif'] = Notifications::notif('success', 'Email envoyé');
+        $result['notif'] = General::notif('success', 'Email envoyé');
         postJournal($pdo, NULL, 0, 'Tentative de réinitialisation de mot de passe', 'Email envoyé');
       } else { // si membre inconu
         $result['status'] = false;
-        $result['notif'] = Notifications::notif('warning', 'Cette adresse email n\'est pas enregistrée');
+        $result['notif'] = General::notif('warning', 'Cette adresse email n\'est pas enregistrée');
         postJournal($pdo, NULL, 3, 'Tentative de réinitialisation de mot de passe', 'Cette adresse email n\'est pas enregistrée');
       }
     } else { // si email non valide
       $result['status'] = false;
-      $result['notif'] = Notifications::notif('warning', 'Email non valide.');
+      $result['notif'] = General::notif('warning', 'Email non valide.');
       postJournal($pdo, NULL, 3, 'Tentative de réinitialisation de mot de passe', 'Email non valide.');
     }
   } else { // si email est absent
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'Merci de rentrer une adresse email');
+    $result['notif'] = General::notif('warning', 'Merci de rentrer une adresse email');
     postJournal($pdo, NULL, 5, 'Tentative de réinitialisation de mot de passe', 'Merci de rentrer une adresse email');
   }
 

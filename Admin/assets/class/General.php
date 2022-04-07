@@ -2,8 +2,19 @@
 
 namespace App;
 
-class Notifications
+class General
 {
+  public static function getMembre($pdo, $id)
+  {
+    if ($id != NULL) {
+      $data = $pdo->query("SELECT * from team WHERE id_team_member = '$id'");
+      $member = $data->fetch($pdo::FETCH_ASSOC);
+
+      return $member['username'];
+    } else {
+      return '';
+    }
+  }
 
   public static function notif(string $class, string $message)
   {

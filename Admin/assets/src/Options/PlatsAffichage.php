@@ -25,40 +25,44 @@ $output .= '</div>
             </div>
           </div>';
 // card2
-// $output .= '<div class="card__single">
-//               <div class="card__body">
-//                 <i class="far fa-keyboard"></i>
-//               <div>
-//                 <h5>Afficher Description</h5>';
-// if ($options['show_cat_description'] == 1) {
+$output .= '<div class="card__single">
+              <div class="card__body">
+                <i class="fas fa-chart-area"></i>
+              <div>
+                <h5>Afficher Stats</h5>';
+if ($options['show_plat_stats'] == 1) {
 
-//   $output .= '<td> <input type="checkbox" id="cat_desc_est_publie" name="cat_desc_est_publie" class="est_publie" value=' . $options['show_cat_description'] . ' checked></td>';
-// } else {
+  $output .= '<td> <input type="checkbox" id="plat_stats_est_publie" name="plat_stats_est_publie" class="est_publie" value=' . $options['show_plat_stats'] . ' checked></td>';
+} else {
 
-//   $output .= '<td> <input type="checkbox" id="cat_desc_est_publie" name="cat_desc_est_publie" class="est_publie" value=' . $options['show_cat_description'] . '></td>';
-// }
-// $output .= '</div>
-//             </div>
-//             <div class="card__footer">
-//             </div>
-//           </div>';
+  $output .= '<td> <input type="checkbox" id="plat_stats_est_publie" name="plat_stats_est_publie" class="est_publie" value=' . $options['show_plat_stats'] . '></td>';
+}
+$output .= '</div>
+            </div>
+            <div class="card__footer">
+            </div>
+          </div>';
 //card3
-// $output .= '<div class="card__single">
-//               <div class="card__body">
-//                 <i class="fas fa-hashtag"></i>
-//               <div>
-//                 <h5>Afficher Nombre de pièces</h5>';
-// if ($options['show_cat_pieces'] == 1) {
+$output .= '<div class="card__single">
+              <div class="card__body">';
+if ($options['show_plat_en_avant']) {
+  $output .= ' <i class="fa-solid fa-star"></i>';
+} else {
+  $output .= ' <i class="fa-regular fa-star"></i>';
+}
+$output .= '<div>
+                <h5>Afficher Mise en avant</h5>';
+if ($options['show_plat_en_avant'] == 1) {
 
-//   $output .= '<td> <input type="checkbox" id="cat_p_est_publie" name="cat_p_est_publie" class="est_publie" value=' . $options['show_cat_pieces'] . ' checked></td>';
-// } else {
+  $output .= '<td> <input type="checkbox" id="plat_en_avant_est_publie" name="plat_en_avant_est_publie" class="est_publie" value=' . $options['show_plat_en_avant'] . ' checked></td>';
+} else {
 
-//   $output .= '<td> <input type="checkbox" id="cat_p_est_publie" name="cat_p_est_publie" class="est_publie" value=' . $options['show_cat_pieces'] . '></td>';
-// }
-// $output .= '</div>
-//             </div>
-//             <div class="card__footer">
-//             </div>
-//           </div>';
+  $output .= '<td> <input type="checkbox" id="plat_en_avant_est_publie" name="plat_en_avant_est_publie" class="est_publie" value=' . $options['show_plat_en_avant'] . '></td>';
+}
+$output .= '</div>
+            </div>
+            <div class="card__footer">
+            </div>
+          </div>';
 
 echo $output;

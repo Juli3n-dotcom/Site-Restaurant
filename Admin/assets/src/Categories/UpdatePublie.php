@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../config/Init.php';
 require_once __DIR__ . '/../../Functions/CategoriesFunctions.php';
 
-use App\Notifications;
+use App\General;
 use App\Categories;
 
 /* #############################################################################
@@ -28,7 +28,7 @@ if (!empty($_POST)) {
     $req->execute();
 
     $result['status'] = true;
-    $result['notif'] = Notifications::notif('success', 'Catégorie Affichée');
+    $result['notif'] = General::notif('success', 'Catégorie Affichée');
     postJournal($pdo, $user, 1, 'Catégorie Affichée', 'Catégorie Affichée # ' . $id);
 
     $record_per_page = 10;
@@ -95,7 +95,7 @@ if (!empty($_POST)) {
       if ($options['show_cat_pieces'] == 1) {
         $result['resultat'] .= '<td class="desktop">' . $row['pieces'] . '</td>';
       }
-      $result['resultat'] .= '<td class="desktop">0</td>';
+      $result['resultat'] .= '<td class="desktop">' . Categories::getNbPlats($pdo, $row['id']) . '</td>';
       if ($options['show_cat_stats'] == 1) {
         $result['resultat'] .= '<td class="desktop">0</td>';
       }
@@ -148,7 +148,7 @@ if (!empty($_POST)) {
     $req->execute();
 
     $result['status'] = true;
-    $result['notif'] = Notifications::notif('success', 'Catégorie Retirée');
+    $result['notif'] = General::notif('success', 'Catégorie Retirée');
     postJournal($pdo, $user, 1, 'Catégorie Retirée', 'Catégorie Retirée # ' . $id);
 
     $record_per_page = 10;
@@ -215,7 +215,7 @@ if (!empty($_POST)) {
       if ($options['show_cat_pieces'] == 1) {
         $result['resultat'] .= '<td class="desktop">' . $row['pieces'] . '</td>';
       }
-      $result['resultat'] .= '<td class="desktop">0</td>';
+      $result['resultat'] .= '<td class="desktop">' . Categories::getNbPlats($pdo, $row['id']) . '</td>';
       if ($options['show_cat_stats'] == 1) {
         $result['resultat'] .= '<td class="desktop">0</td>';
       }

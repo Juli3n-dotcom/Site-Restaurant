@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../Config/Init.php';
 require_once __DIR__ . '/../../Functions/TeamFunctions.php';
 
-use App\Notifications;
+use App\General;
 use App\Team;
 /* #############################################################################
 
@@ -21,22 +21,22 @@ if (!empty($_POST)) {
 
   if (!preg_match('~^[a-zA-Z- ]+$~', $name)) {
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups! il manque le nom');
+    $result['notif'] = General::notif('warning', 'oups! il manque le nom');
     postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Nom manquant');
   } elseif (!preg_match('~^[a-zA-Z- ]+$~', $fname)) {
 
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups! il manque le prénom');
+    $result['notif'] = General::notif('warning', 'oups! il manque le prénom');
     postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Prénom manquant');
   } elseif (getMemberBy($pdo, 'email', $email) !== null) {
 
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'email déjà utilisé');
+    $result['notif'] = General::notif('warning', 'email déjà utilisé');
     postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Email déjà utilisé');
   } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'email non valide ou manquant');
+    $result['notif'] = General::notif('warning', 'email non valide ou manquant');
     postJournal($pdo, 3, 5, 'Tentative d\'ajout d\'un membre', 'Email non valide');
   } else {
 
@@ -114,7 +114,7 @@ if (!empty($_POST)) {
     $req->execute();
 
     $result['status'] = true;
-    $result['notif'] = Notifications::notif('success', 'Nouveau membre ajouté');
+    $result['notif'] = General::notif('success', 'Nouveau membre ajouté');
 
     $new_member = $pdo->lastInsertId();
     $data = $pdo->query("SELECT username FROM team WHERE id_team_member = '$new_member'");

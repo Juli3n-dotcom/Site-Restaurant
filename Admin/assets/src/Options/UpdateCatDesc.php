@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../config/Init.php';
 
-use App\Notifications;
+use App\General;
 
 /* #############################################################################
 
@@ -22,7 +22,7 @@ if (!empty($_POST)) {
     $req->execute();
 
     $result['status'] = true;
-    $result['notif'] = Notifications::notif('success', 'Modification effectuée');
+    $result['notif'] = General::notif('success', 'Modification effectuée');
     postJournal($pdo, $user, 0, 'Modification d\'option', 'Affichage des descriptions de catégories de plats');
 
     $query = $pdo->query("SELECT * FROM Options");
@@ -30,7 +30,7 @@ if (!empty($_POST)) {
 
     while ($options = $query->fetch()) {
 
-      $result['resultat'] = '<div class="card__single">
+      $result['resultat'] = '<div class="card__single card_visites">
               <div class="card__body">
                 <i class="far fa-image"></i>
               <div>
@@ -48,7 +48,7 @@ if (!empty($_POST)) {
             </div>
           </div>';
       // card2
-      $result['resultat'] .= '<div class="card__single">
+      $result['resultat'] .= '<div class="card__single card_visites">
               <div class="card__body">
                 <i class="far fa-keyboard"></i>
               <div>
@@ -66,7 +66,7 @@ if (!empty($_POST)) {
             </div>
           </div>';
       //card3
-      $result['resultat'] .= '<div class="card__single">
+      $result['resultat'] .= '<div class="card__single card_visites">
               <div class="card__body">
                 <i class="fas fa-hashtag"></i>
               <div>
@@ -77,6 +77,24 @@ if (!empty($_POST)) {
       } else {
 
         $result['resultat'] .= '<td> <input type="checkbox" id="cat_p_est_publie" name="cat_p_est_publie" class="est_publie" value=' . $options['show_cat_pieces'] . '></td>';
+      }
+      $result['resultat'] .= '</div>
+            </div>
+            <div class="card__footer">
+            </div>
+          </div>';
+      //card4
+      $result['resultat'] .= '<div class="card__single card_visites">
+              <div class="card__body">
+                <i class="fa-solid fa-diagram-predecessor"></i>
+              <div>
+                <h5>Activer sous-catégories</h5>';
+      if ($options['show_sous_cat'] == 1) {
+
+        $result['resultat'] .= '<td> <input type="checkbox" id="sub_cat_est_publie" name="sub_cat_est_publie" class="est_publie" value=' . $options['show_sous_cat'] . ' checked></td>';
+      } else {
+
+        $result['resultat'] .= '<td> <input type="checkbox" id="sub_cat_est_publie" name="sub_cat_est_publie" class="est_publie" value=' . $options['show_sous_cat'] . '></td>';
       }
       $result['resultat'] .= '</div>
             </div>
@@ -92,7 +110,7 @@ if (!empty($_POST)) {
     $req->execute();
 
     $result['status'] = true;
-    $result['notif'] = Notifications::notif('success', 'Modification effectuée');
+    $result['notif'] = General::notif('success', 'Modification effectuée');
 
     postJournal($pdo, $user, 0, 'Modification d\'option', 'Retrait des descriptions de catégories de plats');
 
@@ -100,7 +118,7 @@ if (!empty($_POST)) {
 
     while ($options = $query->fetch()) {
 
-      $result['resultat'] = '<div class="card__single">
+      $result['resultat'] = '<div class="card__single card_visites">
               <div class="card__body">
                 <i class="far fa-image"></i>
               <div>
@@ -118,7 +136,7 @@ if (!empty($_POST)) {
             </div>
           </div>';
       // card2
-      $result['resultat'] .= '<div class="card__single">
+      $result['resultat'] .= '<div class="card__single card_visites">
               <div class="card__body">
                 <i class="far fa-keyboard"></i>
               <div>
@@ -136,7 +154,7 @@ if (!empty($_POST)) {
             </div>
           </div>';
       //card3
-      $result['resultat'] .= '<div class="card__single">
+      $result['resultat'] .= '<div class="card__single card_visites">
               <div class="card__body">
                 <i class="fas fa-hashtag"></i>
               <div>
@@ -147,6 +165,24 @@ if (!empty($_POST)) {
       } else {
 
         $result['resultat'] .= '<td> <input type="checkbox" id="cat_p_est_publie" name="cat_p_est_publie" class="est_publie" value=' . $options['show_cat_pieces'] . '></td>';
+      }
+      $result['resultat'] .= '</div>
+            </div>
+            <div class="card__footer">
+            </div>
+          </div>';
+      //card4
+      $result['resultat'] .= '<div class="card__single card_visites">
+              <div class="card__body">
+                <i class="fa-solid fa-diagram-predecessor"></i>
+              <div>
+                <h5>Activer sous-catégories</h5>';
+      if ($options['show_sous_cat'] == 1) {
+
+        $result['resultat'] .= '<td> <input type="checkbox" id="sub_cat_est_publie" name="sub_cat_est_publie" class="est_publie" value=' . $options['show_sous_cat'] . ' checked></td>';
+      } else {
+
+        $result['resultat'] .= '<td> <input type="checkbox" id="sub_cat_est_publie" name="sub_cat_est_publie" class="est_publie" value=' . $options['show_sous_cat'] . '></td>';
       }
       $result['resultat'] .= '</div>
             </div>

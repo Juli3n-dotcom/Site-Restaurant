@@ -28,6 +28,9 @@ if (stripos($_SERVER['REQUEST_URI'], 'History.php')) {
 if (stripos($_SERVER['REQUEST_URI'], 'RestaurantCategories.php')) {
   echo '<script type="text/javascript" src="Assets/Js/RestaurantCategories.js"></script>';
 }
+if (stripos($_SERVER['REQUEST_URI'], 'Allergenes.php')) {
+  echo '<script type="text/javascript" src="Assets/Js/Allergenes.min.js"></script>';
+}
 if (stripos($_SERVER['REQUEST_URI'], 'SousCat.php')) {
   echo '<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
 ';
@@ -37,6 +40,16 @@ if (stripos($_SERVER['REQUEST_URI'], 'Categories.php')) {
   echo '<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
 ';
   echo '<script type="text/javascript" src="Assets/Js/Categories.min.js"></script>';
+}
+if (stripos($_SERVER['REQUEST_URI'], 'Plats.php')) {
+  echo '<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+';
+  echo '<script type="text/javascript" src="Assets/Js/Plats.min.js"></script>';
+}
+if (stripos($_SERVER['REQUEST_URI'], 'FichePlat.php')) {
+  echo '<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+';
+  echo '<script type="text/javascript" src="Assets/Js/FichePlat.js"></script>';
 }
 if (stripos($_SERVER['REQUEST_URI'], 'Options.php')) {
   echo '<script type="text/javascript" src="Assets/Js/Options.js"></script>';

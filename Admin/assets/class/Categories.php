@@ -10,7 +10,7 @@ class Categories
   {
 
     if ($photo_id != NULL) {
-      $data = $pdo->query("SELECT * from plats_photo_categories WHERE id_photo = '$photo_id'");
+      $data = $pdo->query("SELECT * from plats_photo WHERE id_photo = '$photo_id'");
       $photo = $data->fetch($pdo::FETCH_ASSOC);
 
       if ($ua == 'Safari') {
@@ -27,7 +27,7 @@ class Categories
   {
 
     if ($photo_id != NULL) {
-      $data = $pdo->query("SELECT * from plats_photo_categories WHERE id_photo = '$photo_id'");
+      $data = $pdo->query("SELECT * from plats_photo WHERE id_photo = '$photo_id'");
       $photo = $data->fetch($pdo::FETCH_ASSOC);
 
       if ($ua == 'Safari') {
@@ -38,5 +38,14 @@ class Categories
     } else {
       return "<img class='img-cat' src='Assets/Images/noimg.png' alt='image catégorie' with='200px'>";
     }
+  }
+
+  public static function getNbPlats($pdo, $id)
+  {
+    $data = $pdo->query("SELECT count(*) as nb from plats WHERE cat_id = '$id'");
+    $data = $data->fetch();
+
+    $count = $data['nb'];
+    return $count;
   }
 }

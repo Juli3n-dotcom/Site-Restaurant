@@ -5,6 +5,7 @@ $(document).ready(function () {
   * ## --> Modification de l'option d'affichage des images pour les catégories de plats
   * ### --> Modification de l'option d'affichage des descriptions pour les catégories de plats
   * #### --> Modification de l'option d'affichage du nombre de pieces pour les catégories de plats
+  * #### --> Modification de l'option d'affichage des sous catégories de plats
   */
   
   // # affichage 
@@ -119,11 +120,43 @@ $(document).ready(function () {
 
  });
   
+  //#### --> Modification de l'option d'affichage des sous catégories de plats
+  $(document).on('click', '#sub_cat_est_publie', function(e){
+  
+
+   var publie = $(this).val();
+  
+  update_p_photo();
+
+  function update_p_photo(){
+
+    var parameters = "publie="+publie;
+
+    $.post('Assets/Src/Options/UpdateSubCat.php', parameters, function(data){
+
+            if(data.status == true){ 
+
+              $('#notif').html(data.notif);
+              $('#plats_menu').html(data.menu);
+              $('#cat_plat').html(data.resultat);
+              
+                
+            }else{
+
+                $('#notif').html(data.notif); 
+                
+            } 
+                
+    }, 'json');
+
+}
+
+ });
   /*
   * # --> View data plats
   * ## --> Modification de l'option d'affichage des images pour les plats
-  * ### --> Modification de l'option d'affichage des descriptions pour les catégories de plats
-  * #### --> Modification de l'option d'affichage du nombre de pieces pour les catégories de plats
+  * ### --> Modification de l'option d'affichage des stats de plats
+  * #### --> Modification de l'option d'affichage de la mise en avant des plats
   */
   
   // # affichage 
@@ -141,7 +174,7 @@ $(document).ready(function () {
 
   }
   
-  // ## Modification de l'option d'affichage des images des plats
+// ## Modification de l'option d'affichage des images des plats
  $(document).on('click', '#plat_photo_est_publie', function(e){
   
 
@@ -171,10 +204,71 @@ $(document).ready(function () {
 
 }
 
+ });
+  
+  // ### Modification de l'option d'affichage des stats de plats
+ $(document).on('click', '#plat_stats_est_publie', function(e){
+  
+
+   var publie = $(this).val();
+  
+  update_cat_photo();
+
+  function update_cat_photo(){
+
+    var parameters = "publie="+publie;
+
+    $.post('Assets/Src/Options/UpdatePlatsStats.php', parameters, function(data){
+
+            if(data.status == true){ 
+
+              $('#notif').html(data.notif);
+              $('#plats').html(data.resultat);
+              
+                
+            }else{
+
+                $('#notif').html(data.notif); 
+                
+            } 
+                
+    }, 'json');
+
+}
+
 });
 
-
+//#### --> Modification de l'option d'affichage de la mise en avant des plats
+  $(document).on('click', '#plat_en_avant_est_publie', function(e){
   
+
+   var publie = $(this).val();
+  
+  update_cat_photo();
+
+  function update_cat_photo(){
+
+    var parameters = "publie="+publie;
+
+    $.post('Assets/Src/Options/UpdatePlatsEnAvant.php', parameters, function(data){
+
+            if(data.status == true){ 
+
+              $('#notif').html(data.notif);
+              $('#plats').html(data.resultat);
+              
+                
+            }else{
+
+                $('#notif').html(data.notif); 
+                
+            } 
+                
+    }, 'json');
+
+}
+
+});
 
 
 });

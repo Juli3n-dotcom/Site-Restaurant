@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../Functions/CategoriesFunctions.php';
 
 $ua = getBrowser();
 
+use App\General;
 use App\Categories;
 /* #############################################################################
 
@@ -35,6 +36,10 @@ if (isset($_POST['cat_id'])) {
     $result .= '<li>
                     <h6>ID : </h6>
                     <p>' . $row['id'] . '</p>
+                  </li>';
+    $result .= '<li>
+                    <h6>Créer par : </h6>
+                    <p>' . General::getMembre($pdo, $row['author_id']) . '</p>
                   </li>';
     $result .= '<li>
                     <h6>Titre : </h6>

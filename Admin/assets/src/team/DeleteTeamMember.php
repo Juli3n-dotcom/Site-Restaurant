@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../config/Init.php';
 require_once __DIR__ . '/../../functions/TeamFunctions.php';
 
-use App\Notifications;
+use App\General;
 use App\Team;
 
 /* #############################################################################
@@ -24,7 +24,7 @@ if (!empty($_POST)) {
   if (($_POST['confirmedelete']) !== $confirme) {
 
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('error', 'Merci de confirmer la suppression');
+    $result['notif'] = General::notif('error', 'Merci de confirmer la suppression');
     postJournal($pdo, 3, 4, 'Tentative de suppresion d\'un membre', 'Tentative de suppresion sans confirmation');
   } else {
 
@@ -56,7 +56,7 @@ if (!empty($_POST)) {
     $req2 = $pdo->exec("DELETE FROM team WHERE id_team_member = '$id'");
 
     $result['status'] = true;
-    $result['notif'] = Notifications::notif('success', 'Membre supprimé');
+    $result['notif'] = General::notif('success', 'Membre supprimé');
     postJournal($pdo, 3, 2, 'Suppresion membre de l\'équipe',  $username['username'] . ' a été supprimé');
 
 

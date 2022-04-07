@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../Config/Init.php';
 
-use App\Notifications;
+use App\General;
 
 /* #############################################################################
 
@@ -18,11 +18,11 @@ if (!empty($_POST)) {
 
   if (empty($username)) {
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups! il manque le pseudo');
+    $result['notif'] = General::notif('warning', 'oups! il manque le pseudo');
     postJournal($pdo, NULL, 5, 'Tentative de connexion', 'oups! il manque le pseudo');
   } elseif (empty($mdp)) {
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups! il manque votre mot de passe');
+    $result['notif'] = General::notif('warning', 'oups! il manque votre mot de passe');
     postJournal($pdo, NULL, 5, 'Tentative de connexion', 'oups! il manque votre mot de passe');
   } else {
     $req = $pdo->prepare(
@@ -37,17 +37,17 @@ if (!empty($_POST)) {
     if (!$tmember) {
 
       $result['status'] = false;
-      $result['notif'] = Notifications::notif('error', 'Membre inconnu');
+      $result['notif'] = General::notif('error', 'Membre inconnu');
       postJournal($pdo, NULL, 4, 'Tentative de connexion', 'Membre inconnu');
     } elseif (!$tmember['confirmation']) {
 
       $result['status'] = false;
-      $result['notif'] = Notifications::notif('info', 'Merci de confirmer votre compte');
+      $result['notif'] = General::notif('info', 'Merci de confirmer votre compte');
       postJournal($pdo, $tmember['id_team_member'], 5, 'Tentative de connexion', 'Compte non confirmé');
     } elseif (!password_verify($mdp, $tmember['password'])) {
 
       $result['status'] = false;
-      $result['notif'] = Notifications::notif('error', 'Mot de passe erroné');
+      $result['notif'] = General::notif('error', 'Mot de passe erroné');
       postJournal($pdo, $tmember['id_team_member'], 4, 'Tentative de connexion', 'Mot de passe erroné');
     } else {
       postJournal($pdo, $tmember['id_team_member'], 3, 'Connexion', $tmember['username'] . ' s\'est connecté');

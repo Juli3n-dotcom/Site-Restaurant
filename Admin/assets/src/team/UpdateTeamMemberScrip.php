@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../config/Init.php';
 require_once __DIR__ . '/../../functions/TeamFunctions.php';
 
-use App\Notifications;
+use App\General;
 use App\Team;
 /* #############################################################################
 
@@ -33,11 +33,11 @@ if (!empty($_POST)) {
   //modification du nom
   if (empty($name)) {
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups! il manque le nom');
+    $result['notif'] = General::notif('warning', 'oups! il manque le nom');
     postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Nom manquant');
   } elseif (!preg_match('~^[a-zA-Z- ]+$~', $name)) {
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups! le nom est pas bon');
+    $result['notif'] = General::notif('warning', 'oups! le nom est pas bon');
     postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Nom non valide');
   } elseif ($name !== $thisMember['nom']) {
     $requete .= 'nom = :nom';
@@ -47,11 +47,11 @@ if (!empty($_POST)) {
   //modification du prénom
   if (empty($fname)) {
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups! il manque le prénom');
+    $result['notif'] = General::notif('warning', 'oups! il manque le prénom');
     postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Prénom manquant');
   } elseif (!preg_match('~^[a-zA-Z- ]+$~', $fname)) {
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups! le prénom est pas bon');
+    $result['notif'] = General::notif('warning', 'oups! le prénom est pas bon');
     postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Prénom non valide');
   } elseif ($fname !== $thisMember['prenom']) {
 
@@ -69,17 +69,17 @@ if (!empty($_POST)) {
   //modification de l'username
   if (empty($username)) {
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups! il manque le pseudo');
+    $result['notif'] = General::notif('warning', 'oups! il manque le pseudo');
     postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Pseudo manquant');
   } elseif ($username !== $thisMember['username']) {
 
     if (getMemberBy($pdo, 'username', $username) !== null) {
       $result['status'] = false;
-      $result['notif'] = Notifications::notif('warning', 'pseudo déjà utilisé');
+      $result['notif'] = General::notif('warning', 'pseudo déjà utilisé');
       postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'pseudo déjà utilisé');
     } elseif (!preg_match('~^[a-zA-Z0-9_-]+$~', $username)) {
       $result['status'] = false;
-      $result['notif'] = Notifications::notif('warning', 'oups! le pseudo est pas bon');
+      $result['notif'] = General::notif('warning', 'oups! le pseudo est pas bon');
       postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Pseudo non valide');
     } else {
 
@@ -98,19 +98,19 @@ if (!empty($_POST)) {
   //modification de l'email
   if (empty($email)) {
     $result['status'] = false;
-    $result['notif'] = Notifications::notif('warning', 'oups! il manque le mail');
+    $result['notif'] = General::notif('warning', 'oups! il manque le mail');
     postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Email manquant');
   } elseif ($email !== $thisMember['email']) {
 
     if (getMemberBy($pdo, 'email', $email) !== null) {
 
       $result['status'] = false;
-      $result['notif'] = Notifications::notif('warning', 'email déjà utilisé');
+      $result['notif'] = General::notif('warning', 'email déjà utilisé');
       postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'Email déjà utilisé');
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
       $result['status'] = false;
-      $result['notif'] = Notifications::notif('warning', 'email non valide');
+      $result['notif'] = General::notif('warning', 'email non valide');
       postJournal($pdo, 3, 5, 'Tentative de modification d\'un membre', 'email non valide');
     } else {
 
@@ -199,7 +199,7 @@ if (!empty($_POST)) {
   $req_update->execute();
 
   $result['status'] = true;
-  $result['notif'] = Notifications::notif('success', 'Membre modifiée');
+  $result['notif'] = General::notif('success', 'Membre modifiée');
   $data = $pdo->query("SELECT username FROM team WHERE id_team_member = '$id'");
   $username = $data->fetch(PDO::FETCH_ASSOC);
   postJournal($pdo, 3, 1, 'Membre Modifié', $username['username'] . ' a été Modifié');

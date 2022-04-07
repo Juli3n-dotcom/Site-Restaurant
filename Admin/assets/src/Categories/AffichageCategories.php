@@ -66,7 +66,7 @@ while ($row = $query->fetch()) {
   if ($options['show_cat_pieces'] == 1) {
     $output .= '<td class="desktop">' . $row['pieces'] . '</td>';
   }
-  $output .= '<td class="desktop">0</td>';
+  $output .= '<td class="desktop">' . Categories::getNbPlats($pdo, $row['id']) . '</td>';
   if ($options['show_cat_stats'] == 1) {
     $output .= '<td class="desktop">0</td>';
   }

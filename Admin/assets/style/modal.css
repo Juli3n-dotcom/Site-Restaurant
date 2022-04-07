@@ -50,6 +50,14 @@
   box-shadow: 0 0 2px 1px rgb(0 140 186 / 50%);
 }
 
+#update_modal img.piment{
+  display: revert;
+  padding: 0;
+  box-shadow: none;
+  width:20px;
+  border: none;
+}
+
 .iframe_container {
   height: 600px;
 }
@@ -62,22 +70,168 @@
   height: 100%;
 }
 
-/* **** modal view team member **** */
+/* **** modal add plat **** */
 
+.input-block {
+  display: flex;
+  flex-direction: inherit;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-block div {
+  display: flex;
+  align-items: center;
+}
+
+.input-block input {
+  margin-left: 20px;
+}
+
+.input-block .show_helper,
+.allergenecontainer .show_helper,
+.update_allergenecontainer .show_helper {
+  cursor: pointer;
+}
+
+.input-block .show_helper:hover + .input_help,
+.allergenecontainer .show_helper:hover + .input_help,
+.update_allergenecontainer .show_helper:hover + .input_help {
+  display: block;
+  opacity: 1;
+  /* -webkit-animation: show_up 1s ease forwards; */
+}
+
+.input-block .new {
+  position: initial;
+}
+
+@-webkit-keyframes show_up {
+  0% {
+    transform: translateY(100%);
+  }
+  40% {
+    transform: translateY(-10%);
+  }
+  80% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+.input-block .input_help,
+.allergenecontainer .input_help,
+.update_allergenecontainer .input_help {
+  display: none;
+  background-color: var(--main-color);
+  color: #fff;
+  font-size: 16px;
+  padding: 0.5rem;
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 40%;
+  border-radius: 10px;
+  box-shadow: 0px 25px 25px 0px rgb(0 0 0 / 15%);
+  opacity: 0;
+  z-index: 3;
+}
+.allergenecontainer .input_help,
+.update_allergenecontainer .input_help {
+  width: 400px;
+}
+.allergenecontainer .input_help:nth-child(odd),
+.update_allergenecontainer .input_help:nth-child(odd) {
+  right: 0 !important;
+}
+.allergenecontainer .input_help:nth-child(even),
+.update_allergenecontainer .input_help:nth-child(even) {
+  left: 0;
+}
+
+#epicelevelcontainer,
+#update_epicelevelcontainer,
+#allergenecontainer,
+#update_allergenecontainer {
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+}
+#epicelevelcontainer.show,
+#update_epicelevelcontainer.show,
+#allergenecontainer.show,
+#update_allergenecontainer.show {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+.form-control:focus {
+  border-color: var(--main-color);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,
+    0px 0px 8px var(--main-color);
+}
+
+.allergenecontainer,
+.update_allergenecontainer {
+  /* font-size: 12px; */
+}
+
+.allergenecontainer .form-check,
+.update_allergenecontainer .form-check {
+  padding-left: 0;
+  display: flex !important;
+}
+
+.allergene-element {
+  position: relative;
+  margin: 10px;
+}
+
+.allergene-element label {
+  margin-right: 10px;
+  /* max-width: 120px; */
+}
+
+.allergeneHelper p {
+  font-size: 16px;
+}
+
+/* **** modal view team member **** */
+.list_container ul {
+  padding-left: 0;
+}
 .list_container ul li {
   display: flex;
+  list-style: none;
+  align-items: center;
+}
+.list_container ul li.description {
+  align-items: baseline;
+  max-width: none;
 }
 .list_container ul li h6 {
-  margin-right: 4rem;
+  margin-right: 1rem;
   font-weight: bold;
-  width: 170px;
+  width: fit-content;
+  min-width: 40%;
 }
-.list_container ul li p {
-  max-width: 100px;
+
+.list_container ul li p.badge {
+  margin: revert;
 }
 
 .list_container ul li p.description {
   max-width: none;
+}
+
+/* **** modal view allergene **** */
+
+.list_container.allergenes ul li {
+  display: initial;
 }
 
 /* **** Modal update **** */
@@ -139,4 +293,19 @@
 
 .form-range::-ms-thumb {
   background: var(--main-color);
+}
+
+@media only screen and (min-width: 768px) {
+  #allergeneContainer.show {
+    /* display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 1rem;
+    grid-row-gap: 10px;  */
+  }
+  .list_container ul li p {
+    max-width: 100px;
+  }
+  .allergene-element label {
+    /* max-width: 120px; */
+  }
 }

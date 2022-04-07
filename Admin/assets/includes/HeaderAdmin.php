@@ -22,8 +22,7 @@ use App\Team;
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.min.css">
   <script src="https://kit.fontawesome.com/3760b9e264.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <!-- CSS -->
 
 
   <link href="Assets/Style/style.css" rel="stylesheet" type="text/css">
@@ -71,19 +70,39 @@ use App\Team;
           <li><a href="#">Visites</a></li>
         </ul>
       </li>
-      <li>
+      <li id="plats_menu">
         <div class="icon-link">
           <a href="#">
             <i class='bx bx-book-alt'></i>
+
             <span class="link_name">Plats</span>
+
           </a>
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="#">Plats</a></li>
+          <li><a class="link_name" href="Plats.php">Plats</a></li>
+          <li><a href="Categories.php">Catégories</a></li>
+          <?php if ($options['show_sous_cat']) : ?>
+            <li><a href="SousCat.php">Sous Catégories</a></li>
+          <?php endif; ?>
+          <li><a href="Allergenes.php">Allergènes</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="icon-link">
+          <a href="#">
+            <i class='bx bxs-drink'></i>
+
+            <span class="link_name">Boissons</span>
+
+          </a>
+          <i class='bx bxs-chevron-down arrow'></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="Plats.php">Boissons</a></li>
           <li><a href="Categories.php">Catégories</a></li>
           <li><a href="SousCat.php">Sous Catégories</a></li>
-          <li><a href="#">Card Design</a></li>
         </ul>
       </li>
       <li>

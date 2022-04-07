@@ -604,7 +604,9 @@ header {
 }
 
 #add_team_member,
-#add_cat {
+#add_cat,
+#add_aller,
+#add_plat {
   display: none;
 }
 
@@ -655,10 +657,9 @@ td {
   padding: 1rem 1rem;
   color: var(--color-dark);
 }
-/* tr {
-  cursor: pointer;
-}
 
+ 
+/*
 .unselectable {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -667,6 +668,23 @@ td {
   user-select: none;
   color: #cc0000;
 } */
+
+.plat_title {
+  position: relative;
+}
+.new {
+  font-size: 10px;
+  color: red;
+  position: absolute;
+  top: 10px;
+  font-style: italic;
+  text-transform: capitalize;
+}
+
+.description {
+  max-width: 350px;
+  text-align: initial;
+}
 
 tbody tr:nth-child(even) {
   background: #f9fafc;
@@ -722,7 +740,7 @@ tbody tr:nth-child(even) {
 }
 
 .td-team {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: center;
 }
@@ -771,11 +789,22 @@ tbody tr:nth-child(even) {
   margin-right: 15px;
 }
 
-.member_action .linkbtn {
+/* .member_action .linkbtn {
   background: url("../images/eye-regular.svg") no-repeat;
   height: 18px;
   width: 18px;
   margin-right: 15px;
+  border: none;
+} */
+
+.member_action a.linkbtn {
+  -webkit-appearance: none;
+  height: 18px;
+  width: 18px;
+  border: none;
+  margin-right: 15px;
+  text-decoration: none;
+  color: var(--main-color);
 }
 
 .member_action .viewbtn {
@@ -873,6 +902,15 @@ div.history_statut div {
   border: none;
 }
 
+.history_statut .history_txt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.history_statut .history_txt i {
+  margin-right: 5px;
+}
+
 td.delete,
 div.history_statut div.delete {
   background-color: var(--error);
@@ -905,7 +943,7 @@ div.list_container.history p {
   width: 100%;
 }
 
-/* ****Catégories **** */
+/* **** Catégories **** */
 
 .img-cat-container {
   margin-bottom: 2rem;
@@ -920,6 +958,169 @@ div.list_container.history p {
   padding: 5px;
   box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
+
+/* **** Plats **** */
+
+input[type="checkbox"].est_en_avant {
+  all: revert;
+  height: 18px;
+  width: 18px;
+  border: none;
+  content: url("../Images/star-regular.svg");
+  -webkit-appearance: none;
+  outline: none;
+}
+input:checked[type="checkbox"].est_en_avant {
+  content: url("../Images/star-solid.svg");
+}
+
+/* **** Page Plat **** */
+
+.plat_container{
+  margin-top: 4rem;
+}
+
+.plat_container .left_part .plat_container-element{
+  margin-top: 0;
+  background-color: #FFFFFF;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,
+  box-shadow .15s ease-in-out;
+}
+
+.plat_container .left_part .plat_container-element .input_help{
+  width: 30%;
+}
+
+.plat_container .left_part .plat_container-element .form-check-label{
+  font-weight: initial;
+}
+
+
+
+.plat_container .left_part #update_epicelevel{
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+}
+
+.plat_container .left_part #update_epicelevel.show{
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+.plat_container .left_part .update_allergenecontainer{
+  display: none;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  transition: all 0.5s ease;
+}
+.plat_container .left_part .update_allergenecontainer.show{
+  display: block !important;
+}
+
+.plat_container .left_part .update_allergenecontainer .input_help{
+  width: 100%;
+}
+
+.plat_container label{
+  font-weight: bold;
+}
+
+.plat_container .left_part{
+  padding-right: 1rem;
+}
+
+.plat_container .left_part .plat_container-element{
+  margin-top: 0;
+}
+
+.plat_container .left_part button,
+.plat_container .right_part button,
+.plat_container .right_part .plat_container-element #new_img+label{
+  padding:10px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.7rem;
+  background: var(--main-color);
+  color: #fff;
+  transition: 0.5s;
+  border: none;
+  cursor: pointer;
+}
+
+.plat_container .left_part .submit_container{
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.plat_container .left_part button:hover,
+.plat_container .right_part .plat_container-element #new_img+label:hover{
+  color: var(--main-color);
+  background: #fff;
+  border: 1px solid var(--main-color);
+}
+
+.plat_container .left_part .submit_container{
+  display: flex;
+}
+
+.plat_container .left_part .load-update{
+  display: flex;
+  justify-content:inherit !important;
+  align-items: center;
+}
+
+.plat_container .left_part .load-update img{
+  width: 50px;
+}
+
+.plat_container .left_part .load-update p {
+  margin-bottom: 0;
+}
+
+
+
+.plat_container .right_part .plat_container-element{
+  background-color: #FFFFFF;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,
+  box-shadow .15s ease-in-out;
+}
+
+.plat_container .right_part .form-select{
+  width: 50%;
+}
+
+.plat_container .right_part .plat_container-element img{
+  width: 100%;
+  margin-top: 10px;
+}
+
+.plat_container .right_part .plat_container-element #new_img{
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.plat_container .input-block p{
+  margin-bottom: 0;
+  padding-right: 1rem;
+}
+
+.plat_container .input-block .input_help{
+  width: 100%;
+}
+
 
 /* **** Help Modal **** */
 
@@ -949,6 +1150,8 @@ div.list_container.history p {
   .social-icons div {
     margin-left: 0.5rem;
   }
+
+  
 }
 
 @media only screen and (min-width: 1199px) {
@@ -957,6 +1160,15 @@ div.list_container.history p {
   }
   .desktop {
     display: revert;
+  }
+  .plat_container .left_part .plat_container-element .form-check-container {
+    display: flex;
+    justify-content: space-between;
+    transition: all .5s ease;
+  }
+  
+  .plat_container .left_part .update_allergenecontainer.show {
+    display: grid !important;
   }
 }
 
@@ -973,13 +1185,33 @@ div.list_container.history p {
   }
 
   #add_team_member,
-  #add_cat {
+  #add_cat,
+  #add_aller,
+  #add_plat {
     display: block;
   }
 
   #add_team_member_min,
-  #add_cat_min {
+  #add_cat_min,
+  #add_aller_min,
+  #add_plat_min {
     display: none;
+  }
+  .plat_container .left_part #regimes_alimentaire {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+  }
+  .plat_container .left_part .submit_container {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .plat_container .right_part .submit_container {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
   }
 }
 

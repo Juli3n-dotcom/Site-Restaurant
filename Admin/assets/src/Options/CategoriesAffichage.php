@@ -7,7 +7,7 @@ $output = '';
 $data = $pdo->query("SELECT * FROM Options");
 $options = $data->fetch(PDO::FETCH_ASSOC);
 
-$output .= '<div class="card__single">
+$output .= '<div class="card__single card_visites">
               <div class="card__body">
                 <i class="far fa-image"></i>
               <div>
@@ -25,7 +25,7 @@ $output .= '</div>
             </div>
           </div>';
 // card2
-$output .= '<div class="card__single">
+$output .= '<div class="card__single card_visites">
               <div class="card__body">
                 <i class="far fa-keyboard"></i>
               <div>
@@ -43,7 +43,7 @@ $output .= '</div>
             </div>
           </div>';
 //card3
-$output .= '<div class="card__single">
+$output .= '<div class="card__single card_visites">
               <div class="card__body">
                 <i class="fas fa-hashtag"></i>
               <div>
@@ -54,6 +54,24 @@ if ($options['show_cat_pieces'] == 1) {
 } else {
 
   $output .= '<td> <input type="checkbox" id="cat_p_est_publie" name="cat_p_est_publie" class="est_publie" value=' . $options['show_cat_pieces'] . '></td>';
+}
+$output .= '</div>
+            </div>
+            <div class="card__footer">
+            </div>
+          </div>';
+//card4
+$output .= '<div class="card__single card_visites">
+              <div class="card__body">
+                <i class="fa-solid fa-diagram-predecessor"></i>
+              <div>
+                <h5>Activer sous-catégories</h5>';
+if ($options['show_sous_cat'] == 1) {
+
+  $output .= '<td> <input type="checkbox" id="sub_cat_est_publie" name="sub_cat_est_publie" class="est_publie" value=' . $options['show_sous_cat'] . ' checked></td>';
+} else {
+
+  $output .= '<td> <input type="checkbox" id="sub_cat_est_publie" name="sub_cat_est_publie" class="est_publie" value=' . $options['show_sous_cat'] . '></td>';
 }
 $output .= '</div>
             </div>

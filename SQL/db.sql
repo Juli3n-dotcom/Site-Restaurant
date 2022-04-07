@@ -29,7 +29,6 @@ photo_id INT (3) DEFAULT NULL,
 
 CREATE TABLE global_options(
   id INT(3) NOT NULL AUTO_INCREMENT,
-  name VARCHAR (255) NOT NULL,
   url VARCHAR (255) NOT NULL,
   version VARCHAR (15) NOT NULL,
   maintenance INT (3) NOT NULL,
@@ -38,13 +37,32 @@ CREATE TABLE global_options(
 
 )ENGINE=INNODB;
 
+
+CREATE TABLE resto_infos(
+  id INT(3) NOT NULL AUTO_INCREMENT,
+  name VARCHAR (255) NOT NULL,
+  type INT (3) NOT NULL,
+  adresse VARCHAR (255) NOT NULL,
+  est_halal  TINYINT NOT NULL,
+  est_vege  TINYINT NOT NULL,
+  est_casher  TINYINT NOT NULL,
+  insta TEXT DEFAULT NULL,
+  facebook TEXT DEFAULT NULL,
+  twitter TEXT DEFAULT NULL,
+  PRIMARY KEY (id)
+)ENGINE=INNODB;
+
+
 CREATE TABLE options(
 id INT(3) NOT NULL AUTO_INCREMENT,
+show_signature TINYINT DEFAULT NULL,
 show_cat_description TINYINT DEFAULT NULL,
 show_cat_photo TINYINT DEFAULT NULL,
 show_cat_pieces TINYINT DEFAULT NULL,
+show_sous_cat TINYINT DEFAULT NULL,
 show_cat_stats TINYINT DEFAULT NULL,
 show_plat_photo TINYINT DEFAULT NULL,
+show_plat_en_avant TINYINT DEFAULT NULL,
 show_plat_stats TINYINT DEFAULT NULL,
 PRIMARY KEY (id)
 )ENGINE=INNODB;
@@ -111,7 +129,7 @@ CREATE TABLE recuperation
 
 /* Plats */
 
-CREATE TABLE plats_photo_categories
+CREATE TABLE plats_photo
 (
 id_photo INT(3) NOT NULL AUTO_INCREMENT,
  img__jpeg VARCHAR (255) NOT NULL,
@@ -126,6 +144,7 @@ id INT(3) NOT NULL AUTO_INCREMENT,
 titre VARCHAR (255) NOT NULL,
 description TEXT DEFAULT NULL,
 photo_id INT (3) DEFAULT NULL,
+author_id INT(3) DEFAULT NULL,
 pieces INT (2) DEFAULT NULL,
 position INT (2) DEFAULT NULL,
 est_publie TINYINT NOT NULL,
@@ -133,30 +152,24 @@ date_enregistrement DATETIME NOT NULL,
  PRIMARY KEY (id),
  CONSTRAINT fk_plats_categories_photo
       FOREIGN KEY (photo_id)
-      REFERENCES  plats_photo_categories(id_photo)
+      REFERENCES  plats_photo(id_photo)
+      ON DELETE SET NULL,
+  CONSTRAINT fk_plats_categories_team
+      FOREIGN KEY (author_id)
+      REFERENCES  team(id_team_member)
       ON DELETE SET NULL
 )ENGINE=INNODB;
 
-CREATE TABLE plats_stats_categories
-(
-  id INT(3)NOT NULL AUTO_INCREMENT,
-  nb INT,
-  cat_id INT(3) DEFAULT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT fk_plats_categories_stats
-      FOREIGN KEY  (cat_id)
-      REFERENCES  plats_categories(id)
-      ON DELETE SET NULL
-)ENGINE=INNODB;
 
 CREATE TABLE plats_sous_categories
 (
   id INT(3)NOT NULL AUTO_INCREMENT,
   titre VARCHAR (255) NOT NULL,
   description TEXT DEFAULT NULL,
-  photo_id INT (3) DEFAULT NULL,
   pieces INT (2) DEFAULT NULL, 
+  photo_id INT (3) DEFAULT NULL,
   cat_id INT(3) DEFAULT NULL,
+  author_id INT(3) DEFAULT NULL,
   est_publie TINYINT NOT NULL,
   position INT (2) DEFAULT NULL,
   date_enregistrement DATETIME NOT NULL,
@@ -167,6 +180,91 @@ CREATE TABLE plats_sous_categories
       ON DELETE SET NULL,
     CONSTRAINT fk_plats_sous_categories_photo
       FOREIGN KEY (photo_id)
-      REFERENCES  plats_photo_categories(id_photo)
+      REFERENCES  plats_photo(id_photo)
+      ON DELETE SET NULL,
+    CONSTRAINT fk_plats_sous_categories_team
+      FOREIGN KEY (author_id)
+      REFERENCES  team(id_team_member)
+      ON DELETE SET NULL
+)ENGINE=INNODB;
+
+CREATE TABLE plats
+(
+  id INT(3)NOT NULL AUTO_INCREMENT,
+  titre VARCHAR (255) NOT NULL,
+  author_id INT(3) DEFAULT NULL,
+  prix decimal(10,2) NOT NULL,
+  description TEXT DEFAULT NULL,
+  quantite INT(5) DEFAULT NULL,
+  est_halal  TINYINT NOT NULL,
+  est_vege  TINYINT NOT NULL,
+  est_vegan  TINYINT NOT NULL,
+  est_casher  TINYINT NOT NULL,
+  est_epice  TINYINT NOT NULL,
+  epice_level INT(3) DEFAULT NULL,
+  cat_id INT(3) DEFAULT NULL,
+  souscat_id INT(3) DEFAULT NULL,
+  have_allergenes TINYINT NOT NULL,
+  photo_id INT (3) DEFAULT NULL,
+  est_en_avant TINYINT NOT NULL,
+  est_nouveau TINYINT NOT NULL,
+  est_publie TINYINT NOT NULL,
+  position INT (2) DEFAULT NULL,
+  date_enregistrement DATETIME NOT NULL,
+  date_modification DATETIME DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_plats_team
+      FOREIGN KEY (author_id)
+      REFERENCES  team(id_team_member)
+      ON DELETE SET NULL,
+    CONSTRAINT fk_plats_categories
+      FOREIGN KEY  (cat_id)
+      REFERENCES  plats_categories(id)
+      ON DELETE SET NULL,
+    CONSTRAINT fk_plats_souscategories
+      FOREIGN KEY  (souscat_id)
+      REFERENCES  plats_sous_categories(id)
+      ON DELETE SET NULL,
+    CONSTRAINT fk_plats_photo
+      FOREIGN KEY (photo_id)
+      REFERENCES  plats_photo(id_photo)
+      ON DELETE SET NULL
+)ENGINE=INNODB;
+
+CREATE TABLE allergenes(
+  id INT(3) NOT NULL AUTO_INCREMENT,
+  titre VARCHAR(255) NOT NULL,
+  description TEXT DEFAULT NULL,
+  exclusions TEXT DEFAULT NULL,
+  date_enregistrement DATETIME NOT NULL,
+  PRIMARY KEY (id)
+)ENGINE=InnoDB;
+
+CREATE TABLE plats_allergenes_liaison(
+ id INT(3)NOT NULL AUTO_INCREMENT,
+ plat_id INT(3) DEFAULT NULL,
+ allergene_id INT(3) DEFAULT NULL,
+  PRIMARY KEY (id),
+    CONSTRAINT fk_plats_liaison
+      FOREIGN KEY  (plat_id)
+      REFERENCES  plats(id)
+      ON DELETE CASCADE,
+    CONSTRAINT fk_allergenes_liaison
+      FOREIGN KEY (allergene_id)
+      REFERENCES  allergenes(id)
+      ON DELETE CASCADE
+)
+
+
+/* Stats */
+CREATE TABLE plats_stats_categories
+(
+  id INT(3)NOT NULL AUTO_INCREMENT,
+  nb INT,
+  cat_id INT(3) DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_plats_categories_stats
+      FOREIGN KEY  (cat_id)
+      REFERENCES  plats_categories(id)
       ON DELETE SET NULL
 )ENGINE=INNODB;

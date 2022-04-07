@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../config/Init.php';
 require_once __DIR__ . '/../../Functions/CategoriesFunctions.php';
 
-use App\Notifications;
+use App\General;
 use App\Categories;
 
 $user = $user['id_team_member'];
@@ -35,7 +35,7 @@ if (!empty($_POST['data'])) {
 
   #3 retour ajax
   $result['status'] = true;
-  $result['notif'] = Notifications::notif('success', 'Organisation des catégories modifiée');
+  $result['notif'] = General::notif('success', 'Organisation des catégories modifiée');
   postJournal($pdo, $user, 1, 'Ordre des catégories modifié', 'Ordre des catégories modifié ');
 
 

@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../../config/Init.php';
 
+use App\General;
 use App\History;
 
 $record_per_page = 20;
@@ -42,7 +43,7 @@ while ($row = $query->fetch()) {
   $output .= '<tr>';
   $output .= '<td>' . $row['id'] . '</td>';
   $output .= History::getStatut($row['statut']);
-  $output .= '<td>' . History::getMembre($pdo, $row['member_id']) . '</td>';
+  $output .= '<td>' . General::getMembre($pdo, $row['member_id']) . '</td>';
   $output .= '<td>' . $row['titre'] . '</td>';
   $output .= '<td>' . $row['contenu'] . '</td>';
   $output .= '<td>' . date('d-m-Y', strtotime($date)) . '</td>';

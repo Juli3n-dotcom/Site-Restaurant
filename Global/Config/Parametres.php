@@ -5,12 +5,18 @@ const DB_NAME = 'Resto';
 const DB_USER = 'root';
 const DB_PASS = 'root';
 
+// version du site
+const VERSION = '1.0.0';
 
 // role
 const ROLE_ADMIN = 0;
 const ROLE_GERANT = 1;
 const ROLE_EDITEUR = 2;
 const ROLE_VISITEUR = 3;
+
+//Type d'établissement
+const RESTO = 0;
+const BAR = 1;
 
 //Confirmation
 const NON_CONFIRME = 0;

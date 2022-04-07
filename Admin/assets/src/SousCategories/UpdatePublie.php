@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../config/Init.php';
 require_once __DIR__ . '/../../Functions/SousCategoriesFunctions.php';
 
-use App\Notifications;
+use App\General;
 use App\SousCategories;
 
 /* #############################################################################
@@ -28,7 +28,7 @@ if (!empty($_POST)) {
     $req->execute();
 
     $result['status'] = true;
-    $result['notif'] = Notifications::notif('success', 'Sous Catégorie Affichée');
+    $result['notif'] = General::notif('success', 'Sous Catégorie Affichée');
     postJournal($pdo, $user, 1, 'Sous Catégorie Affichée', 'Sous Catégorie Affichée # ' . $id);
 
     $record_per_page = 10;
@@ -142,7 +142,7 @@ if (!empty($_POST)) {
     $req->execute();
 
     $result['status'] = true;
-    $result['notif'] = Notifications::notif('success', 'Sous Catégorie Retirée');
+    $result['notif'] = General::notif('success', 'Sous Catégorie Retirée');
     postJournal($pdo, $user, 1, 'Sous Catégorie Retirée', 'Sous Catégorie Retirée # ' . $id);
 
     $record_per_page = 10;

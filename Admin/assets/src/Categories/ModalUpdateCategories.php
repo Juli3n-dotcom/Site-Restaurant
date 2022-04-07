@@ -58,7 +58,7 @@ if (isset($_POST['cat_id'])) {
     $result .=  '</div>';
 
     $result .= '<div class="mb-3 mt-4">';
-    $result .= '<label for="est publié" class="form_label">Afficher : </label>';
+    $result .= '<label for="update_publie" class="form_label">Afficher : </label>';
     if ($row['est_publie']) {
       $result .= '<td> <input type="checkbox" id="update_publie" name="update_publie" class="update_publie" value=' . $row['est_publie'] . ' checked></td>';
     } else {

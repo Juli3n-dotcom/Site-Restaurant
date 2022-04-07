@@ -71,3 +71,16 @@ function getBrowser()
     'pattern'    => $pattern
   );
 }
+
+function globalOptions(PDO $pdo)
+{
+  $req = $pdo->prepare(
+    'SELECT *
+       FROM global_options'
+  );
+
+  $req->execute();
+
+  $globalOptions = $req->fetch(PDO::FETCH_ASSOC);
+  return $globalOptions;
+}
