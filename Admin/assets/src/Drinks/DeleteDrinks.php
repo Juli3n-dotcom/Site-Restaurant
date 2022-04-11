@@ -1,21 +1,21 @@
 <?php
 require_once __DIR__ . '/../../Config/Init.php';
-require_once __DIR__ . '/../../Functions/PlatsFunctions.php';
+require_once __DIR__ . '/../../Functions/DrinksFunctions.php';
 
 use App\General;
-use App\Plats;
+use App\Drinks;
 
 $user = $user['id_team_member'];
 /* #############################################################################
 
-Delete d'un plat de plats à partir Plats.php en Ajax
+Delete d'une boisson à partir Drinks.php en Ajax
 
 #1 Confirmation du suppresion
-#2 récupération des informations du pla
-#3 récupération des catégories avec une position supérieur 
-#4 update des positions des autres catégories
+#2 récupération des informations de la boissons
+#3 récupération des boissons avec une position supérieur 
+#4 update des positions des autres boissons
 #5 si image, suppression des images 
-#6 suppression de la catégorie
+#6 suppression de la boisson
 #7 suppression allergenes
 #8 retour AJAX
 
@@ -31,22 +31,22 @@ if (!empty($_POST)) {
     #1
     $result['status'] = false;
     $result['notif'] = General::notif('error', 'Merci de confirmer la suppression');
-    postJournal($pdo, $user, 4, 'Tentative de suppresion d\'un plat', 'Suppression non confirmée');
+    postJournal($pdo, $user, 4, 'Tentative de suppresion d\'une boisson', 'Suppression non confirmée');
   } else {
     #2
-    $data = $pdo->query("SELECT * FROM plats WHERE id = '$id'");
+    $data = $pdo->query("SELECT * FROM boissons WHERE id = '$id'");
     $plat = $data->fetch(PDO::FETCH_ASSOC);
     $titre = $plat['titre'];
     $pics = $plat['photo_id'];
     $position = $plat['position'];
 
     #3
-    $req = $pdo->query("SELECT id, position FROM plats WHERE position > $position");
+    $req = $pdo->query("SELECT id, position FROM boissons WHERE position > $position");
     $upPlat = $req->fetchAll(PDO::FETCH_ASSOC);
 
     #4
     foreach ($upPlat as $Plats) {
-      $updatePos = $pdo->prepare('UPDATE plats SET position = :position WHERE id=' . $Plats['id']);
+      $updatePos = $pdo->prepare('UPDATE boissons SET position = :position WHERE id=' . $Plats['id']);
       $updatePos->bindValue(':position', --$Plats['position']);
       $updatePos->execute();
     }
@@ -78,19 +78,19 @@ if (!empty($_POST)) {
 
 
     #6
-    $req3 = $pdo->exec("DELETE FROM plats WHERE id = '$id'");
+    $req3 = $pdo->exec("DELETE FROM boissons WHERE id = '$id'");
 
     #7
-    $query = $pdo->prepare("SELECT * FROM plats_allergenes_liaison WHERE plat_id = '$id'");
-    $plat = $query->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($plat as $a) {
+    $query = $pdo->prepare("SELECT * FROM boissons_allergenes_liaison WHERE boisson_id = '$id'");
+    $drink = $query->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($drink as $a) {
       $liaisonID = $a['id'];
-      $req4 = $pdo->exec("DELETE FROM plats_allergenes_liaison WHERE id = '$liaisonID'");
+      $req4 = $pdo->exec("DELETE FROM boisson_allergenes_liaison WHERE id = '$liaisonID'");
     }
 
     $result['status'] = true;
-    $result['notif'] = General::notif('success', 'Plat supprimé');
-    postJournal($pdo, $user, 2, 'Plat supprimé', 'Plat ' . $titre . ' supprimé');
+    $result['notif'] = General::notif('success', 'Boisson supprimée');
+    postJournal($pdo, $user, 2, 'Boisson supprimée', 'Boisson ' . $titre . ' supprimée');
 
     #8 - Retour AJAX 
     $ua = getBrowser();
@@ -108,9 +108,9 @@ if (!empty($_POST)) {
 
     $start_from = ($page - 1) * $record_per_page;
 
-    $query = $pdo->query("SELECT * FROM plats ORDER BY cat_id, titre ASC LIMIT $start_from,$record_per_page");
+    $query = $pdo->query("SELECT * FROM boissons ORDER BY cat_id, titre ASC LIMIT $start_from,$record_per_page");
 
-    $result['nbplats'] = countPlats($pdo);
+    $result['nbdrinks'] = countDrinks($pdo);
 
     $result['resultat'] = '<table>
 
@@ -119,16 +119,16 @@ if (!empty($_POST)) {
               <th class="dnone">ID</th>';
     //$result['resultat'] .= '<th class="tab desktop" title="Position de l\'element sur la carte">#</th>'
     $result['resultat'] .= '<th>Titre</th>';
-    if ($options['show_plat_photo'] == 1) {
+    if ($options['show_drink_photo'] == 1) {
       $result['resultat'] .= '<th>Image</th>';
     }
     $result['resultat'] .= '<th class="desktop">Prix</th>';
     $result['resultat'] .= '<th class="desktop">Description</th>';
     $result['resultat'] .= '<th class="tab desktop">Catégorie</th>';
-    if ($options['show_plat_stats'] == 1) {
+    if ($options['show_drinks_stats'] == 1) {
       $result['resultat'] .= '<th class="desktop"><i class="fas fa-chart-area"></i></th>';
     }
-    if ($options['show_plat_en_avant'] == 1) {
+    if ($options['show_drinks_en_avant'] == 1) {
       $result['resultat'] .= '<th class="tab desktop">Mise en avant</th>';
     }
     $result['resultat'] .= '<th class="tab desktop">Afficher</th>
@@ -142,18 +142,18 @@ if (!empty($_POST)) {
       // $result['resultat'] .= '<td class="tab desktop">' . $row['position'] . '</td>';
       $result['resultat'] .= '<td id="' . $row['id'] . '"class="dnone">' . $row['id'] . '</td>';
       $result['resultat'] .= '<td class="plat_title"><strong>' . $row['titre'] . '</strong>' . ($row['est_nouveau'] ? '<span class="new"> nouveau</span>' : '') . '</td>';
-      if ($options['show_plat_photo'] == 1) {
+      if ($options['show_drink_photo'] == 1) {
         $result['resultat'] .= '<td class="dnone cat_pics">' . $row['photo_id'] . '</td>';
-        $result['resultat'] .= '<td class="td-team">' . Plats::getImage($pdo, $row['photo_id'], $ua['name']) . '</td>';
+        $result['resultat'] .= '<td class="td-team">' . Drinks::getImage($pdo, $row['photo_id'], $ua['name']) . '</td>';
       }
       $result['resultat'] .= '<td class="desktop">' . $row['prix'] . ' €</td>';
       $result['resultat'] .= '<td class="desktop description">' . $row['description'] . '</td>';
-      $result['resultat'] .= '<td class="tab desktop"><strong>' . Plats::getCat($pdo, $row['cat_id']) . '</strong></td>';
-      if ($options['show_plat_stats'] == 1) {
+      $result['resultat'] .= '<td class="tab desktop"><strong>' . Drinks::getCat($pdo, $row['cat_id']) . '</strong></td>';
+      if ($options['show_drinks_stats'] == 1) {
         $result['resultat'] .= '<td class="desktop">0</td>';
       }
-      if ($options['show_plat_en_avant'] == 1) {
-        $result['resultat'] .= '<th class="tab desktop">' . Plats::getEstEnAvant($pdo, $row['id']) . '</th>';
+      if ($options['show_drinks_en_avant'] == 1) {
+        $result['resultat'] .= '<th class="tab desktop">' . Drinks::getEstEnAvant($pdo, $row['id']) . '</th>';
       }
       if ($row['est_publie'] == 1) {
 
@@ -174,10 +174,10 @@ if (!empty($_POST)) {
     }
 
     $result['resultat'] .= '</tbody></table>';
-    if (countPlats($pdo) > 10) {
+    if (countDrinks($pdo) > 10) {
       $result['resultat'] .= '<br /><div class="custom_pagination">';
 
-      $page_query = $pdo->query('SELECT * FROM plats ORDER BY cat_id, titre ASC');
+      $page_query = $pdo->query('SELECT * FROM boissons ORDER BY cat_id, titre ASC');
       $total_records = $page_query->rowCount();
       $total_pages = ceil($total_records / $record_per_page);
 

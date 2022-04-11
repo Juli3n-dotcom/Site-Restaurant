@@ -20,10 +20,10 @@ include __DIR__ . '/HelpModal.php';
 <?php
 
 if (stripos($_SERVER['REQUEST_URI'], 'Team.php')) {
-  echo '<script type="text/javascript" src="Assets/Js/Team.js"></script>';
+  echo '<script type="text/javascript" src="Assets/Js/Team.min.js"></script>';
 }
 if (stripos($_SERVER['REQUEST_URI'], 'Profil.php')) {
-  echo '<script type="text/javascript" src="Assets/Js/Profil.js"></script>';
+  echo '<script type="text/javascript" src="Assets/Js/Profil.min.js"></script>';
 }
 if (stripos($_SERVER['REQUEST_URI'], 'History.php')) {
   echo '<script type="text/javascript" src="Assets/Js/History.min.js"></script>';
@@ -43,6 +43,21 @@ if (stripos($_SERVER['REQUEST_URI'], 'Categories.php')) {
   echo '<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
 ';
   echo '<script type="text/javascript" src="Assets/Js/Categories.min.js"></script>';
+}
+if (stripos($_SERVER['REQUEST_URI'], 'DrinksCat.php')) {
+  echo '<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+';
+  echo '<script type="text/javascript" src="Assets/Js/DrinksCat.min.js"></script>';
+}
+if (stripos($_SERVER['REQUEST_URI'], 'DrinksSubCat.php')) {
+  echo '<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+';
+  echo '<script type="text/javascript" src="Assets/Js/DrinksSubCat.min.js"></script>';
+}
+if (stripos($_SERVER['REQUEST_URI'], 'Drinks.php')) {
+  echo '<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+';
+  echo '<script type="text/javascript" src="Assets/Js/Drinks.min.js"></script>';
 }
 if (stripos($_SERVER['REQUEST_URI'], 'Plats.php')) {
   echo '<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>

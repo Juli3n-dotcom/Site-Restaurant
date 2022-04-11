@@ -74,12 +74,14 @@ $ua = getBrowser();
       <li id="plats_menu">
         <div class="icon-link">
           <a href="#">
-            <i class='bx bx-book-alt'></i>
+            <!-- <i class='bx bx-book-alt'></i> -->
+            <i class='bx bx-restaurant'></i>
 
             <span class="link_name">Plats</span>
 
           </a>
           <i class='bx bxs-chevron-down arrow'></i>
+
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="Plats.php">Plats</a></li>
@@ -90,9 +92,9 @@ $ua = getBrowser();
           <li><a href="Allergenes.php">Allergènes</a></li>
         </ul>
       </li>
-      <li>
+      <li id="drinks_menu">
         <div class="icon-link">
-          <a href="#">
+          <a href="Drinks.php">
             <i class='bx bxs-drink'></i>
 
             <span class="link_name">Boissons</span>
@@ -101,9 +103,11 @@ $ua = getBrowser();
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="Plats.php">Boissons</a></li>
-          <li><a href="Categories.php">Catégories</a></li>
-          <li><a href="SousCat.php">Sous Catégories</a></li>
+          <li><a class="link_name" href="Drinks.php">Boissons</a></li>
+          <li><a href="DrinksCat.php">Catégories</a></li>
+          <?php if ($options['show_drink_sous_cat']) : ?>
+            <li><a href="DrinksSubCat.php">Sous Catégories</a></li>
+          <?php endif; ?>
         </ul>
       </li>
       <li>

@@ -606,7 +606,8 @@ header {
 #add_team_member,
 #add_cat,
 #add_aller,
-#add_plat {
+#add_plat,
+#add_drink {
   display: none;
 }
 
@@ -740,7 +741,7 @@ tbody tr:nth-child(even) {
 }
 
 .td-team {
-  /* display: flex; */
+  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -1122,6 +1123,11 @@ input:checked[type="checkbox"].est_en_avant {
   width: 100%;
 }
 
+/* **** Options **** */
+.options__container{
+padding-bottom: 4rem;
+}
+
 /* **** Profil **** */
 
 .container_profil {
@@ -1293,14 +1299,17 @@ color: rgba(240, 52, 52, 0.8);
   #add_team_member,
   #add_cat,
   #add_aller,
-  #add_plat {
+  #add_plat,
+  #add_plat,
+  #add_drink {
     display: block;
   }
 
   #add_team_member_min,
   #add_cat_min,
   #add_aller_min,
-  #add_plat_min {
+  #add_plat_min,
+  #add_drink_min {
     display: none;
   }
   .plat_container .left_part #regimes_alimentaire {

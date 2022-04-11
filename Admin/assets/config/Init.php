@@ -15,6 +15,9 @@ require_once __DIR__ . '/../Class/Categories.php';
 require_once __DIR__ . '/../Class/SousCategories.php';
 require_once __DIR__ . '/../Class/Plats.php';
 require_once __DIR__ . '/../Class/Allergenes.php';
+require_once __DIR__ . '/../Class/DrinksCat.php';
+require_once __DIR__ . '/../Class/DrinksSubCategories.php';
+require_once __DIR__ . '/../Class/Drinks.php';
 
 
 if (!stripos($_SERVER['REQUEST_URI'], 'connexion') && !stripos($_SERVER['REQUEST_URI'], 'Login.php') && !stripos($_SERVER['REQUEST_URI'], 'LostPassWord.php')) {

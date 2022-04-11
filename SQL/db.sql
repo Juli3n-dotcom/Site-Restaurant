@@ -55,15 +55,23 @@ CREATE TABLE resto_infos(
 
 CREATE TABLE options(
 id INT(3) NOT NULL AUTO_INCREMENT,
-show_signature TINYINT DEFAULT NULL,
-show_cat_description TINYINT DEFAULT NULL,
-show_cat_photo TINYINT DEFAULT NULL,
-show_cat_pieces TINYINT DEFAULT NULL,
-show_sous_cat TINYINT DEFAULT NULL,
-show_cat_stats TINYINT DEFAULT NULL,
-show_plat_photo TINYINT DEFAULT NULL,
-show_plat_en_avant TINYINT DEFAULT NULL,
-show_plat_stats TINYINT DEFAULT NULL,
+show_signature TINYINT NOT NULL,
+show_cat_description TINYINT NOT NULL,
+show_cat_photo TINYINT NOT NULL,
+show_cat_pieces TINYINT NOT NULL,
+show_sous_cat TINYINT NOT NULL,
+show_cat_stats TINYINT NOT NULL,
+show_plat_photo TINYINT NOT NULL,
+show_plat_en_avant TINYINT NOT NULL,
+show_plat_stats TINYINT NOT NULL,
+show_cat_drink_description TINYINT NOT NULL,
+show_cat_drink_photo TINYINT NOT NULL,
+show_drink_sous_cat TINYINT NOT NULL,
+show_sub_cat_drink_photo TINYINT NOT NULL,
+show_sub_cat_drink_description TINYINT NOT NULL,
+show_drink_photo TINYINT NOT NULL,
+show_drinks_en_avant TINYINT NOT NULL,
+show_drinks_stats TINYINT NOT NULL,
 PRIMARY KEY (id)
 )ENGINE=INNODB;
 
@@ -257,6 +265,106 @@ CREATE TABLE plats_allergenes_liaison(
       ON DELETE CASCADE
 )
 
+/* Boissons */
+CREATE TABLE boissons_categories
+(
+id INT(3) NOT NULL AUTO_INCREMENT,
+titre VARCHAR (255) NOT NULL,
+description TEXT DEFAULT NULL,
+photo_id INT (3) DEFAULT NULL,
+author_id INT(3) DEFAULT NULL,
+position INT (2) DEFAULT NULL,
+est_publie TINYINT NOT NULL,
+date_enregistrement DATETIME NOT NULL,
+ PRIMARY KEY (id),
+ CONSTRAINT fk_boissons_categories_photo
+      FOREIGN KEY (photo_id)
+      REFERENCES  plats_photo(id_photo)
+      ON DELETE SET NULL,
+  CONSTRAINT fk_boissons_categories_team
+      FOREIGN KEY (author_id)
+      REFERENCES  team(id_team_member)
+      ON DELETE SET NULL
+)ENGINE=INNODB;
+
+
+CREATE TABLE boissons_sous_categories
+(
+  id INT(3)NOT NULL AUTO_INCREMENT,
+  titre VARCHAR (255) NOT NULL,
+  description TEXT DEFAULT NULL,
+  photo_id INT (3) DEFAULT NULL,
+  cat_id INT(3) DEFAULT NULL,
+  author_id INT(3) DEFAULT NULL,
+  est_publie TINYINT NOT NULL,
+  position INT (2) DEFAULT NULL,
+  date_enregistrement DATETIME NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_boissons_categories_souscat
+      FOREIGN KEY  (cat_id)
+      REFERENCES  boissons_categories(id)
+      ON DELETE SET NULL,
+    CONSTRAINT fk_boissons_sous_categories_photo
+      FOREIGN KEY (photo_id)
+      REFERENCES  plats_photo(id_photo)
+      ON DELETE SET NULL,
+    CONSTRAINT fk_boissons_sous_categories_team
+      FOREIGN KEY (author_id)
+      REFERENCES  team(id_team_member)
+      ON DELETE SET NULL
+)ENGINE=INNODB;
+
+
+CREATE TABLE boissons
+(
+  id INT(3)NOT NULL AUTO_INCREMENT,
+  titre VARCHAR (255) NOT NULL,
+  author_id INT(3) DEFAULT NULL,
+  prix decimal(10,2) NOT NULL,
+  description TEXT DEFAULT NULL,
+  cat_id INT(3) DEFAULT NULL,
+  souscat_id INT(3) DEFAULT NULL,
+  have_allergenes TINYINT NOT NULL,
+  photo_id INT (3) DEFAULT NULL,
+  est_en_avant TINYINT NOT NULL,
+  est_nouveau TINYINT NOT NULL,
+  est_publie TINYINT NOT NULL,
+  position INT (2) DEFAULT NULL,
+  date_enregistrement DATETIME NOT NULL,
+  date_modification DATETIME DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_boissons_team
+      FOREIGN KEY (author_id)
+      REFERENCES  team(id_team_member)
+      ON DELETE SET NULL,
+    CONSTRAINT fk_boissons_categories
+      FOREIGN KEY  (cat_id)
+      REFERENCES  boissons_categories(id)
+      ON DELETE SET NULL,
+    CONSTRAINT fk_boissons_souscategories
+      FOREIGN KEY  (souscat_id)
+      REFERENCES  boissons_sous_categories(id)
+      ON DELETE SET NULL,
+    CONSTRAINT fk_boissons_photo
+      FOREIGN KEY (photo_id)
+      REFERENCES  plats_photo(id_photo)
+      ON DELETE SET NULL
+)ENGINE=INNODB;
+
+CREATE TABLE boissons_allergenes_liaison(
+ id INT(3)NOT NULL AUTO_INCREMENT,
+ boisson_id INT(3) DEFAULT NULL,
+ allergene_id INT(3) DEFAULT NULL,
+  PRIMARY KEY (id),
+    CONSTRAINT fk_boisson_liaison
+      FOREIGN KEY  (boisson_id)
+      REFERENCES  boissons(id)
+      ON DELETE CASCADE,
+    CONSTRAINT fk_allergenes_liaison_boissons
+      FOREIGN KEY (allergene_id)
+      REFERENCES  allergenes(id)
+      ON DELETE CASCADE
+)
 
 /* Stats */
 CREATE TABLE plats_stats_categories
@@ -270,3 +378,4 @@ CREATE TABLE plats_stats_categories
       REFERENCES  plats_categories(id)
       ON DELETE SET NULL
 )ENGINE=INNODB;
+

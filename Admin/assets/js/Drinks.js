@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
   /*
   * --> View data
   */
@@ -7,7 +6,7 @@ $(document).ready(function () {
   function load_data(page) {
 
     $.ajax({
-      url: "Assets/Src/Plats/AffichagePlats.php",
+      url: "Assets/Src/Drinks/AffichageDrinks.php",
       method: "post",
       data: { page: page },
       success: function (data) {
@@ -22,27 +21,26 @@ $(document).ready(function () {
     load_data(page);
   })
 
-  /*
- * --> Add Plats
+
+/*
+ * --> Add boisson
  * 
  * # Ouverture du Modal d'ajout
+ *   
+ * ## activation des allergenes
  * 
- * ## activation du niveau de piment
+ * ### traitement Ajax de l'ajout
  * 
- * ### activation des allergenes
- * 
- * #### traitement Ajax de l'ajout
- * 
- * ##### Reset BTN
+ * #### Reset BTN
  */
 
     //modal d'ajout 
-    $('#add_plat').on('click', function () {
+    $('#add_drink').on('click', function () {
         $('#addmodal').modal('show');
     });
   
-  //modal d'ajout plat min
-    $('#add_plat_min').on('click', function () {
+  //modal d'ajout drink min
+    $('#add_drink_min').on('click', function () {
         $('#addmodal').modal('show');
     });
   
@@ -52,7 +50,7 @@ $(document).ready(function () {
   
     $.ajax({
       method: 'post',
-      url: 'Assets/Src/Plats/LoadSubCat.php',
+      url: 'Assets/Src/Drinks/LoadSubCat.php',
       data: { cat_id: selectcat }
     }).done(function (subcat) {
       subcat = JSON.parse(subcat)
@@ -63,18 +61,8 @@ $(document).ready(function () {
       });
   })
   
-  //  ### activation du niveau de piment
-  $('#est_epice').on('click', function () {
 
-    if ($(this).is(':checked')) {
-      $('#epicelevelcontainer').addClass('show')
-    } else {
-      $('#epicelevelcontainer').removeClass('show')
-
-    }
-  });
-
-//  #### activation des allergenes
+//  ### activation des allergenes
   $('#haveAllergene').on('click', function () {
 
     if ($(this).is(':checked')) {
@@ -86,14 +74,14 @@ $(document).ready(function () {
   });
 
     // ## ajout plat ajax
-  $("#add_plat_form").on('submit', function (e) {
+  $("#add_drink_form").on('submit', function (e) {
   
   e.preventDefault();
 
     $.ajax({
 
       type: 'POST',
-      url: 'Assets/Src/Plats/AddPlats.php',
+      url: 'Assets/Src/Drinks/AddDrinks.php',
       data: new FormData(this),
       dataType: 'json',
       contentType: false,
@@ -107,10 +95,10 @@ $(document).ready(function () {
 
         if (data.status == true) {   
           
-          $('#add_plat_form').trigger("reset");
+          $('#add_drink_form').trigger("reset");
           $('#notif').html(data.notif);
           $('#addmodal').modal('hide');
-          $('#nbplats').html(data.nbplats);
+          $('#nbdrinks').html(data.nbplats);
           $('#table').html(data.resultat); 
           $('#load-add').addClass('hide').fadeOut(1000);
           $('#footer-action').show().fadeIn(1000)
@@ -130,8 +118,9 @@ $(document).ready(function () {
     $("#add_plat_form")[0].reset();
   });
 
+
 /*
- * --> Delete plat
+ * --> Delete boissons
  * 
  * # Ouverture du Modal de suppresion
  * 
@@ -166,24 +155,24 @@ $(document).on('click','.deletebtn', function () {
 $('#confirmedelete').on('click', function () {
   if ($(this).is(':checked')) {
 
-    $('#deleteplat').prop("disabled", false).removeClass('disabledBtn').addClass('deleteBtn');
+    $('#deletedrink').prop("disabled", false).removeClass('disabledBtn').addClass('deleteBtn');
 
   } else {
 
-    $('#deleteplat').prop("disabled", true).addClass('disabledBtn').removeClass('deleteBtn');
+    $('#deletedrink').prop("disabled", true).addClass('disabledBtn').removeClass('deleteBtn');
 
   }
 });
 
 
 //### delete  ajax
-$('#delete_plat').on('submit', function(e){
+$('#delete_drink').on('submit', function(e){
 
 
   e.preventDefault();
-  delete_plat();
+  delete_drink();
 
-  function delete_plat(){
+  function delete_drink(){
 
     var id = $('#delete_id').val();
     var confirme = $('#confirmedelete').val();
@@ -191,13 +180,13 @@ $('#delete_plat').on('submit', function(e){
     var parameters = "id=" + id + '&confirmedelete=' + confirme;
 
     
-    $.post('Assets/Src/Plats/DeletePlats.php', parameters, function(data){
+    $.post('Assets/Src/Drinks/DeleteDrinks.php', parameters, function(data){
 
             if(data.status == true){ 
               
-              $('#delete_plat').trigger("reset");
+              $('#delete_drink').trigger("reset");
               $('#notif').html(data.notif);
-              $('#nbplats').html(data.nbplats);
+              $('#nbdrinks').html(data.nbplats);
               $('#deletemodal').modal('hide');
               $('#table').html(data.resultat); 
                 
@@ -214,8 +203,8 @@ $('#delete_plat').on('submit', function(e){
 
 });
   
- /*
- * --> view plats
+  /*
+ * --> view boisson
  * 
  * # Ouverture du Modal de vue
  * 
@@ -223,13 +212,13 @@ $('#delete_plat').on('submit', function(e){
 
 // # Ouverture du Modal de vue
 $(document).on('click','.viewbtn', function(){  
-  var plat_id = $(this).attr("id");  
+  var drink_id = $(this).attr("id");  
   $.ajax({  
-       url:"Assets/Src/Plats/ViewPlats.php",  
+       url:"Assets/Src/Drinks/ViewDrink.php",  
        method:"post",  
-       data:{plat_id:plat_id},  
+       data:{drink_id:drink_id},  
        success:function(data){  
-            $('#plat_detail').html(data);  
+            $('#drink_detail').html(data);  
             $('#viewmodal').modal("show");  
        }  
   });  
@@ -237,7 +226,99 @@ $(document).on('click','.viewbtn', function(){
   
   
 /*
- * --> Update plat
+ * --> Update Publication
+ *
+ * # traitement Ajax de la modification
+ */
+
+// # traitement de la publication
+ $(document).on('click', '.est_publie', function(e){
+  
+
+  $tr = $(this).closest('tr');
+  
+  let data = $tr.children('td').map(function () {
+
+    return $(this).text()
+
+  }).get();
+
+  var publie = $(this).val();
+  
+  update_est_publie();
+
+  function update_est_publie(){
+
+    var id = data[0];
+    var parameters = "id="+id + "&publie="+publie;
+    
+    $.post('Assets/Src/Drinks/UpdatePublie.php', parameters, function(data){
+
+            if(data.status == true){ 
+
+                $('#notif').html(data.notif);
+                $('#table').html(data.resultat); 
+                
+            }else{
+
+                $('#notif').html(data.notif); 
+
+            } 
+                
+    }, 'json');
+
+}
+
+ });
+  
+ /*
+ * --> Update mit en avant
+ *
+ * # traitement Ajax de la modification
+ */
+
+// # traitement de la publication
+ $(document).on('click', '.est_en_avant', function(e){
+  
+
+  $tr = $(this).closest('tr');
+  
+  let data = $tr.children('td').map(function () {
+
+    return $(this).text()
+
+  }).get();
+
+  var est_en_avant = $(this).val();
+  
+  update_est_en_avant();
+
+  function update_est_en_avant(){
+
+    var id = data[0];
+    var parameters = "id="+id + "&est_en_avant="+est_en_avant;
+   
+    $.post('Assets/Src/Drinks/UpdateEnAvant.php', parameters, function(data){
+
+            if(data.status == true){ 
+
+                $('#notif').html(data.notif);
+                $('#table').html(data.resultat); 
+                
+            }else{
+
+                $('#notif').html(data.notif); 
+
+            } 
+                
+    }, 'json');
+
+}
+
+ });
+  
+/*
+ * --> Update boissons
  * 
  * # Ouverture du Modal d'edition
  * 
@@ -249,12 +330,12 @@ $(document).on('click','.viewbtn', function(){
     
   //# Ouverture du Modal de vue
  $(document).on('click','.editbtn', function(){  
-    var plat_id = $(this).attr("id");  
+    var drink_id = $(this).attr("id");  
   
     $.ajax({  
-          url:"Assets/Src/Plats/ModalUpdatePlat.php",  
+          url:"Assets/Src/Drinks/ModalUpdatedrink.php",  
           method:"post",  
-          data: { plat_id: plat_id },
+          data: { drink_id: drink_id },
           dataType: 'json', 
           success:function(data){  
               $('#update_modal').html(data);  
@@ -289,7 +370,7 @@ $(document).on('change',"#new_img", function (e) {
     
   $.ajax({
       method: 'post',
-      url: 'Assets/Src/Plats/LoadSubCat.php',
+      url: 'Assets/Src/Drinks/LoadSubCat.php',
       data: {cat_id: selectupdatecat }
     }).done(function (subcat) {
       subcat = JSON.parse(subcat)
@@ -300,16 +381,6 @@ $(document).on('change',"#new_img", function (e) {
       });
     
   })
-
-  // checked epice
-$(document).on('change', '#update_est_epice', function () {
-  if ($(this).is(':checked')) {
-    $('#update_epicelevelcontainer').addClass('show')
-  } else {
-    $('input[name=updateepicelevel]').attr('checked',false);
-    $('#update_epicelevelcontainer').removeClass('show')
-    }
-  });
 
 // checked allergeneContainer
 $(document).on('change', '#update_haveallergene', function () {
@@ -322,13 +393,13 @@ $(document).on('change', '#update_haveallergene', function () {
 
 
 // ### update plat ajax
-$(document).on('submit', '#update_plat', function(e){
+$(document).on('submit', '#update_drink', function(e){
   e.preventDefault();
 
   $.ajax({
 
     type: 'POST',
-    url: 'Assets/Src/Plats/UpdatePlat.php',
+    url: 'Assets/Src/Drinks/UpdateDrink.php',
     data: new FormData(this),
     dataType: 'json',
     contentType: false,
@@ -342,7 +413,7 @@ $(document).on('submit', '#update_plat', function(e){
 
       if(data.status == true){    
         
-        $('#update_plat').trigger("reset");
+        $('#update_drink').trigger("reset");
         $('#notif').html(data.notif);
         $('#editmodal').modal('hide');
         $('#table').html(data.resultat); 
@@ -360,99 +431,6 @@ $(document).on('submit', '#update_plat', function(e){
   });
 
 });
-  
-/*
- * --> Update Publication
- *
- * # traitement Ajax de la modification
- */
 
-// # traitement de la publication
- $(document).on('click', '.est_publie', function(e){
-  
-
-  $tr = $(this).closest('tr');
-  
-  let data = $tr.children('td').map(function () {
-
-    return $(this).text()
-
-  }).get();
-
-  var publie = $(this).val();
-  
-  update_est_publie();
-
-  function update_est_publie(){
-
-    var id = data[0];
-    var parameters = "id="+id + "&publie="+publie;
-    
-    $.post('Assets/Src/Plats/UpdatePublie.php', parameters, function(data){
-
-            if(data.status == true){ 
-
-                $('#notif').html(data.notif);
-                $('#table').html(data.resultat); 
-                
-            }else{
-
-                $('#notif').html(data.notif); 
-
-            } 
-                
-    }, 'json');
-
-}
 
  });
-  
-  /*
- * --> Update mit en avant
- *
- * # traitement Ajax de la modification
- */
-
-// # traitement de la publication
- $(document).on('click', '.est_en_avant', function(e){
-  
-
-  $tr = $(this).closest('tr');
-  
-  let data = $tr.children('td').map(function () {
-
-    return $(this).text()
-
-  }).get();
-
-  var est_en_avant = $(this).val();
-  
-  update_est_en_avant();
-
-  function update_est_en_avant(){
-
-    var id = data[0];
-    var parameters = "id="+id + "&est_en_avant="+est_en_avant;
-   
-    $.post('Assets/Src/Plats/UpdateEnAvant.php', parameters, function(data){
-
-            if(data.status == true){ 
-
-                $('#notif').html(data.notif);
-                $('#table').html(data.resultat); 
-                
-            }else{
-
-                $('#notif').html(data.notif); 
-
-            } 
-                
-    }, 'json');
-
-}
-
- });
-
-
-
-});
