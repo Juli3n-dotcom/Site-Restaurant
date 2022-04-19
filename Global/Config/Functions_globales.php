@@ -84,3 +84,23 @@ function globalOptions(PDO $pdo)
   $globalOptions = $req->fetch(PDO::FETCH_ASSOC);
   return $globalOptions;
 }
+
+function getRestoInfos(PDO $pdo)
+{
+  $req = $pdo->prepare(
+    'SELECT *
+       FROM resto_infos'
+  );
+
+  $req->execute();
+
+  $infos = $req->fetch(PDO::FETCH_ASSOC);
+  return $infos;
+}
+
+function getOptionsResto(PDO $pdo, $id)
+{
+  $req = $pdo->query("SELECT * FROM resto_options WHERE resto_id = '$id'");
+  $options = $req->fetch(PDO::FETCH_ASSOC);
+  return $options;
+}

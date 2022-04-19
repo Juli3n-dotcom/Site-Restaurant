@@ -1233,6 +1233,173 @@ background-color: #FFF;
 color: rgba(240, 52, 52, 0.8);
 }
 
+/* **** settings **** */
+
+.options_settings ul a{
+  text-decoration: none;
+  color: var(--main-color);
+}
+
+.options_settings .nav-tabs .nav-link.active{
+  background-color: var(--main-color);
+  color: #fff;
+}
+
+.options_settings .submit_container button{
+  padding:10px 20px;
+}
+
+.settings_container-element{
+  background-color: #FFFFFF;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,
+  box-shadow .15s ease-in-out;
+}
+
+.settings_container .left_part button,
+.settings_container .right_part button,
+.settings_container .right_part .settings_container-element #new_img+label {
+  padding: 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.7rem;
+  background: var(--main-color);
+  color: #fff;
+  transition: 0.5s;
+  border: none;
+  cursor: pointer;
+}
+
+.settings_container  .submit_container {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.settings_container  button:hover,
+.settings_container .settings_container-element #new_img+label:hover {
+  color: var(--main-color);
+  background: #fff;
+  border: 1px solid var(--main-color);
+}
+
+.options_settings .submit_container {
+  display: flex;
+}
+
+.options_settings .load-update {
+  display: flex;
+  justify-content: inherit !important;
+  align-items: center;
+}
+
+.options_settings .load-update img {
+  width: 50px;
+}
+
+.options_settings .load-update p {
+  margin-bottom: 0;
+}
+
+.settings_container .right_part .settings_container-element {
+  background-color: #FFFFFF;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+}
+
+.settings_container .right_part .form-select {
+  width: 50%;
+}
+
+.settings_container .right_part .settings_container-element img {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.settings_container .right_part .settings_container-element #new_img {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.settings_container .input-block p {
+  margin-bottom: 0;
+  padding-right: 1rem;
+}
+
+.settings_container .input-block .input_help {
+  width: 100%;
+}
+
+#settings_container .input_help{
+  width: 100%;
+}
+
+#social .rs_label-container{
+display: flex;
+flex-direction: inherit;
+position: relative;
+justify-content: space-between;
+align-items: center;
+}
+#social .rs_label-container .show_helper{
+  cursor: pointer;
+}
+
+#social .rs_label-container .input_help{
+display: none;
+background-color: var(--main-color);
+color: #fff;
+font-size: 16px;
+padding: 0.5rem;
+position: absolute;
+bottom: 1.5rem;
+right: 1.5rem;
+width: 40%;
+border-radius: 10px;
+box-shadow: 0px 25px 25px 0px rgb(0 0 0 / 15%);
+opacity: 0;
+z-index: 3;
+}
+
+#social .rs_label-container .show_helper:hover+.input_help {
+  display: block;
+  opacity: 1;
+  /* -webkit-animation: show_up 1s ease forwards; */
+}
+
+#social .input-block{
+  display: initial;
+}
+
+#social .input-block div{
+  margin-bottom: 1rem;
+}
+
+#social .input-block input{
+  margin-left: 0;
+}
+
+#social .text_block{
+  display: flex;
+}
+
+.img-logo {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: 3px solid #efefef;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 
 /* **** Help Modal **** */
 
@@ -1282,6 +1449,12 @@ color: rgba(240, 52, 52, 0.8);
   .plat_container .left_part .update_allergenecontainer.show {
     display: grid !important;
   }
+
+  #social,
+  #regimes,
+  #infos {
+    max-width: 50%;
+  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -1312,18 +1485,22 @@ color: rgba(240, 52, 52, 0.8);
   #add_drink_min {
     display: none;
   }
-  .plat_container .left_part #regimes_alimentaire {
+  .plat_container .left_part #regimes_alimentaire,
+  .settings_container .left_part #regimes_alimentaire
+   {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1rem;
   }
-  .plat_container .left_part .submit_container {
-    display: block;
+  .plat_container .left_part .submit_container,
+  .settings_container .left_part .submit_container{
+    
     visibility: visible;
     opacity: 1;
   }
   
-  .plat_container .right_part .submit_container {
+  .plat_container .right_part .submit_container,
+  .settings_container .right_part .submit_container {
     display: none;
     visibility: hidden;
     opacity: 0;
@@ -1338,6 +1515,12 @@ color: rgba(240, 52, 52, 0.8);
     display: none;
     visibility: hidden;
     opacity: 0;
+  }
+
+  #social,
+  #regimes,
+  #infos {
+    max-width: 75%;
   }
 }
 

@@ -5,6 +5,10 @@ require_once __DIR__ . '/../../Functions/PlatsFunctions.php';
 use App\General;
 use App\Plats;
 
+$infos = getRestoInfos($pdo);
+$optionsResto = getOptionsResto($pdo, $infos['id']);
+$user = $user['id_team_member'];
+
 /* #############################################################################
 
 Ajout d'un plats à partir plat.php en Ajax
@@ -34,8 +38,6 @@ Ajout d'un plats à partir plat.php en Ajax
 #14 - Retour AJAX
 
 ############################################################################# */
-
-$user = $user['id_team_member'];
 
 if (!empty($_POST)) {
   #1 - Récupération des infos, et stockage dans des variables pour

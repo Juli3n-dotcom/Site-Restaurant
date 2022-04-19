@@ -141,21 +141,19 @@ $ua = getBrowser();
       </li>
 
 
-      <?php if ($user['statut'] == 0) : ?>
+      <?php if ($user['statut'] !== 2) : ?>
         <li>
           <div class="icon-link">
-            <a href="#">
+            <a href="Preference.php">
               <i class="fas fa-cog"></i>
-              <span class="link_name">Settings</span>
+              <span class="link_name">Réglages</span>
             </a>
             <i class='bx bxs-chevron-down arrow'></i>
           </div>
           <ul class="sub-menu">
-            <li><a class="link_name" href="#">Settings</a></li>
-            <li><a href="#">Card Design</a></li>
+            <li><a class="link_name" href="Preference.php">Réglages</a></li>
           </ul>
         </li>
-
       <?php endif; ?>
 
       <?php if ($user['statut'] == 0) : ?>
@@ -171,7 +169,6 @@ $ua = getBrowser();
             <li><a class="link_name" href="#">Admin</a></li>
             <li><a href="Options.php">Options</a></li>
             <li><a href="History.php">Journal</a></li>
-            <li><a href="#">Card Design</a></li>
           </ul>
         </li>
 
@@ -209,7 +206,7 @@ $ua = getBrowser();
           <ul>
             <li>
               <i class='bx bxs-user-circle'></i>
-              <a href="Profil.php"> Mon Profil</a>
+              <a href="Profil.php"> Mon Compte</a>
             </li>
             <li>
               <i class="fa fa-info-circle" aria-hidden="true"></i>

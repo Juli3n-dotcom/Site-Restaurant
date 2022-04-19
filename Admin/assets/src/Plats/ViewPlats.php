@@ -3,10 +3,11 @@ require_once __DIR__ . '/../../Config/Init.php';
 require_once __DIR__ . '/../../Functions/PlatsFunctions.php';
 
 
-use App\GeneralClass;
 use App\General;
 use App\Plats;
 
+$infos = getRestoInfos($pdo);
+$optionsResto = getOptionsResto($pdo, $infos['id']);
 /* #############################################################################
 
 vue rapide d'un plat a partir Plats.php en Ajax
@@ -78,28 +79,39 @@ if (isset($_POST['plat_id'])) {
 
       $result .= '</ul></li>';
     }
-    if ($row['est_epice']) {
-      $result .= '<li>
+    if (($optionsResto['est_epice'])) {
+      if ($row['est_epice']) {
+        $result .= '<li>
                     <h6>Epicé : </h6>';
-      $result .= '<p class="badge success confirmation">Oui </p>';
+        $result .= '<p class="badge success confirmation">Oui </p>';
+        $result .= '</li>';
+      }
+    }
+    if (($optionsResto['est_vege'])) {
+      $result .= '<li>
+                    <h6>Végétarien : </h6>';
+      $result .= ($row['est_vege']) ? '<p class="badge success confirmation">Oui</p>' : '<p class="badge danger confirmation">Non</p>';
       $result .= '</li>';
     }
-    $result .= '<li>
-                    <h6>Végétarien : </h6>';
-    $result .= ($row['est_vege']) ? '<p class="badge success confirmation">Oui</p>' : '<p class="badge danger confirmation">Non</p>';
-    $result .= '</li>';
-    $result .= '<li>
+    if (($optionsResto['est_vegan'])) {
+      $result .= '<li>
                     <h6>Végan : </h6>';
-    $result .= ($row['est_vegan']) ? '<p class="badge success confirmation">Oui</p>' : '<p class="badge danger confirmation">Non</p>';
-    $result .= '</li>';
-    $result .= '<li>
+      $result .= ($row['est_vegan']) ? '<p class="badge success confirmation">Oui</p>' : '<p class="badge danger confirmation">Non</p>';
+      $result .= '</li>';
+    }
+    if (($optionsResto['est_casher'])) {
+      $result .= '<li>
                     <h6>Casher : </h6>';
-    $result .= ($row['est_casher']) ? '<p class="badge success confirmation">Oui</p>' : '<p class="badge danger confirmation">Non</p>';
-    $result .= '</li>';
-    $result .= '<li>
+      $result .= ($row['est_casher']) ? '<p class="badge success confirmation">Oui</p>' : '<p class="badge danger confirmation">Non</p>';
+      $result .= '</li>';
+    }
+    if (($optionsResto['est_halal'])) {
+      $result .= '<li>
                     <h6>Halal : </h6>';
-    $result .= ($row['est_halal']) ? '<p class="badge success confirmation">Oui</p>' : '<p class="badge danger confirmation">Non</p>';
-    $result .= '</li>';
+      $result .= ($row['est_halal']) ? '<p class="badge success confirmation">Oui</p>' : '<p class="badge danger confirmation">Non</p>';
+      $result .= '</li>';
+    }
+
     $result .= '<li>
                     <h6>Publié : </h6>';
     $result .= ($row['est_publie']) ? '<p class="badge success confirmation">Oui</p>' : '<p class="badge danger confirmation">Non</p>';

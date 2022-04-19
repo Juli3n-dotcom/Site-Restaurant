@@ -5,6 +5,8 @@ require_once __DIR__ . '/Assets/Functions/PlatsFunctions.php';
 use App\GeneralClass;
 
 $page_title = 'Plats';
+$infos = getRestoInfos($pdo);
+$optionsResto = getOptionsResto($pdo, $infos['id']);
 $ua = getBrowser();
 include __DIR__ . '/Assets/Includes/HeaderAdmin.php';
 ?>
@@ -102,40 +104,42 @@ include __DIR__ . '/Assets/Includes/HeaderAdmin.php';
             </div>
           <?php endif; ?>
 
-          <div class=" mb-3 mt-4 input-block">
-            <label for="est_epice">S' agit il d'un plat épicé: </label>
-            <div>
-              <input type="checkbox" id="est_epice" name="est_epice" class="est_epice">
-              <span class="show_helper"><i class="fa-solid fa-circle-question"></i></span>
-              <div class="input_help">
-                <p>
-                  Cocher cette case si le plat est épicé.
-                </p>
+          <?php if ($optionsResto['est_epice']) : ?>
+            <div class=" mb-3 mt-4 input-block">
+              <label for="est_epice">S' agit il d'un plat épicé: </label>
+              <div>
+                <input type="checkbox" id="est_epice" name="est_epice" class="est_epice">
+                <span class="show_helper"><i class="fa-solid fa-circle-question"></i></span>
+                <div class="input_help">
+                  <p>
+                    Cocher cette case si le plat est épicé.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class=" mb-3 mt-4 epicelevelcontainer" id="epicelevelcontainer">
-            <label for="epicelevel">Niveau d'épices :</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="epicelevel" id="epicelevel1" value="1" checked>
-              <label class="form-check-label" for="epicelevel">
-                Un peu épicé <?php GeneralClass::getNbPiment(1, $ua['name']) ?>
-              </label>
+            <div class=" mb-3 mt-4 epicelevelcontainer" id="epicelevelcontainer">
+              <label for="epicelevel">Niveau d'épices :</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="epicelevel" id="epicelevel1" value="1" checked>
+                <label class="form-check-label" for="epicelevel">
+                  Un peu épicé <?php GeneralClass::getNbPiment(1, $ua['name']) ?>
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="epicelevel" id="epicelevel2" value="2">
+                <label class="form-check-label" for="epicelevel">
+                  Moyennement épicé <?php GeneralClass::getNbPiment(2, $ua['name']) ?>
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="epicelevel" id="epicelevel3" value="3">
+                <label class="form-check-label" for="epicelevel">
+                  Trés épicé <?php GeneralClass::getNbPiment(3, $ua['name']) ?>
+                </label>
+              </div>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="epicelevel" id="epicelevel2" value="2">
-              <label class="form-check-label" for="epicelevel">
-                Moyennement épicé <?php GeneralClass::getNbPiment(2, $ua['name']) ?>
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="epicelevel" id="epicelevel3" value="3">
-              <label class="form-check-label" for="epicelevel">
-                Trés épicé <?php GeneralClass::getNbPiment(3, $ua['name']) ?>
-              </label>
-            </div>
-          </div>
+          <?php endif; ?>
 
           <div class=" mb-3 mt-4 input-block">
             <label>Votre plat contient t'il des allergénes ? : </label>
@@ -179,57 +183,65 @@ include __DIR__ . '/Assets/Includes/HeaderAdmin.php';
             <?php endforeach; ?>
           </div>
 
-          <div class=" mb-3 mt-4 input-block">
-            <label for="est_vege">S'agit il d'un plat végétarien: </label>
-            <div>
-              <input type="checkbox" id="est_vege" name="est_vege" class="est_vege">
-              <span class="show_helper"><i class="fa-solid fa-circle-question"></i></span>
-              <div class="input_help">
-                <p>
-                  Cocher cette case si le plat est végétarien.
-                </p>
+          <?php if ($optionsResto['est_vege']) : ?>
+            <div class=" mb-3 mt-4 input-block">
+              <label for="est_vege">S'agit il d'un plat végétarien: </label>
+              <div>
+                <input type="checkbox" id="est_vege" name="est_vege" class="est_vege">
+                <span class="show_helper"><i class="fa-solid fa-circle-question"></i></span>
+                <div class="input_help">
+                  <p>
+                    Cocher cette case si le plat est végétarien.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          <?php endif; ?>
 
-          <div class=" mb-3 mt-4 input-block">
-            <label for="est_vege">S'agit il d'un plat végan: </label>
-            <div>
-              <input type="checkbox" id="est_vegan" name="est_vegan">
-              <span class="show_helper"><i class="fa-solid fa-circle-question"></i></span>
-              <div class="input_help">
-                <p>
-                  Cocher cette case si le plat est végan.
-                </p>
+          <?php if ($optionsResto['est_vegan']) : ?>
+            <div class=" mb-3 mt-4 input-block">
+              <label for="est_vege">S'agit il d'un plat végan: </label>
+              <div>
+                <input type="checkbox" id="est_vegan" name="est_vegan">
+                <span class="show_helper"><i class="fa-solid fa-circle-question"></i></span>
+                <div class="input_help">
+                  <p>
+                    Cocher cette case si le plat est végan.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          <?php endif; ?>
 
-          <div class=" mb-3 mt-4 input-block">
-            <label for="est_halal">S'agit il d'un plat halal: </label>
-            <div>
-              <input type="checkbox" id="est_halal" name="est_halal">
-              <span class="show_helper"><i class="fa-solid fa-circle-question"></i></span>
-              <div class="input_help">
-                <p>
-                  Cocher cette case si le plat est halal.
-                </p>
+          <?php if ($optionsResto['est_halal']) : ?>
+            <div class=" mb-3 mt-4 input-block">
+              <label for="est_halal">S'agit il d'un plat halal: </label>
+              <div>
+                <input type="checkbox" id="est_halal" name="est_halal">
+                <span class="show_helper"><i class="fa-solid fa-circle-question"></i></span>
+                <div class="input_help">
+                  <p>
+                    Cocher cette case si le plat est halal.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          <?php endif; ?>
 
-          <div class=" mb-3 mt-4 input-block">
-            <label for="est_casher">S'agit il d'un plat casher: </label>
-            <div>
-              <input type="checkbox" id="est_casher" name="est_casher">
-              <span class="show_helper"><i class="fa-solid fa-circle-question"></i></span>
-              <div class="input_help">
-                <p>
-                  Cocher cette case si le plat est cacher.
-                </p>
+          <?php if ($optionsResto['est_casher']) : ?>
+            <div class=" mb-3 mt-4 input-block">
+              <label for="est_casher">S'agit il d'un plat casher: </label>
+              <div>
+                <input type="checkbox" id="est_casher" name="est_casher">
+                <span class="show_helper"><i class="fa-solid fa-circle-question"></i></span>
+                <div class="input_help">
+                  <p>
+                    Cocher cette case si le plat est cacher.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          <?php endif; ?>
 
           <div class=" mb-3 mt-4 input-block">
             <label for="est_nouveau">Afficher <span class="new"> nouveau</span> sur le plat: </label>

@@ -28,6 +28,9 @@ if (stripos($_SERVER['REQUEST_URI'], 'Profil.php')) {
 if (stripos($_SERVER['REQUEST_URI'], 'History.php')) {
   echo '<script type="text/javascript" src="Assets/Js/History.min.js"></script>';
 }
+if (stripos($_SERVER['REQUEST_URI'], 'Preference.php')) {
+  echo '<script type="text/javascript" src="Assets/Js/Settings.min.js"></script>';
+}
 if (stripos($_SERVER['REQUEST_URI'], 'RestaurantCategories.php')) {
   echo '<script type="text/javascript" src="Assets/Js/RestaurantCategories.js"></script>';
 }
@@ -55,8 +58,6 @@ if (stripos($_SERVER['REQUEST_URI'], 'DrinksSubCat.php')) {
   echo '<script type="text/javascript" src="Assets/Js/DrinksSubCat.min.js"></script>';
 }
 if (stripos($_SERVER['REQUEST_URI'], 'Drinks.php')) {
-  echo '<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-';
   echo '<script type="text/javascript" src="Assets/Js/Drinks.min.js"></script>';
 }
 if (stripos($_SERVER['REQUEST_URI'], 'Plats.php')) {

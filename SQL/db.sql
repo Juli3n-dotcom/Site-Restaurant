@@ -34,22 +34,65 @@ CREATE TABLE global_options(
   maintenance INT (3) NOT NULL,
   coming_soon INT (3) NOT NULL,
   PRIMARY KEY (id)
-
 )ENGINE=INNODB;
 
+CREATE TABLE resto_photo
+(
+id_photo INT(3) NOT NULL AUTO_INCREMENT,
+img__jpeg VARCHAR (255) NOT NULL,
+img__webp VARCHAR (255) NOT NULL,
+original VARCHAR (255) NOT NULL,
+PRIMARY KEY (id_photo)
+)ENGINE=INNODB;
 
 CREATE TABLE resto_infos(
   id INT(3) NOT NULL AUTO_INCREMENT,
   name VARCHAR (255) NOT NULL,
   type INT (3) NOT NULL,
-  adresse VARCHAR (255) NOT NULL,
-  est_halal  TINYINT NOT NULL,
-  est_vege  TINYINT NOT NULL,
-  est_casher  TINYINT NOT NULL,
-  insta TEXT DEFAULT NULL,
-  facebook TEXT DEFAULT NULL,
-  twitter TEXT DEFAULT NULL,
-  PRIMARY KEY (id)
+  photo_id INT (3) DEFAULT NULL,
+  adresse VARCHAR (255) DEFAULT NULL,
+  complements VARCHAR (255) DEFAULT NULL,
+  cp VARCHAR (5) DEFAULT NULL,
+  ville VARCHAR (255) DEFAULT NULL,
+  telephone VARCHAR (255) DEFAULT NULL,
+  email VARCHAR (255) DEFAULT NULL,
+  siret VARCHAR (255) DEFAULT NULL,
+  tva VARCHAR (255) DEFAULT NULL,
+  insta VARCHAR (255) DEFAULT NULL,
+  facebook  VARCHAR (255) DEFAULT NULL,
+  pinterest  VARCHAR (255) DEFAULT NULL,
+  twitter  VARCHAR (255) DEFAULT NULL,
+  snap  VARCHAR (255) DEFAULT NULL,
+  tiktok  VARCHAR (255) DEFAULT NULL,
+  author_id INT(3) DEFAULT NULL,
+  date_enregistrement DATETIME NOT NULL,
+  date_modification DATETIME DEFAULT NULL,
+  token VARCHAR (255) DEFAULT NULL,
+  PRIMARY KEY (id),
+      CONSTRAINT fk_resto_photo
+      FOREIGN KEY (photo_id)
+      REFERENCES  resto_photo(id_photo)
+      ON DELETE SET NULL,
+      CONSTRAINT fk_resto_info_team
+      FOREIGN KEY (author_id)
+      REFERENCES  team(id_team_member)
+      ON DELETE SET NULL
+)ENGINE=INNODB;
+
+CREATE TABLE resto_options
+(
+id INT(3) NOT NULL AUTO_INCREMENT,
+resto_id INT(3) DEFAULT NULL,
+est_epice  TINYINT NOT NULL,
+est_vegan  TINYINT NOT NULL,
+est_vege  TINYINT NOT NULL,
+est_halal  TINYINT NOT NULL,
+est_casher  TINYINT NOT NULL,
+PRIMARY KEY (id),
+CONSTRAINT fk_resto_options
+      FOREIGN KEY (resto_id)
+      REFERENCES  resto_infos(id)
+      ON DELETE SET NULL
 )ENGINE=INNODB;
 
 
