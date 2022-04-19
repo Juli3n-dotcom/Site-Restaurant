@@ -67,7 +67,8 @@ $("#add_cat_form").on('submit', function(e){
           $('#add_cat_form').trigger("reset");
           $('#notif').html(data.notif);
           $('#addmodal').modal('hide');
-          $('#table').html(data.resultat); 
+          $('#table').html(data.resultat);
+          $('#nbsubcats').html(data.nbsubcat);
           $('#load-add').addClass('hide').fadeOut(1000);
           $('#footer-action').show().fadeIn(1000)
    
@@ -97,7 +98,6 @@ $("#add_cat_form").on('submit', function(e){
 // # Ouverture du Modal de vue
 $(document).on('click','.viewbtn', function(){  
   var cat_id = $(this).attr("id");  
-console.log(cat_id);
   $.ajax({  
        url:"Assets/Src/SousCategories/ViewSousCategorie.php",  
        method:"post",  
@@ -178,13 +178,12 @@ $('#delete_cat').on('submit', function(e){
               $('#delete_cat').trigger("reset");
               $('#notif').html(data.notif);
               $('#deletemodal').modal('hide');
+              $('#nbsubcats').html(data.nbsubcat);
               $('#table').html(data.resultat); 
                 
             }else{
 
               $('#notif').html(data.notif); 
-              console.log(data.test)
-
             } 
                 
     }, 'json');

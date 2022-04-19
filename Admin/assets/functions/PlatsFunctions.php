@@ -1,6 +1,6 @@
 <?php
 
-// Count du nombre de catégorie dans la BDD
+// Count du nombre de plats dans la BDD
 function countPlats(PDO $pdo)
 {
   $req = $pdo->query('SELECT * FROM plats');

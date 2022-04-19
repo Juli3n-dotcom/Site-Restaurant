@@ -13,7 +13,7 @@ include __DIR__ . '/Assets/Includes/HeaderAdmin.php';
     <div class="grid__card">
 
       <div class="card__header">
-        <h3>Catégories de plats </h3>
+        <h3>Catégories de plats : <span id="nbcats"><?= countCat($pdo) ?></span></h3>
 
 
 

@@ -100,6 +100,7 @@ if (!empty($_POST)) {
 
     $query = $pdo->query("SELECT * FROM plats_categories ORDER BY position ASC LIMIT $start_from,$record_per_page");
 
+    $result['nbcat'] = countCat($pdo);
 
     $result['resultat'] = '<table>
 

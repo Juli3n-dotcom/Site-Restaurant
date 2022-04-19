@@ -100,6 +100,8 @@ if (!empty($_POST)) {
 
     $query = $pdo->query("SELECT * FROM plats_sous_categories ORDER BY position ASC LIMIT $start_from,$record_per_page");
 
+    $result['nbsubcat'] = countSousCat($pdo);
+
     $result['resultat'] = '<table>
 
             <thead>

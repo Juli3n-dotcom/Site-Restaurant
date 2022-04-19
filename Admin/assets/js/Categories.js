@@ -70,7 +70,8 @@ $("#add_cat_form").on('submit', function(e){
           $('#add_cat_form').trigger("reset");
           $('#notif').html(data.notif);
           $('#addmodal').modal('hide');
-          $('#table').html(data.resultat); 
+          $('#table').html(data.resultat);
+          $('#nbcats').html(data.nbcat);
           $('#load-add').addClass('hide').fadeOut(1000);
           $('#footer-action').show().fadeIn(1000)
    
@@ -181,12 +182,12 @@ $('#delete_cat').on('submit', function(e){
               $('#delete_cat').trigger("reset");
               $('#notif').html(data.notif);
               $('#deletemodal').modal('hide');
+              $('#nbcats').html(data.nbcat);
               $('#table').html(data.resultat); 
                 
             }else{
 
               $('#notif').html(data.notif); 
-              console.log(data.test)
 
             } 
                 
